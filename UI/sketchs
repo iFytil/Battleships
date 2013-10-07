@@ -1,0 +1,64 @@
+application:
+  width: 900px
+  height: 600px
+    navigation bar: red
+      width: 900px
+      height: 35px
+      orientation: top
+    application space: pink
+      width: 900px
+      height: 565px
+      orientation: bottom
+      joined to: navigation bar
+
+
+game frame:
+  width: 900px
+  height: 565px
+
+  ribbon: blue
+    width: 900px
+    height: 125px
+    orientation: bottom
+    purpose:
+      >>where the user controls the action of the selected boat
+      >>controls should be disabled until user selects a boat
+
+  game window: green
+    width: 900px
+    height: 440px
+    orientation: top
+    joined to: ribbon
+
+user home:
+  width: 900px
+  height: 565px
+  max games in progress: 4
+    >>when 4 games are in progress user cannot start a new game
+    >>user can delete games which counts as a defeat
+  statistics:
+    >>user can see their overall statistics aggregated from all of their games.
+
+ribbon waiting:
+  width: 900px
+  height: 125px
+
+ribbon active:
+  width: 900px
+  height: 125px
+  actions:
+    >> a user should not be able to select any actions that they are not able to make
+    >> rotations should cycle between all available rotations
+    >> a user should click the select icon when they are satisfied with their choice
+    >> clicking a different button should override the current choice
+    >> the sketches do not show all available actions
+      however the ribbbon should contain all available actions to the player
+
+game setup:
+  width: 900px
+  height: 125px
+  >> user can see their stats and opponents stats
+  >> clicking regenerate map will change the coral for both players
+  >> when both players accept the map then the game starts
+  >> the players can chat to each other using the chat box
+  >> the win loss ratio for both players should be visible

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="900"
+   height="565"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="userhome.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.9318096"
+     inkscape:cx="308.23205"
+     inkscape:cy="92.315402"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1342"
+     inkscape:window-height="1059"
+     inkscape:window-x="0"
+     inkscape:window-y="19"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-487.36218)">
+    <rect
+       style="fill:#00ff00"
+       id="rect3023"
+       width="900"
+       height="565"
+       x="0"
+       y="487.36218" />
+    <rect
+       style="fill:#000000"
+       id="rect3025"
+       width="900"
+       height="1"
+       x="0"
+       y="751.36218" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="7.7539062"
+       y="526.79578"
+       id="text3027"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3029"
+         x="7.7539062"
+         y="526.79578">Games:</tspan></text>
+    <g
+       id="g3051"
+       transform="matrix(0.83333333,0,0,0.83333,3.3333333,78.729202)">
+      <rect
+         y="552.36218"
+         x="20"
+         height="100"
+         width="360"
+         id="rect3031"
+         style="fill:#ffff00" />
+      <text
+         transform="scale(0.99222531,1.0078356)"
+         sodipodi:linespacing="125%"
+         id="text3033"
+         y="568.24609"
+         x="24.090778"
+         style="font-size:40.05784988px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:20.02892494px"
+           id="tspan3037"
+           y="568.24609"
+           x="24.090778"
+           sodipodi:role="line">game in progress with: userx</tspan><tspan
+           style="font-size:20.02892494px"
+           id="tspan3041"
+           y="593.28223"
+           x="24.090778"
+           sodipodi:role="line">number of turns: x</tspan><tspan
+           style="font-size:20.02892494px"
+           id="tspan3043"
+           y="618.31842"
+           x="24.090778"
+           sodipodi:role="line">units lost: x units destroyed: x</tspan></text>
+      <rect
+         y="627.36218"
+         x="305"
+         height="20"
+         width="70"
+         id="rect3045"
+         style="fill:#ff0000" />
+      <text
+         transform="scale(0.90440125,1.1057039)"
+         sodipodi:linespacing="125%"
+         id="text3047"
+         y="581.15143"
+         x="339.98874"
+         style="font-size:36.17604828px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:13.56601906px"
+           y="581.15143"
+           x="339.98874"
+           id="tspan3049"
+           sodipodi:role="line">goto game</tspan></text>
+    </g>
+    <g
+       id="g3051-5"
+       transform="matrix(0.83333333,0,0,0.83333,3.3333334,188.7292)">
+      <rect
+         y="552.36218"
+         x="20"
+         height="100"
+         width="360"
+         id="rect3031-6"
+         style="fill:#ffff00" />
+      <text
+         transform="scale(0.99222531,1.0078356)"
+         sodipodi:linespacing="125%"
+         id="text3033-2"
+         y="568.24609"
+         x="24.090778"
+         style="font-size:40.05784988px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:20.02892494px"
+           id="tspan3037-4"
+           y="568.24609"
+           x="24.090778"
+           sodipodi:role="line">game in progress with: userx</tspan><tspan
+           style="font-size:20.02892494px"
+           id="tspan3041-0"
+           y="593.28223"
+           x="24.090778"
+           sodipodi:role="line">number of turns: x</tspan><tspan
+           style="font-size:20.02892494px"
+           id="tspan3043-0"
+           y="618.31842"
+           x="24.090778"
+           sodipodi:role="line">units lost: x units destroyed: x</tspan></text>
+      <rect
+         y="627.36218"
+         x="305"
+         height="20"
+         width="70"
+         id="rect3045-1"
+         style="fill:#ff0000" />
+      <text
+         transform="scale(0.90440125,1.1057039)"
+         sodipodi:linespacing="125%"
+         id="text3047-0"
+         y="581.15143"
+         x="339.98874"
+         style="font-size:36.17604828px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:13.56601906px"
+           y="581.15143"
+           x="339.98874"
+           id="tspan3049-5"
+           sodipodi:role="line">goto game</tspan></text>
+    </g>
+    <g
+       id="g3321">
+      <rect
+         y="539.02917"
+         x="350"
+         height="83.333"
+         width="300"
+         id="rect3031-3"
+         style="fill:#ffff00" />
+      <text
+         transform="scale(0.9922273,1.0078336)"
+         sodipodi:linespacing="125%"
+         id="text3033-4"
+         y="551.65472"
+         x="356.02014"
+         style="font-size:33.38147354px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:16.69073677px"
+           id="tspan3037-1"
+           y="551.65472"
+           x="356.02014"
+           sodipodi:role="line">game in progress with: userx</tspan><tspan
+           style="font-size:16.69073677px"
+           id="tspan3041-4"
+           y="572.51813"
+           x="356.02014"
+           sodipodi:role="line">number of turns: x</tspan><tspan
+           style="font-size:16.69073677px"
+           id="tspan3043-7"
+           y="593.38159"
+           x="356.02014"
+           sodipodi:role="line">units lost: x units destroyed: x</tspan></text>
+      <rect
+         y="601.52893"
+         x="587.5"
+         height="16.666599"
+         width="58.333332"
+         id="rect3045-7"
+         style="fill:#ff0000" />
+      <text
+         transform="scale(0.90440307,1.1057017)"
+         sodipodi:linespacing="125%"
+         id="text3047-3"
+         y="555.49481"
+         x="651.89062"
+         style="font-size:30.1466465px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:11.30499363px"
+           y="555.49481"
+           x="651.89062"
+           id="tspan3049-7"
+           sodipodi:role="line">goto game</tspan></text>
+    </g>
+    <rect
+       style="fill:#ffff00"
+       id="rect3031-6-0"
+       width="300"
+       height="83.333"
+       x="350"
+       y="649.02917" />
+    <text
+       xml:space="preserve"
+       style="font-size:36.39271545px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="356.86008"
+       y="703.28119"
+       id="text3285"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3287"
+         x="356.86008"
+         y="703.28119">open game slot</tspan></text>
+    <rect
+       style="fill:#ff0000"
+       id="rect3045-7-4"
+       width="58.333332"
+       height="16.666599"
+       x="776.73553"
+       y="515.10815" />
+    <text
+       xml:space="preserve"
+       style="font-size:30.1466465px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="861.12872"
+       y="477.33557"
+       id="text3047-3-7"
+       sodipodi:linespacing="125%"
+       transform="scale(0.90440306,1.1057017)"><tspan
+         sodipodi:role="line"
+         id="tspan3049-7-0"
+         x="861.12872"
+         y="477.33557"
+         style="font-size:11.30499363px">new game</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="45.5312"
+       y="839.8833"
+       id="text3331"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3333"
+         x="45.5312"
+         y="839.8833">100       200       20</tspan><tspan
+         sodipodi:role="line"
+         x="45.5312"
+         y="939.8833"
+         id="tspan3335" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="47.048904"
+       y="880.86139"
+       id="text3372"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3374"
+         x="47.048904"
+         y="880.86139">ships lost     ships destroyed  games won</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="651.42065"
+       y="913.92188"
+       id="text3376"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3378"
+         x="651.42065"
+         y="913.92188">10 games lost</tspan><tspan
+         sodipodi:role="line"
+         x="651.42065"
+         y="951.42188"
+         id="tspan3380">0   games tied</tspan><tspan
+         sodipodi:role="line"
+         x="651.42065"
+         y="988.92188"
+         id="tspan3382" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="321.80396"
+       y="906.66779"
+       id="text3376-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3378-5"
+         x="321.80396"
+         y="906.66779"
+         style="font-size:25px">1000   cannons fired</tspan><tspan
+         sodipodi:role="line"
+         x="321.80396"
+         y="937.91779"
+         id="tspan3411"
+         style="font-size:25px">1000 hcannons fired</tspan><tspan
+         sodipodi:role="line"
+         x="321.80396"
+         y="969.16779"
+         id="tspan3413"
+         style="font-size:25px">1000  torpedos fired</tspan><tspan
+         sodipodi:role="line"
+         x="321.80396"
+         y="1000.4178"
+         id="tspan3380-9"
+         style="font-size:25px">1000 mines dropped</tspan><tspan
+         sodipodi:role="line"
+         x="321.80396"
+         y="1031.6677"
+         id="tspan3419"
+         style="font-size:25px">1000     mines taken</tspan><tspan
+         sodipodi:role="line"
+         x="321.80396"
+         y="1062.9177"
+         id="tspan3382-7"
+         style="font-size:25px" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="7.3620648"
+       y="905.5946"
+       id="text3376-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="7.3620648"
+         y="905.5946"
+         id="tspan3382-4"
+         style="font-size:25px">20       losses to mines</tspan><tspan
+         sodipodi:role="line"
+         x="7.3620648"
+         y="936.8446"
+         id="tspan3453"
+         style="font-size:25px">20 losses to hcannons</tspan><tspan
+         sodipodi:role="line"
+         x="7.3620648"
+         y="968.0946"
+         id="tspan3455"
+         style="font-size:25px">60   losses to cannons</tspan><tspan
+         sodipodi:role="line"
+         x="7.3620648"
+         y="999.3446"
+         id="tspan3457"
+         style="font-size:25px">20  instances of repair</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="297.27103"
+       y="560.84546"
+       id="text3459"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3461"
+         x="297.27103"
+         y="560.84546">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="300.25766"
+       y="671.00073"
+       id="text3459-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3461-1"
+         x="300.25766"
+         y="671.00073">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="629.72406"
+       y="558.31677"
+       id="text3459-9-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3461-1-9"
+         x="629.72406"
+         y="558.31677">x</tspan></text>
+  </g>
+</svg>

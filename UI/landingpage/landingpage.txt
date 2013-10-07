@@ -1,4 +1,0 @@
-landingpage should:
-  take new users to sign up page
-  take existing users to log in page
-  graphically show the purpose of the web app without much text
