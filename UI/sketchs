@@ -39,7 +39,7 @@ user home:
   statistics:
     >>user can see their overall statistics aggregated from all of their games.
 
-ribbon waiting:
+ribbon waiting / ribbon idle:
   width: 900px
   height: 125px
 
@@ -52,18 +52,28 @@ ribbon active:
     >> a user should click the select icon when they are satisfied with their choice
     >> clicking a different button should override the current choice
     >> the sketches do not show all available actions
-      however the ribbbon should contain all available actions to the player
+      however the ribbbon should contain all available actions to the player/boat
 
-game setup:
+map configuration:
   width: 900px
-  height: 125px
+  height: 565px
   >> user can see their stats and opponents stats
   >> clicking regenerate map will change the coral for both players
   >> when both players accept the map then the game starts
   >> the players can chat to each other using the chat box
   >> the win loss ratio for both players should be visible
 
-game view:
+boat selection:
+  width: 900px
+  height: 565px
+   >> User has a list of available boats (red)
+   >> The coral configuration is visible at this point (blue)
+   >> Chat still available
+   >> User chooses starting position of his boats (docked on the base as white circles)
+   >> Occurs after map configuration because coral arrangement is crucial for this step
+   >> User clicks the "I'm done" button when he placed all his boats
+
+game window:
   width: 900px
   height: 440px
   is joined with a ribbon

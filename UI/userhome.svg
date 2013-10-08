@@ -13,7 +13,7 @@
    height="565"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="userhome.svg">
   <defs
      id="defs4" />
@@ -26,14 +26,14 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.9318096"
      inkscape:cx="308.23205"
-     inkscape:cy="92.315402"
+     inkscape:cy="306.95153"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1342"
-     inkscape:window-height="1059"
-     inkscape:window-x="0"
-     inkscape:window-y="19"
+     inkscape:window-height="1027"
+     inkscape:window-x="58"
+     inkscape:window-y="24"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -259,23 +259,23 @@
     <rect
        style="fill:#ff0000"
        id="rect3045-7-4"
-       width="58.333332"
-       height="16.666599"
-       x="776.73553"
-       y="515.10815" />
+       width="95.894638"
+       height="41.349781"
+       x="718.78375"
+       y="583.79175" />
     <text
        xml:space="preserve"
-       style="font-size:30.1466465px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="861.12872"
-       y="477.33557"
+       style="font-size:47.289814px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="795.0412"
+       y="556.15698"
        id="text3047-3-7"
        sodipodi:linespacing="125%"
-       transform="scale(0.90440306,1.1057017)"><tspan
+       transform="scale(0.91006368,1.0988242)"><tspan
          sodipodi:role="line"
-         id="tspan3049-7-0"
-         x="861.12872"
-         y="477.33557"
-         style="font-size:11.30499363px">new game</tspan></text>
+         x="795.0412"
+         y="556.15698"
+         style="font-size:17.73368263px"
+         id="tspan3702">New Game</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:80px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -418,5 +418,37 @@
          id="tspan3461-1-9"
          x="629.72406"
          y="558.31677">x</tspan></text>
+    <rect
+       style="fill:#ff0000"
+       id="rect3045-7-4-5"
+       width="95.894638"
+       height="41.349781"
+       x="718.30365"
+       y="662.51318" />
+    <text
+       xml:space="preserve"
+       style="font-size:47.289814px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="823.99457"
+       y="627.79858"
+       id="text3047-3-7-7"
+       sodipodi:linespacing="125%"
+       transform="scale(0.91006368,1.0988242)"><tspan
+         sodipodi:role="line"
+         x="823.99457"
+         y="627.79858"
+         style="font-size:17.73368263px"
+         id="tspan3698">Help</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="662.1524"
+       y="546.8941"
+       id="text3706"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3708"
+         x="662.1524"
+         y="546.8941"
+         style="font-size:18px;font-style:italic;font-weight:bold;-inkscape-font-specification:Sans Bold Italic">Welcome &lt;Username&gt;</tspan></text>
   </g>
 </svg>
