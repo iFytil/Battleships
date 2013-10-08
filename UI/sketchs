@@ -62,3 +62,15 @@ game setup:
   >> when both players accept the map then the game starts
   >> the players can chat to each other using the chat box
   >> the win loss ratio for both players should be visible
+
+game view:
+  width: 900px
+  height: 440px
+  is joined with a ribbon
+   >> Both bases are visible to players 
+   >> Coral is visible to players (pink) and can only be placed in the shaded middle area
+   >> By default, map is grey and foggy (lack of vision) 
+   >> Players have vision (light blue) around their boats and base
+   >> Areas where the player can choose to shoot are in red
+   >> Ribbon changes depending on which boat (or base) is selected
+  
