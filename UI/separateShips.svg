@@ -25,8 +25,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.0567318"
-     inkscape:cx="502.44823"
-     inkscape:cy="306.07362"
+     inkscape:cx="524.61811"
+     inkscape:cy="154.66339"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="true"
@@ -77,7 +77,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -555,5 +555,53 @@
        sodipodi:ry="7.3333001"
        d="m 120,286.0007 a 15,7.3333001 0 1 1 -30,0 15,7.3333001 0 1 1 30,0 z"
        transform="translate(119.5,22.833812)" />
+    <rect
+       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect9517"
+       width="29.5"
+       height="14.166594"
+       x="120.5"
+       y="73.835007"
+       transform="translate(0,125)" />
+    <rect
+       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect9519"
+       width="30"
+       height="14.6666"
+       x="180"
+       y="73.334999"
+       transform="translate(0,125)" />
+    <rect
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect9521"
+       width="30"
+       height="14.6666"
+       x="570"
+       y="425.3334"
+       transform="translate(0,125)" />
+    <rect
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect9523"
+       width="30"
+       height="14.6666"
+       x="150"
+       y="366.66699"
+       transform="translate(0,125)" />
+    <rect
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect9525"
+       width="30"
+       height="14.6666"
+       x="150"
+       y="176.00121"
+       transform="translate(0,125)" />
+    <rect
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect9527"
+       width="30"
+       height="14.6666"
+       x="150"
+       y="73.334999"
+       transform="translate(0,125)" />
   </g>
 </svg>
