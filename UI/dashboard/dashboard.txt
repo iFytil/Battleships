@@ -1,0 +1,5 @@
+dashboard should:
+  show user basic information about user
+  show user all existing games
+  allow user to enter play mode of existing game
+  allow user to start new game, unless existing games = max
