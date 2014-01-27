@@ -13,7 +13,7 @@
    height="125"
    id="svg3010"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="ribbonactive.svg">
   <defs
      id="defs3012" />
@@ -25,15 +25,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="475.30929"
-     inkscape:cy="170.64477"
+     inkscape:cx="342.33775"
+     inkscape:cy="185.64477"
      inkscape:document-units="px"
-     inkscape:current-layer="g3030"
+     inkscape:current-layer="g3110-4-1-7-8"
      showgrid="false"
-     inkscape:window-width="1342"
-     inkscape:window-height="1059"
-     inkscape:window-x="0"
-     inkscape:window-y="19"
+     inkscape:window-width="931"
+     inkscape:window-height="1018"
+     inkscape:window-x="989"
+     inkscape:window-y="29"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata3015">
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -67,30 +67,31 @@
          height="100"
          width="100"
          id="rect3020"
-         style="fill:#ffff00" />
+         style="fill:#00ffff" />
       <text
          sodipodi:linespacing="125%"
          id="text3022"
-         y="986.36218"
-         x="31"
+         y="973.36218"
+         x="18"
          style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
-           y="986.36218"
-           x="31"
+           y="973.36218"
+           x="18"
            id="tspan3024"
-           sodipodi:role="line">icon</tspan></text>
+           sodipodi:role="line"
+           style="font-size:22px">Selected</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text3026"
-         y="1019.3622"
-         x="25.5"
+         y="1017.3622"
+         x="33.5"
          style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px"
-           y="1019.3622"
-           x="25.5"
+           y="1017.3622"
+           x="33.5"
            id="tspan3028"
-           sodipodi:role="line">generic</tspan></text>
+           sodipodi:role="line">UNIT</tspan></text>
     </g>
     <g
        id="g3070"
@@ -305,7 +306,7 @@
          height="100"
          width="100"
          id="rect3020-8-5-2-1-5-5"
-         style="fill:#ffff00" />
+         style="fill:#00ff00" />
       <text
          sodipodi:linespacing="125%"
          id="text3022-1-2-2-2-7-7"
@@ -320,15 +321,15 @@
       <text
          sodipodi:linespacing="125%"
          id="text3026-6-6-6-4-8-9"
-         y="1023.3622"
-         x="25.742641"
+         y="1020.3622"
+         x="15.742641"
          style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            style="font-size:20px"
-           y="1023.3622"
-           x="25.742641"
+           y="1020.3622"
+           x="15.742641"
            id="tspan3028-1-8-8-7-2-4"
-           sodipodi:role="line">SELECT</tspan></text>
+           sodipodi:role="line">CONFIRM</tspan></text>
     </g>
   </g>
 </svg>
