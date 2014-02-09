@@ -15,9 +15,13 @@
 <div class='container'>
 
   <ul class='nav nav-pills'>
-    <li><a>home</a></li>
-    <li><a>log in</a></li>
-    <li><a>sign up</a></li>
+    <li><a href='<%= root_path %>'>home</a></li>
+    <% if current_user.nil? %>
+      <li><a href='<%= new_user_session_path %>'>log in</a></li>
+      <li><a href='<%= new_user_registration_path %>'>sign up</a></li>
+    <% else %>
+      <li><a data-method="delete" href='<%= destroy_user_session_path %>'>log out</a><li>
+    <% end %>
   </ul>
 
   <%= yield %>
