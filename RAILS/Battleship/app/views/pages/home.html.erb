@@ -1,1 +1,9 @@
-<h1>HELLO</h1>
+<% if current_user.nil? %>
+	<h1>Hello. Why don't you log in</h1>
+<% else %>
+	<h1>Hey, welcome <%= current_user.email %></h1>
+<% end %>
+<h2>These users already exist in our database</h2>
+<% User.all.each do |user|%>
+	<li><%= user.email %></li>
+<% end %>
