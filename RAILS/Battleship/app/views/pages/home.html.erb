@@ -1,9 +1,13 @@
 <% if current_user.nil? %>
-	<h1>Hello. Why don't you log in</h1>
+	<h1>Hello! Welcome to Battleships.</h1>
+	<h3>Log in to start playing.</h3>
 <% else %>
 	<h1>Hey, welcome <%= current_user.email %></h1>
-<% end %>
-<h2>These users already exist in our database</h2>
+
+<h3>Other users:</h3>
 <% User.all.each do |user|%>
 	<li><%= user.email %></li>
 <% end %>
+
+<% end %>
+
