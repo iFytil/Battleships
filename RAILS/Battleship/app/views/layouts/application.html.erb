@@ -20,6 +20,7 @@
       <li><a href='<%= new_user_session_path %>'>log in</a></li>
       <li><a href='<%= new_user_registration_path %>'>sign up</a></li>
     <% else %>
+<li><a href='<%= new_user_registration_path %>'>Lobby</a></li>
       <li><a data-method="delete" href='<%= destroy_user_session_path %>'>log out</a><li>
     <% end %>
   </ul>
