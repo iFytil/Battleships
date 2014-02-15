@@ -1,7 +1,14 @@
 require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  test "the truth" do
+    assert true
+  end
+  
+  test "should get lobby" do
+    get :lobby
+    assert_response :success
+  end
+
 end

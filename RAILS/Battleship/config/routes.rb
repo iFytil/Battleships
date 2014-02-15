@@ -1,4 +1,8 @@
 Battleship::Application.routes.draw do
+
+  # Example: pages/lobby
+  get ':controller(/:action(/:id(.:format)))'
+
   devise_for :users
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
