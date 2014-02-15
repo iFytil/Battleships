@@ -1,0 +1,4 @@
+<h1>This is the list of all players</h1>
+<% Player.all.each do |player|%>
+	<li><%= link_to player.username, player%></li>
+<% end %>

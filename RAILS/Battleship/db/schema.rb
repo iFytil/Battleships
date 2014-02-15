@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140214222307) do
+ActiveRecord::Schema.define(version: 20140215204455) do
+
+  create_table "players", force: true do |t|
+    t.string   "username"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "players", ["user_id"], name: "index_players_on_user_id"
 
   create_table "rails_admin_histories", force: true do |t|
     t.text     "message"
@@ -39,11 +48,11 @@ ActiveRecord::Schema.define(version: 20140214222307) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "wins"
-    t.integer  "losses"
+    t.integer  "player_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["player_id"], name: "index_users_on_player_id"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

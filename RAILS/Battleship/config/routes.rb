@@ -1,6 +1,7 @@
 Battleship::Application.routes.draw do
 
-  # Example: pages/lobby
+  resources :players
+
   get 'lobby' => 'pages#lobby', :as => :lobby
 
   devise_for :users

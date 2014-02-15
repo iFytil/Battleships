@@ -3,11 +3,7 @@
 	<h3>Log in to start playing.</h3>
 <% else %>
 	<h1>Hey, welcome <%= current_user.email %></h1>
-
-<h3>Other users:</h3>
-<% User.all.each do |user|%>
-	<li><%= user.email %></li>
-<% end %>
+	<h2>Why don't you check out our lobby!</h2>
 
 <% end %>
 
