@@ -1,4 +1,4 @@
-jQuery ->
+$(document).on 'ready page:load', ->
   window.chatController = new Chat.Controller($('#chat').data('uri'), true);
 
 window.Chat = {}
