@@ -1,6 +1,11 @@
 Battleship::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Websockets result in internal server errors when config.cache_classes is false
+  # which won't be the case in production, but in dev it's certainly annoying. This
+  # seems to fix it.
+  config.middleware.delete Rack::Lock
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
