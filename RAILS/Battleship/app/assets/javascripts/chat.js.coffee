@@ -1,5 +1,7 @@
-$(document).on 'ready page:load', ->
-  window.chatController = new Chat.Controller($('#chat').data('uri'), true);
+ready = -> window.chatController = new Chat.Controller($('#chat').data('uri'), true);
+
+$(document).ready(ready)
+$(document).on('page:load', ready)
 
 window.Chat = {}
 

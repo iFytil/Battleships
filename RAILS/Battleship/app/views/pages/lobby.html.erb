@@ -4,17 +4,17 @@
 <div id="chat" class="well" data-uri="<%= request.host %>:<%= request.port %>/websocket">
 </div>
 
-<div class="form-inline well">
+<div class="well">
   <fieldset>
-    <input type="text" class="input-medium" id="user_name">
-    <input type="text" class="input-xlarge" id="message">
+    <input type="text" id="user_name">
+    <input type="text" id="message">
     <button id="send" class="btn btn-primary">Send</button>
   </fieldset>
 </div>
 
-<div class="well sidebar-nav">
-  <h3>Users</h3>
-  <ul class="nav nav-list" id="user-list">
-    <li class="nav-header">Active</li>
+<div class="well">
+  <h3>Active players</h3>
+  <ul id="user-list">
+    <li>Chat is inactive</li>
   </ul>
 </div>		
