@@ -8,10 +8,7 @@ class User < ActiveRecord::Base
 
   after_create do |user|
 
-  	player = Player.new
-  	player.user_id = user.id
-  	player.username = user.email.split("@")[0]
-  	player.save
+  	player = Player.create(user_id: user.id, username: user.email.split("@")[0])
 
     user.player_id = player.id
     user.save

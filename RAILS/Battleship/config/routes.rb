@@ -1,5 +1,6 @@
 Battleship::Application.routes.draw do
 
+  get 'game/:id' => 'games#show', :as => :game
   resources :players
 
   get 'lobby' => 'pages#lobby', :as => :lobby
