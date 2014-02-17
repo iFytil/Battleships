@@ -1,7 +1,9 @@
-ready = -> window.chatController = new Chat.Controller($('#chat').data('uri'), true);
+//= require jquery
+//= require jquery_ujs
+//= require websocket_rails/main
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
+ready = -> window.chatController = new Chat.Controller($('#chat').data('uri'), true);
+$(document).on('ready page:load', ready)
 
 window.Chat = {}
 
@@ -31,13 +33,12 @@ class Chat.Controller
   constructor: (url,useWebSockets) ->
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
-    @dispatcher.on_open = @createGuestUser
+    @dispatcher.on_open = @createUser
     @bindEvents()
 
   bindEvents: =>
     @dispatcher.bind 'new_message', @newMessage
     @dispatcher.bind 'user_list', @updateUserList
-    $('input#user_name').on 'keyup', @updateUserInfo
     $('#send').on 'click', @sendMessage
     $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13
 
@@ -55,11 +56,6 @@ class Chat.Controller
   updateUserList: (userList) =>
     $('#user-list').html @userListTemplate(userList)
 
-  updateUserInfo: (event) =>
-    @user.user_name = $('input#user_name').val()
-    $('#username').html @user.user_name
-    @dispatcher.trigger 'change_username', @user.serialize()
-
   appendMessage: (message) ->
     messageTemplate = @template(message)
     $('#chat').append messageTemplate
@@ -70,9 +66,6 @@ class Chat.Controller
     $('#chat div.messages:first').slideDown 100, ->
       $(this).remove()
 
-  createGuestUser: =>
-    rand_num = Math.floor(Math.random()*1000)
-    @user = new Chat.User("Guest_" + rand_num)
-    $('#username').html @user.user_name
-    $('input#user_name').val @user.user_name
+  createUser: =>
+    @user = new Chat.User($('#player_data').data('name'))
     @dispatcher.trigger 'new_user', @user.serialize()
