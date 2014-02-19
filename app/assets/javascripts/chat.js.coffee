@@ -1,10 +1,3 @@
-//= require jquery
-//= require jquery_ujs
-//= require websocket_rails/main
-
-ready = -> window.chatController = new Chat.Controller($('#chat').data('uri'), true);
-$(document).on('ready page:load', ready)
-
 window.Chat = {}
 
 class Chat.User
@@ -33,6 +26,8 @@ class Chat.Controller
   constructor: (url,useWebSockets) ->
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
+    console.log(url)
+    console.log(@dispatcher)
     @dispatcher.on_open = @createUser
     @bindEvents()
 

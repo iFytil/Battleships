@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'sqlite3', group: :development
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -32,9 +31,6 @@ gem 'rails_admin'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
@@ -47,3 +43,9 @@ gem 'devise'
 # Used for live-chatting
 gem 'websocket-rails', :git => 'git://github.com/DanKnox/websocket-rails.git'
 gem 'jquery-rails', :git => 'git://github.com/rails/jquery-rails'
+
+# Heroku wants this
+gem 'rails_12factor', group: :production
+gem 'pg'
+
+ruby "2.0.0"

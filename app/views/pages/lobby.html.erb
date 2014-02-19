@@ -1,4 +1,12 @@
-<%= javascript_include_tag "chat" %>
+<script>
+	var ready;
+
+ready = function() {
+  return window.chatController = new Chat.Controller($('#chat').data('uri'), true);
+};
+
+$(document).on('ready page:load', ready);
+</script>
 
 <h1>This is the lobby</h1>
 <p><%= link_to "view all players", players_path %></p>
