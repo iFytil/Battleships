@@ -1,3 +1,5 @@
+jQuery -> window.chatController = new Chat.Controller(window.location.host+"/websocket", true)
+
 window.Chat = {}
 
 class Chat.User
