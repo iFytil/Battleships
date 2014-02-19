@@ -26,8 +26,6 @@ class Chat.Controller
   constructor: (url,useWebSockets) ->
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
-    console.log(url)
-    console.log(@dispatcher)
     @dispatcher.on_open = @createUser
     @bindEvents()
 
