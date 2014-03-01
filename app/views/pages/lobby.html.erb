@@ -1,5 +1,7 @@
 <script>
-  new Chat.Controller(window.location.host+"/websocket", true)
+  jQuery(function() {
+    return window.chatController = new Chat.Controller(window.location.host + "/websocket", true);
+  });
 </script>
 
 <h1>This is the lobby</h1>
