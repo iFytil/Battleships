@@ -1,5 +1,5 @@
 class AddPlayerRefToUsers < ActiveRecord::Migration
   def change
-    add_reference :users, :player, index: true
+    add_column :users, :username, :string
   end
 end

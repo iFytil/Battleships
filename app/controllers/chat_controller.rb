@@ -23,7 +23,7 @@ class ChatController < WebsocketRails::BaseController
   
   def client_connected
     clientName = Player.find(current_user.player_id).username
-    system_msg :new_message, "#{clientName} #{client_id} connected"
+    #system_msg :new_message, "#{clientName} #{client_id} connected"
   end
   
   def new_message
@@ -37,7 +37,7 @@ class ChatController < WebsocketRails::BaseController
   
   def delete_user
     connection_store[:user] = nil
-    system_msg :new_message, "client #{client_id} disconnected"
+    #system_msg :new_message, "client #{client_id} disconnected"
     broadcast_user_list
   end
   

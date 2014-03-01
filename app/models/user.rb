@@ -4,14 +4,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates_uniqueness_of :username
+  validates_presence_of :username
+
   has_one :player
 
   after_create do |user|
-
-  	player = Player.create(user_id: user.id, username: user.email.split("@")[0])
-
-    user.player_id = player.id
-    user.save
+  	player = Player.create(user_id: user.id)
   end
          
 end
