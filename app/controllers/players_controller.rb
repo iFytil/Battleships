@@ -4,5 +4,6 @@ class PlayersController < ApplicationController
 
   def show
   	@player = Player.find(params[:id])
+  	@username = User.find(params[:id]).username
   end
 end
