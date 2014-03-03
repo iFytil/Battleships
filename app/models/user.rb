@@ -6,11 +6,5 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :username
   validates_presence_of :username
-
-  has_one :player
-
-  after_create do |user|
-  	player = Player.create(user_id: user.id)
-  end
          
 end

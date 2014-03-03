@@ -1,28 +1,5 @@
-<script>
-  jQuery(function() {
-    return window.chatController = new Chat.Controller(window.location.host + "/websocket", true);
-  });
-</script>
-
 <h1>This is the lobby</h1>
-<p><%= link_to "view all players", players_path %></p>
+<p><%= link_to "view all players", users_path %></p>
 
-<%= content_tag "span", id: "player_data", data: {name: @username} do %>
-<% end %>
-
-<div id="chat" class="well">
-</div>
-
-<div class="well">
-  <fieldset>
-    <input type="text" id="message">
-    <button id="send" class="btn btn-primary">Send</button>
-  </fieldset>
-</div>
-
-<div class="well">
-  <h3>Active players</h3>
-  <ul id="user-list">
-    <li>Chat is inactive</li>
-  </ul>
-</div>
+<%= render "chatroom/chatroom" %>
+<%= render "invites/invites" %>

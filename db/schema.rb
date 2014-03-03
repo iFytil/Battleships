@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140301211521) do
+ActiveRecord::Schema.define(version: 20140302181812) do
 
   create_table "games", force: true do |t|
     t.integer  "player_1"
@@ -22,15 +22,11 @@ ActiveRecord::Schema.define(version: 20140301211521) do
   end
 
   create_table "invites", force: true do |t|
-  end
-
-  create_table "players", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "sender",     default: 0, null: false
+    t.integer  "receiver",   default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "players", ["user_id"], name: "index_players_on_user_id"
 
   create_table "rails_admin_histories", force: true do |t|
     t.text     "message"

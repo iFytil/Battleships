@@ -1,0 +1,22 @@
+<div class="well">
+  <h3>Active invites</h3>
+  <ul>
+    <% sent = invites_sent(current_user.id) %>
+    <% sent.each do |invite| %>
+      <li>You sent an invite to <%= User.find(invite.receiver).username %></li>
+    <% end %>
+  </ul>
+  <ul>
+    <% received = invites_received(current_user.id) %>
+    <% received.each do |invite| %>
+      <li>
+        <div>You got an invite from <%= User.find(invite.sender).username %>
+        </div>
+        <div class="btn-group btn-group-xs">
+          <%= link_to "Accept invite", respond_invite_path(:id => invite.id, :accept => true), class: "btn btn-success", role: "button" %>
+          <%= link_to "Reject invite", respond_invite_path(:id => invite.id), class: "btn btn-danger", role: "button" %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
