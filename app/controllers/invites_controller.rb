@@ -5,11 +5,12 @@ class InvitesController < ApplicationController
   end
 
   def destroy
-    Invite.find(params[:id]).destroy
-    puts params
+    invite = Invite.find(params[:id])
     if params[:accept]
-      puts "Create a new game"
+      puts "Should have accepted"
+      Game.create(player_1: params[:sender], player_2: params[:receiver])
     end
+    invite.destroy
     redirect_to request.referer
   end
 

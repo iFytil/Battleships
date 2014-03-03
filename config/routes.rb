@@ -1,18 +1,20 @@
 Battleship::Application.routes.draw do
 
+  get 'newgame' => 'games#new', :as => :new_game
+
   # Acces a game's view
   get 'game/:id' => 'games#show', :as => :game
 
   # Access the lobby
   get 'lobby' => 'pages#lobby', :as => :lobby
 
-  # Create an invite from :sender to :receiver 
+  # Create an invite_id from :sender to :receiver 
   get 'send_invite' => 'invites#new', :as => :send_invite
 
-  # Respond to an invite with a :decision (accept/reject)
+  # Respond to an invite_id with an optional :accept decision
   get 'respond_invite' => 'invites#destroy', :as => :respond_invite
 
-  # Access a ussser's view
+  # Access a user's view
   get 'user/:id' => 'users#show', :as => :user
 
   # Access the list of users
