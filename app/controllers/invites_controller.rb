@@ -7,8 +7,7 @@ class InvitesController < ApplicationController
   def destroy
     invite = Invite.find(params[:id])
     if params[:accept]
-      puts "Should have accepted"
-      Game.create(player_1: params[:sender], player_2: params[:receiver])
+      Game.create(:player_1 => invite.sender, :player_2 => invite.receiver)
     end
     invite.destroy
     redirect_to request.referer

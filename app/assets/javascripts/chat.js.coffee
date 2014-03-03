@@ -1,3 +1,7 @@
+//= require websocket_rails/main
+
+jQuery -> return window.chatController = new Chat.Controller(window.location.host + "/websocket", true);
+
 window.Chat = {}
 
 class Chat.User

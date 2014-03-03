@@ -1,9 +1,4 @@
-<script>
-  jQuery(function() {
-    return window.chatController = new Chat.Controller(window.location.host + "/websocket", true);
-  });
-</script>
-
+<%= javascript_include_tag "chat" %>
 <%= content_tag "span", id: "player_data", data: {name: current_user.username} do %>
 <% end %>
 
