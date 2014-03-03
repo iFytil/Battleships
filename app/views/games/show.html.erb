@@ -1,3 +1,60 @@
-<h1>This is a game</h1>
-<p>The ID of this game is <%= @game.id %></p>
-<h1>Game Player A vs. Player B </h1>
+<!--<h1>This is a game</h1>-->
+<!--<p>The ID of this game is <%= @game.id %></p>-->
+<!DOCTYPE HTML>
+<html>
+  <head> 
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+		background: #000;
+      }
+	  canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  
+	
+}
+    </style>
+  </head>
+  <body>
+	<script src="scripts/environment.js"></script>
+	<script src="scripts/components.js"></script>
+	<script src="scripts/visibility.js"></script>
+	<script src="scripts/game.js"></script>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+
+        // Inputs
+        window.addEventListener('keydown', this.check, false);
+
+		// game logistics
+        game = new Game(context, canvas.width, 30);
+
+		function check(e) {
+			var code = e.keyCode;
+			switch (code) {
+				case 32: game.FinalizeMove(); break; //Space Bar
+				case 37:  break; //Left key
+				case 38:  break; //Up key
+				case 39:  break; //Right key
+				case 40:  break; //Down key
+				case 65:  game.NextShipDown(); break; // 'a' key
+				case 83:  game.NextShipUp(); break; // 's' key
+				default:  //Everything else
+			}
+		}
+
+        setInterval(function () {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            game.Display();
+
+        }, 36);
+    </script>
+  </body>
+</html>
