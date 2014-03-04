@@ -12,7 +12,7 @@ class Chat.Controller
   template: (message) ->
     html =
       """
-      <div class="message" >
+      <div class="messages" >
         <label class="label label-info">
           [#{message.received}] #{message.user_name}
         </label>&nbsp;
@@ -43,29 +43,34 @@ class Chat.Controller
     $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13
 
   newMessage: (message) =>
+    console.log(@messageQueue)
     @messageQueue.push message
-    @shiftMessageQueue() if @messageQueue.length > 15
+    @shiftMessageQueue() if @messageQueue.length > $('#chat-data').data('maxmsgs')
     @appendMessage message
 
   sendMessage: (event) =>
     event.preventDefault()
     message = $('#message').val()
-    @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message}
-    $('#message').val('')
+    if message.length > 0
+      @dispatcher.trigger 'send_message', {user_name: @user.user_name, msg_body: message}
+      $('#message').val('')
 
   updateUserList: (userList) =>
     $('#user-list').html @userListTemplate(userList)
 
   appendMessage: (message) ->
     messageTemplate = @template(message)
-    $('#chat').append messageTemplate
+    $('#chat-messages').append messageTemplate
     messageTemplate.slideDown 140
 
   shiftMessageQueue: =>
     @messageQueue.shift()
-    $('#chat div.messages:first').slideDown 100, ->
+    $('#chat-messages div.messages:first').slideDown 100, ->
       $(this).remove()
 
   createUser: =>
-    @user = new Chat.User($('#player_data').data('name'))
+    @user = new Chat.User($('#chat-data').data('username'))
     @dispatcher.trigger 'new_user', @user.serialize()
+    list = $('#chat-data').data('oldmsgs')
+    for each of list
+      @newMessage list[each]

@@ -2,13 +2,12 @@ class ChatController < WebsocketRails::BaseController
   include ActionView::Helpers::SanitizeHelper
 
   def initialize_session
-    puts "Session Initialized\n"
   end
   
   def system_msg(ev, msg)
     broadcast_message ev, { 
       user_name: 'system', 
-      received: Time.now.to_s(:short), 
+      received: Time.now.utc.to_s(:short), 
       msg_body: msg
     }
   end
@@ -16,14 +15,19 @@ class ChatController < WebsocketRails::BaseController
   def user_msg(ev, msg)
     broadcast_message ev, { 
       user_name:  connection_store[:user][:user_name], 
-      received:   Time.now.to_s(:short), 
+      received:   Time.now.utc.to_s(:short), 
       msg_body:   ERB::Util.html_escape(msg) 
       }
   end
   
   def client_connected
-    clientName = Player.find(current_user.player_id).username
+    #clientName = current_user.username
     #system_msg :new_message, "#{clientName} #{client_id} connected"
+  end
+
+  def send_message
+    Message.create(message)
+    new_message
   end
   
   def new_message
@@ -35,7 +39,7 @@ class ChatController < WebsocketRails::BaseController
     broadcast_user_list
   end
   
-  def delete_user
+  def client_disconnected
     connection_store[:user] = nil
     #system_msg :new_message, "client #{client_id} disconnected"
     broadcast_user_list

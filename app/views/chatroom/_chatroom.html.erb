@@ -1,20 +1,21 @@
 <%= javascript_include_tag "chat" %>
-<%= content_tag "span", id: "player_data", data: {name: current_user.username} do %>
+<%= stylesheet_link_tag    "chat" %>
+<%= content_tag "span", id: "chat-data", data: {username: current_user.username, oldmsgs: find_old_msgs, maxmsgs: max_chat_msgs} do %>
 <% end %>
 
-<div id="chat" class="well">
-</div>
-
-<div class="well">
-  <fieldset>
-    <input type="text" id="message">
-    <button id="send" class="btn btn-primary">Send</button>
-  </fieldset>
-</div>
-
-<div class="well">
-  <h3>Active players</h3>
-  <ul id="user-list">
-    <li>Chat is inactive</li>
-  </ul>
+<div id="chat-wrapper" class="well">
+  <div id="chat-users" class="well">
+    <h3>Active players</h3>
+    <ul id="user-list">
+      <li>Chat is inactive</li>
+    </ul>
+  </div>
+  <div id="chat-messages" class="well">
+  </div>
+  <div id="chat-submit" class="well">
+    <fieldset>
+      <input type="text" id="message">
+      <button id="send" class="btn btn-primary">Send</button>
+    </fieldset>
+  </div>
 </div>

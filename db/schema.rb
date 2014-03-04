@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140302181812) do
+ActiveRecord::Schema.define(version: 20140304015142) do
 
   create_table "games", force: true do |t|
     t.integer  "player_1"
@@ -22,8 +22,15 @@ ActiveRecord::Schema.define(version: 20140302181812) do
   end
 
   create_table "invites", force: true do |t|
-    t.integer  "sender",     default: 0, null: false
-    t.integer  "receiver",   default: 0, null: false
+    t.integer  "sender"
+    t.integer  "receiver"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "messages", force: true do |t|
+    t.string   "user_name"
+    t.string   "msg_body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

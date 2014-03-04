@@ -1,7 +1,26 @@
 .label-info {
 	display: inline !important;
 }
-#chat {
-	height: 290px;
+#chat-wrapper {
+	width: 100%;
+	height:300;
+	overflow:hidden;
+}
+#chat-messages {
+    margin-right:250px;
 	overflow: auto;
+	height:280px;
+}
+#chat-users {
+	width: 230px;
+	height:280px;
+	float:right;
+    overflow: auto;
+}
+#chat-submit {
+
+}
+
+#message {
+	width:30%;
 }

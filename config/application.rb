@@ -13,6 +13,7 @@ module Battleship
     # -- all .rb files in that directory are automatically loaded.
 
     config.assets.precompile += %w( chat.js )
+    config.assets.precompile += %w( chat.css )
     config.assets.precompile += %w( games.js )
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
