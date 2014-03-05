@@ -7,7 +7,7 @@ class InvitesController < ApplicationController
   def destroy
     invite = Invite.find(params[:id])
     if params[:accept]
-      Game.create(:player_1 => invite.sender, :player_2 => invite.receiver)
+      Game.create(:player_1 => invite.sender_id, :player_2 => invite.receiver_id)
     end
     invite.destroy
     redirect_to request.referer
@@ -16,6 +16,6 @@ class InvitesController < ApplicationController
   private
 
   def user_params
-    params.permit(:sender, :receiver)
+    params.permit(:sender_id, :receiver_id)
   end
 end

@@ -1,8 +1,8 @@
 class CreateInvites < ActiveRecord::Migration
   def change
     create_table :invites do |t|
-      t.integer :sender
-      t.integer :receiver
+      t.belongs_to :sender, index: true
+      t.belongs_to :receiver, index: true
       t.timestamps
     end
   end

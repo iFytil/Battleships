@@ -1,5 +1,5 @@
 module UsersHelper
   def isGameGoingOn(id)
-    Invite.find_by({sender: current_user.id, receiver: id}) or Invite.find_by({sender: id, receiver: current_user.id})
+    Invite.find_by({sender_id: current_user.id, receiver_id: id}) or Invite.find_by({sender_id: id, receiver_id: current_user.id})
   end
 end

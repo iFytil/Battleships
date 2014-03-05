@@ -23,11 +23,14 @@ ActiveRecord::Schema.define(version: 20140305063215) do
   end
 
   create_table "invites", force: true do |t|
-    t.integer  "sender"
-    t.integer  "receiver"
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "invites", ["receiver_id"], name: "index_invites_on_receiver_id"
+  add_index "invites", ["sender_id"], name: "index_invites_on_sender_id"
 
   create_table "messages", force: true do |t|
     t.string   "user_name"
@@ -51,10 +54,12 @@ ActiveRecord::Schema.define(version: 20140305063215) do
 
   create_table "ships", force: true do |t|
     t.integer  "shiptype_id"
+    t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "ships", ["game_id"], name: "index_ships_on_game_id"
   add_index "ships", ["shiptype_id"], name: "index_ships_on_shiptype_id"
 
   create_table "shiptypes", force: true do |t|
