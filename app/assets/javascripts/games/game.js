@@ -6,15 +6,13 @@ var D = {
     RIGHT: 3
 };
 
-var N = 30;
-
-Player = function(side,sqsize){
+Player = function(side){
   
   // true - it is this player's turn
   var turn = false;
   
   // initial fleet
-  this.fleet = new Fleet(side,sqsize);
+  this.fleet = new Fleet(side);
   
   // current ship
   this.selected = 0; //index
@@ -58,17 +56,16 @@ Player = function(side,sqsize){
   
 };
 
-Game = function(context,w)
+Game = function(context)
 {
 
   // environment
-  var square_width = Math.floor(w/N);
-  var env = new Environment(context,w,square_width);
+  var env = new Environment(context);
   
   // 2 players
   this.players=new Array();
-  this.players.push(new Player(D.LEFT,square_width));
-  this.players.push(new Player(D.RIGHT,square_width));
+  this.players.push(new Player(D.LEFT));
+  this.players.push(new Player(D.RIGHT));
   
   this.turn = 0;
   this.players[this.turn].Turn();

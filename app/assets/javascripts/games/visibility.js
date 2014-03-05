@@ -30,7 +30,7 @@ Visibility = function(ranges) {
 
   this.Set();
        
-  this.Draw = function(context,color,sqw)
+  this.Draw = function(context,color)
   {
     for (var i =0; i < N; i++) 
       {
@@ -39,7 +39,7 @@ Visibility = function(ranges) {
           if (c[j + i * N] == 1) 
           {
             context.beginPath();
-            context.rect(i * sqw, j * sqw, sqw, sqw);
+            context.rect(i * SQ_WIDTH, j * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
             context.fillStyle = color;
             context.fill();
           }

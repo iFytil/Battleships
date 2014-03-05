@@ -1,8 +1,8 @@
-Environment = function (context, w, sqw) {
+Environment = function (context) {
     
   Ocean = function () {
-    context.rect(0, 0, w, w);
-    var gradient = context.createLinearGradient(w / 2, 0, w / 2, w);
+    context.rect(0, 0, WIDTH, WIDTH);
+    var gradient = context.createLinearGradient(WIDTH / 2, 0, WIDTH / 2, WIDTH);
     gradient.addColorStop(0, '#66A3D2');
     gradient.addColorStop(1, '#0B61A4');
     context.fillStyle = gradient;
@@ -15,7 +15,7 @@ Environment = function (context, w, sqw) {
       for (var j = 3; j < 27; j++) {
         if (c[j + i * 10] == 1) {
           context.beginPath();
-          context.rect(i * sqw, j * sqw, sqw, sqw);
+          context.rect(i * SQ_WIDTH, j * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
           context.fillStyle = 'orange';
           context.fill();
         }
@@ -26,16 +26,16 @@ Environment = function (context, w, sqw) {
   Grid = function () {
     for (var i = 0; i < N; i++) {
       context.beginPath();
-      context.moveTo(sqw + i * sqw, 0);
-      context.lineTo(sqw + i * sqw, w);
+      context.moveTo(SQ_WIDTH + i * SQ_WIDTH, 0);
+      context.lineTo(SQ_WIDTH + i * SQ_WIDTH, WIDTH);
       context.lineWidth = 1;
       context.strokeStyle = '#254055';
       context.stroke();
     }
     for (var i = 0; i < N; i++) {
       context.beginPath();
-      context.moveTo(0, sqw + i * sqw);
-      context.lineTo(w, sqw + i * sqw);
+      context.moveTo(0, SQ_WIDTH + i * SQ_WIDTH);
+      context.lineTo(WIDTH, SQ_WIDTH + i * SQ_WIDTH);
       context.lineWidth = 1;
       context.strokeStyle = '#254055';
       context.stroke();

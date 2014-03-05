@@ -9,12 +9,15 @@
 
   var canvas = document.getElementById('myCanvas');
   var context = canvas.getContext('2d');
+  var N = 30;
+  var WIDTH = canvas.width
+  var SQ_WIDTH = Math.floor(WIDTH/N)
 
   // Inputs
   window.addEventListener('keydown', this.check, false);
 
   // game logistics
-  game = new Game(context, canvas.width);
+  game = new Game(context);
 
   function check(e) {
     var code = e.keyCode;
