@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305063431) do
+ActiveRecord::Schema.define(version: 20140305063215) do
 
   create_table "games", force: true do |t|
     t.integer  "player_1"
@@ -50,9 +50,9 @@ ActiveRecord::Schema.define(version: 20140305063431) do
   add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories"
 
   create_table "ships", force: true do |t|
+    t.integer  "shiptype_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "shiptype_id"
   end
 
   add_index "ships", ["shiptype_id"], name: "index_ships_on_shiptype_id"
