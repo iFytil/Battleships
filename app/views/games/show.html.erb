@@ -1,7 +1,7 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
-<%= content_tag "span", id: "game-data", data: {coral: @game.coral} do %>
+<%= content_tag :div, id: "game-data", data: {coral: @game.coral} do %>
 <% end %>
 
 <canvas id="myCanvas" width="600" height="600"></canvas>
@@ -14,7 +14,7 @@
   window.addEventListener('keydown', this.check, false);
 
   // game logistics
-  game = new Game(context, canvas.width, 30);
+  game = new Game(context, canvas.width);
 
   function check(e) {
     var code = e.keyCode;

@@ -1,4 +1,4 @@
-Environment = function (context, n, w, sqw) {
+Environment = function (context, w, sqw) {
     
   Ocean = function () {
     context.rect(0, 0, w, w);
@@ -24,7 +24,7 @@ Environment = function (context, n, w, sqw) {
   };
 
   Grid = function () {
-    for (var i = 0; i < n; i++) {
+    for (var i = 0; i < N; i++) {
       context.beginPath();
       context.moveTo(sqw + i * sqw, 0);
       context.lineTo(sqw + i * sqw, w);
@@ -32,7 +32,7 @@ Environment = function (context, n, w, sqw) {
       context.strokeStyle = '#254055';
       context.stroke();
     }
-    for (var i = 0; i < n; i++) {
+    for (var i = 0; i < N; i++) {
       context.beginPath();
       context.moveTo(0, sqw + i * sqw);
       context.lineTo(w, sqw + i * sqw);

@@ -1,10 +1,20 @@
-Player = function(side,sqsize,gridn){
+// Ship directions
+var D = {
+    UP: 0,
+    LEFT: 1,
+    DOWN: 2,
+    RIGHT: 3
+};
+
+var N = 30;
+
+Player = function(side,sqsize){
   
   // true - it is this player's turn
   var turn = false;
   
   // initial fleet
-  this.fleet = new Fleet(side,sqsize,gridn);
+  this.fleet = new Fleet(side,sqsize);
   
   // current ship
   this.selected = 0; //index
@@ -48,23 +58,23 @@ Player = function(side,sqsize,gridn){
   
 };
 
-Game = function(context,w,n)
+Game = function(context,w)
 {
 
   // environment
-  var square_width = Math.floor(w/n);
-  var env = new Environment(context,n,w,square_width);
+  var square_width = Math.floor(w/N);
+  var env = new Environment(context,w,square_width);
   
   // 2 players
   this.players=new Array();
-  this.players.push(new Player('left',square_width,n));
-  this.players.push(new Player('right',square_width,n));
+  this.players.push(new Player(D.LEFT,square_width));
+  this.players.push(new Player(D.RIGHT,square_width));
   
   this.turn = 0;
   this.players[this.turn].Turn();
   
   // Visibility
-  this.V = new Visibility(n,this.players[this.turn].Ranges());
+  this.V = new Visibility(this.players[this.turn].Ranges());
   
   this.FinalizeMove=function()
   {
