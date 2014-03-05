@@ -1,8 +1,12 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
+<%= content_tag "span", id: "game-data", data: {coral: @game.coral} do %>
+<% end %>
+
 <canvas id="myCanvas" width="600" height="600"></canvas>
 <script>
+
   var canvas = document.getElementById('myCanvas');
   var context = canvas.getContext('2d');
 

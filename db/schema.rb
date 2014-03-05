@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20140305000548) do
     t.integer  "player_1"
     t.integer  "player_2"
     t.integer  "moves_made", default: 0, null: false
+    t.string   "coral"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

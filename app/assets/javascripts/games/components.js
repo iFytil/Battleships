@@ -26,10 +26,10 @@ RadarRange = function (x,y,b, w, h,facing) {
             this.x = bx-Math.floor(this.h/2);
             this.y = by+b;
         }
-	}
-	this.Set(x,y);
-	
-	   this.Draw = function (context, color,sqw) {
+  }
+  this.Set(x,y);
+  
+     this.Draw = function (context, color,sqw) {
         context.beginPath();
         context.moveTo(this.x*sqw, this.y*sqw);
         context.lineTo(this.x*sqw+this.w*sqw, this.y*sqw);
@@ -224,9 +224,9 @@ Base = function (x, y, sqsize) {
     points.push(new Point(x0 + sqsize, y0 + sqsize * 10));
     points.push(new Point(x0, y0 + sqsize * 10));
     /*points.push(new Point(10,50));
-	points.push(new Point(20,50));
-	points.push(new Point(20,100));
-	points.push(new Point(10,100));*/
+  points.push(new Point(20,50));
+  points.push(new Point(20,100));
+  points.push(new Point(10,100));*/
 
     this.Draw = function (context, color) {
         context.beginPath();

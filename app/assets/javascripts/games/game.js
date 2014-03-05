@@ -50,6 +50,7 @@ Player = function(side,sqsize,gridn){
 
 Game = function(context,w,n)
 {
+
   // environment
   var square_width = Math.floor(w/n);
   var env = new Environment(context,n,w,square_width);
