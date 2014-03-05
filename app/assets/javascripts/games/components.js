@@ -253,47 +253,49 @@ Base = function (x, y, sqsize) {
 };
 
 Fleet = function (side, sqsize) {
-    this.ships = new Array();
+  this.ships = new Array();
 
-    if (side == D.LEFT) {
-        this.ships.push(Destroyer(4, 10, D.RIGHT, sqsize));
-        this.ships.push(Torpedo(3, 11, D.RIGHT, sqsize));
-        this.ships.push(Cruiser(5, 12, D.RIGHT, sqsize));
-        this.ships.push(MineLayer(2, 13, D.RIGHT, sqsize));
-        this.ships.push(Destroyer(4, 14, D.RIGHT, sqsize));
-        this.ships.push(RadarBoat(3, 15, D.RIGHT, sqsize));
-        this.ships.push(Cruiser(5, 16, D.RIGHT, sqsize));
-        this.ships.push(Destroyer(4, 17, D.RIGHT, sqsize));
-        this.ships.push(MineLayer(2, 18, D.RIGHT, sqsize));
-        this.ships.push(Torpedo(3, 19, D.RIGHT, sqsize));
+  if (side == D.LEFT) 
+  {
+    this.ships.push(Destroyer(4, 10, D.RIGHT, sqsize));
+    this.ships.push(Torpedo(3, 11, D.RIGHT, sqsize));
+    this.ships.push(Cruiser(5, 12, D.RIGHT, sqsize));
+    this.ships.push(MineLayer(2, 13, D.RIGHT, sqsize));
+    this.ships.push(Destroyer(4, 14, D.RIGHT, sqsize));
+    this.ships.push(RadarBoat(3, 15, D.RIGHT, sqsize));
+    this.ships.push(Cruiser(5, 16, D.RIGHT, sqsize));
+    this.ships.push(Destroyer(4, 17, D.RIGHT, sqsize));
+    this.ships.push(MineLayer(2, 18, D.RIGHT, sqsize));
+    this.ships.push(Torpedo(3, 19, D.RIGHT, sqsize));
 
-        var base = new Base(0, 10, sqsize);
+    var base = new Base(0, 10, sqsize);
 
-    } else // side == D.RIGHT
-    {
-        this.ships.push(Destroyer(25, 19, D.LEFT, sqsize));
-        this.ships.push(Torpedo(26, 18, D.LEFT, sqsize));
-        this.ships.push(Cruiser(24, 17, D.LEFT, sqsize));
-        this.ships.push(MineLayer(27, 16, D.LEFT, sqsize));
-        this.ships.push(Destroyer(25, 15, D.LEFT, sqsize));
-        this.ships.push(RadarBoat(26, 14, D.LEFT, sqsize));
-        this.ships.push(Cruiser(24, 13, D.LEFT, sqsize));
-        this.ships.push(Destroyer(25, 12, D.LEFT, sqsize));
-        this.ships.push(MineLayer(27, 11, D.LEFT, sqsize));
-        this.ships.push(Torpedo(26, 10, D.LEFT, sqsize));
+  } 
+  else // side == D.RIGHT
+  {
+      this.ships.push(Destroyer(25, 19, D.LEFT, sqsize));
+      this.ships.push(Torpedo(26, 18, D.LEFT, sqsize));
+      this.ships.push(Cruiser(24, 17, D.LEFT, sqsize));
+      this.ships.push(MineLayer(27, 16, D.LEFT, sqsize));
+      this.ships.push(Destroyer(25, 15, D.LEFT, sqsize));
+      this.ships.push(RadarBoat(26, 14, D.LEFT, sqsize));
+      this.ships.push(Cruiser(24, 13, D.LEFT, sqsize));
+      this.ships.push(Destroyer(25, 12, D.LEFT, sqsize));
+      this.ships.push(MineLayer(27, 11, D.LEFT, sqsize));
+      this.ships.push(Torpedo(26, 10, D.LEFT, sqsize));
 
-        var base = new Base(29, 10, sqsize);
-    }
+      var base = new Base(29, 10, sqsize);
+  }
 
-    this.Select = function (x, y) {
-        return false; //true if something gets selected, false if nothing is selected
-    };
+  this.Select = function (x, y) {
+      return false; //true if something gets selected, false if nothing is selected
+  };
 
-    this.Draw = function (context, color) {
-        for (var i = 0; i < this.ships.length; i++) {
-            this.ships[i].Draw(context, color);
-        }
-        base.Draw(context, 'black');
-    };
+  this.Draw = function (context, color) {
+      for (var i = 0; i < this.ships.length; i++) {
+          this.ships[i].Draw(context, color);
+      }
+      base.Draw(context, 'black');
+  };
 
 };
