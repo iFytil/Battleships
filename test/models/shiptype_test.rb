@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ShipTypeTest < ActiveSupport::TestCase
+class ShiptypeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

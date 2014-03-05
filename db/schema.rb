@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305053521) do
+ActiveRecord::Schema.define(version: 20140305063431) do
 
   create_table "games", force: true do |t|
     t.integer  "player_1"
     t.integer  "player_2"
     t.integer  "moves_made", default: 0, null: false
-    t.string   "coral"
+    t.text     "coral"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140305053521) do
 
   create_table "messages", force: true do |t|
     t.string   "user_name"
-    t.string   "msg_body"
+    t.text     "msg_body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,16 +49,19 @@ ActiveRecord::Schema.define(version: 20140305053521) do
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories"
 
-  create_table "ship_types", force: true do |t|
+  create_table "ships", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "shiptype_id"
+  end
+
+  add_index "ships", ["shiptype_id"], name: "index_ships_on_shiptype_id"
+
+  create_table "shiptypes", force: true do |t|
     t.integer  "size"
     t.integer  "speed"
     t.integer  "armor"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "ships", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end

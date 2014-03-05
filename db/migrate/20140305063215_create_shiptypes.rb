@@ -1,6 +1,6 @@
-class CreateShipTypes < ActiveRecord::Migration
+class CreateShiptypes < ActiveRecord::Migration
   def change
-    create_table :ship_types do |t|
+    create_table :shiptypes do |t|
       t.integer :size
       t.integer :speed
       t.integer :armor
