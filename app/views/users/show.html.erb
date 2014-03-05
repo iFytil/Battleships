@@ -1,6 +1,6 @@
-<h1>Profile page of <i><%= @user.username %></i></h1>
-<p>His ID is <%= @user.id %> and username is <%= @user.username %> </p>
-<% if current_user.username==@user.username %>
+<h1>Profile page of <i><%= @user.name %></i></h1>
+<p>His ID is <%= @user.id %> and username is <%= @user.name %> </p>
+<% if current_user.name==@user.name %>
 	<p> This is your own profile page</p>
 <% end %>
 

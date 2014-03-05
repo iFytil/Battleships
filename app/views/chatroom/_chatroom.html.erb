@@ -1,6 +1,6 @@
 <%= javascript_include_tag "chat" %>
 <%= stylesheet_link_tag    "chat" %>
-<%= content_tag "span", id: "chat-data", data: {username: current_user.username, oldmsgs: find_old_msgs, maxmsgs: max_chat_msgs} do %>
+<%= content_tag "span", id: "chat-data", data: {username: current_user.name, oldmsgs: find_old_msgs, maxmsgs: max_chat_msgs} do %>
 <% end %>
 
 <div id="chat-wrapper" class="well">

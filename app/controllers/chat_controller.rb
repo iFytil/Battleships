@@ -21,7 +21,7 @@ class ChatController < WebsocketRails::BaseController
   end
   
   def client_connected
-    #clientName = current_user.username
+    #clientName = current_user.name
     #system_msg :new_message, "#{clientName} #{client_id} connected"
   end
 

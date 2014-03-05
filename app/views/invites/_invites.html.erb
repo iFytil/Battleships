@@ -3,14 +3,14 @@
   <ul>
     <% sent = invites_sent(current_user.id) %>
     <% sent.each do |invite| %>
-      <li>You sent an invite to <%= invite.receiver.username %></li>
+      <li>You sent an invite to <%= invite.receiver.name %></li>
     <% end %>
   </ul>
   <ul>
     <% received = invites_received(current_user.id) %>
     <% received.each do |invite| %>
       <li>
-        <div>You got an invite from <%= invite.sender.username %>
+        <div>You got an invite from <%= invite.sender.name %>
         </div>
         <div class="btn-group btn-group-xs">
           <%= link_to "Accept invite", respond_invite_path(:id => invite.id, :accept => true), class: "btn btn-success", role: "button" %>
