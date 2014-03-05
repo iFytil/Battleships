@@ -56,11 +56,11 @@ Player = function(side){
   
 };
 
-Game = function(context)
+Game = function(ctx)
 {
 
   // environment
-  var env = new Environment(context);
+  var env = new Environment(ctx);
   
   // 2 players
   this.players=new Array();
@@ -118,11 +118,11 @@ Game = function(context)
     env.Draw();
     
     // ships
-    this.players[0].fleet.Draw(context,'#B80B0B');
-    this.players[1].fleet.Draw(context,'#63A80A');
+    this.players[0].fleet.Draw(ctx,'#B80B0B');
+    this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(context,'grey',square_width);
+    //this.V.Draw(ctx,'grey');
   };
   
 };

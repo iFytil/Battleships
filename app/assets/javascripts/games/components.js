@@ -36,16 +36,16 @@ RadarRange = function (x,y,b, w, h,facing) {
   }
   this.Set(x,y);
   
-  this.Draw = function (context, color) {
-    context.beginPath();
-    context.moveTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH);
-    context.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH);
-    context.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
-    context.lineTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
-    context.closePath();
-    context.lineWidth = 2;
-    context.strokeStyle = color;
-    context.stroke();
+  this.Draw = function (ctx, color) {
+    ctx.beginPath();
+    ctx.moveTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH);
+    ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH);
+    ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
+    ctx.lineTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
+    ctx.closePath();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = color;
+    ctx.stroke();
   }
   
 
@@ -171,24 +171,24 @@ Ship = function (x, y, speed, radar, length, facing) {
 
 
     this.highlighted = false;
-    this.Draw = function (context, color) {
-        context.beginPath();
-        context.moveTo(this.points[0].x, this.points[0].y);
-        context.lineTo(this.points[1].x, this.points[1].y);
-        context.lineTo(this.points[2].x, this.points[2].y);
-        context.lineTo(this.points[3].x, this.points[3].y);
-        context.lineTo(this.points[4].x, this.points[4].y);
-        context.closePath();
-        context.lineWidth = 2;
+    this.Draw = function (ctx, color) {
+        ctx.beginPath();
+        ctx.moveTo(this.points[0].x, this.points[0].y);
+        ctx.lineTo(this.points[1].x, this.points[1].y);
+        ctx.lineTo(this.points[2].x, this.points[2].y);
+        ctx.lineTo(this.points[3].x, this.points[3].y);
+        ctx.lineTo(this.points[4].x, this.points[4].y);
+        ctx.closePath();
+        ctx.lineWidth = 2;
         if (this.highlighted)
-            context.strokeStyle = 'yellow';
+            ctx.strokeStyle = 'yellow';
         else
-            context.strokeStyle = color;
-        context.stroke();
-        context.fillStyle = color;
-        context.fill();
+            ctx.strokeStyle = color;
+        ctx.stroke();
+        ctx.fillStyle = color;
+        ctx.fill();
         
-        this.radar.Draw(context, 'yellow');
+        this.radar.Draw(ctx, 'yellow');
     }
 
 
@@ -235,18 +235,18 @@ Base = function (x, y) {
   points.push(new Point(20,100));
   points.push(new Point(10,100));*/
 
-    this.Draw = function (context, color) {
-        context.beginPath();
-        context.moveTo(points[0].x, points[0].y);
-        context.lineTo(points[1].x, points[1].y);
-        context.lineTo(points[2].x, points[2].y);
-        context.lineTo(points[3].x, points[3].y);
-        context.closePath();
-        context.lineWidth = 2;
-        context.strokeStyle = color;
-        context.stroke();
-        context.fillStyle = color;
-        context.fill();
+    this.Draw = function (ctx, color) {
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(points[1].x, points[1].y);
+        ctx.lineTo(points[2].x, points[2].y);
+        ctx.lineTo(points[3].x, points[3].y);
+        ctx.closePath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = color;
+        ctx.stroke();
+        ctx.fillStyle = color;
+        ctx.fill();
     }
 
 
@@ -291,11 +291,11 @@ Fleet = function (side) {
       return false; //true if something gets selected, false if nothing is selected
   };
 
-  this.Draw = function (context, color) {
+  this.Draw = function (ctx, color) {
       for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(context, color);
+          this.ships[i].Draw(ctx, color);
       }
-      base.Draw(context, 'black');
+      base.Draw(ctx, 'black');
   };
 
 };

@@ -30,7 +30,7 @@ Visibility = function(ranges) {
 
   this.Set();
        
-  this.Draw = function(context,color)
+  this.Draw = function(ctx,color)
   {
     for (var i =0; i < N; i++) 
       {
@@ -38,10 +38,10 @@ Visibility = function(ranges) {
         {
           if (c[j + i * N] == 1) 
           {
-            context.beginPath();
-            context.rect(i * SQ_WIDTH, j * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-            context.fillStyle = color;
-            context.fill();
+            ctx.beginPath();
+            ctx.rect(i * SQ_WIDTH, j * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+            ctx.fillStyle = color;
+            ctx.fill();
           }
         }
       } 
