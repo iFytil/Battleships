@@ -43,7 +43,6 @@ class Chat.Controller
     $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13
 
   newMessage: (message) =>
-    console.log(@messageQueue)
     @messageQueue.push message
     @shiftMessageQueue() if @messageQueue.length > $('#chat-data').data('maxmsgs')
     @appendMessage message

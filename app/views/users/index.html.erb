@@ -5,7 +5,7 @@
     <%= link_to user.username, user%>
     <% if current_user.id == user.id %>
     	(You)
-    <% elsif Invite.find_by({sender: current_user.id, receiver: user.id}).nil? %>
+    <% elsif isGameGoingOn(user.id).nil? %>
       <%= link_to "Invite him", send_invite_path(:sender => current_user.id, :receiver => user.id) %>
     <% else %>
       Already invited!
