@@ -1,8 +1,8 @@
 class CreateGames < ActiveRecord::Migration
   def change
     create_table :games do |t|
-      t.integer  :player_1
-      t.integer  :player_2
+      t.belongs_to :player_1, index: true
+      t.belongs_to :player_2, index: true
       t.integer  :moves_made, :null => false, :default => 0
       t.text     :coral
       t.timestamps

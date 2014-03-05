@@ -14,13 +14,16 @@
 ActiveRecord::Schema.define(version: 20140305063215) do
 
   create_table "games", force: true do |t|
-    t.integer  "player_1"
-    t.integer  "player_2"
-    t.integer  "moves_made", default: 0, null: false
+    t.integer  "player_1_id"
+    t.integer  "player_2_id"
+    t.integer  "moves_made",  default: 0, null: false
     t.text     "coral"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "games", ["player_1_id"], name: "index_games_on_player_1_id"
+  add_index "games", ["player_2_id"], name: "index_games_on_player_2_id"
 
   create_table "invites", force: true do |t|
     t.integer  "sender_id"
