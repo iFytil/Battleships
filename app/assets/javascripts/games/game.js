@@ -94,7 +94,7 @@ Game = function(context,w,n){
 		this.players[1].fleet.Draw(context,'#63A80A');
 		
 		// "cloud of invisibitily"
-		this.V.Draw(context,'grey',square_width);
+		//this.V.Draw(context,'grey',square_width);
 	};
 	
 };
