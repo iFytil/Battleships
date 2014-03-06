@@ -23,7 +23,7 @@
   function check(e) {
     var code = e.keyCode;
     switch (code) {
-      case 32: game.FinalizeMove(); break; //Space Bar
+      case 13: game.FinalizeMove(); break; //Space Bar
       case 37:  break; //Left key
       case 38:  break; //Up key
       case 39:  break; //Right key
@@ -35,8 +35,7 @@
   }
 
   setInterval(function () {
-      ctx.clearRect(0, 0, WIDTH, HEIGHT);
-      game.Display();
-
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    game.Display();
   }, 36);
 </script>

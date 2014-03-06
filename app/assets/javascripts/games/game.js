@@ -31,30 +31,16 @@ Player = function(turn){
   this.selected = 0; //index
   this.fleet.ships[this.selected].highlighted = true;
   
-  this.Turn = function()
+  this.changeTurn = function()
   {
     is_turn = !is_turn;
   }
 
-  this.NextShipUp = function()
+  this.nextShip = function(delta)
   {
+    var len = this.fleet.ships.length;
     this.fleet.ships[this.selected].highlighted = false;
-    this.selected++;
-    if (this.selected>=this.fleet.ships.length)
-    {
-      this.selected = 0; 
-    }
-    this.fleet.ships[this.selected].highlighted = true;
-  }
-
-  this.NextShipDown = function()
-  {
-    this.fleet.ships[this.selected].highlighted = false;
-    this.selected--;
-    if (this.selected<0) 
-    {
-      this.selected = this.fleet.ships.length-1;
-    }
+    this.selected = (this.selected + delta + len)%len
     this.fleet.ships[this.selected].highlighted = true;
   }
 
@@ -81,7 +67,7 @@ Game = function(ctx)
   this.players.push(new Player(Turn.Second));
   
   this.turn = 0;
-  this.players[this.turn].Turn();
+  this.players[this.turn].changeTurn();
   
   // Visibility
   this.V = new Visibility(this.players[this.turn].Ranges());
@@ -89,7 +75,7 @@ Game = function(ctx)
   this.FinalizeMove=function()
   {
     // change turns
-    this.players[this.turn].Turn();//remove turn
+    this.players[this.turn].changeTurn();//remove turn
     if(this.turn==0) 
     {
       this.turn=1;
@@ -98,7 +84,7 @@ Game = function(ctx)
     {
       this.turn=0;
     }
-    this.players[this.turn].Turn();
+    this.players[this.turn].changeTurn();
 
     this.V.ranges = this.players[this.turn].Ranges();
     this.V.Set();
@@ -117,11 +103,11 @@ Game = function(ctx)
   
   this.NextShipUp = function()
   {
-    this.players[this.turn].NextShipUp();
+    this.players[this.turn].nextShip(1);
   };
   this.NextShipDown = function()
   {
-    this.players[this.turn].NextShipDown();
+    this.players[this.turn].nextShip(-1);
   };
   
   this.Display = function()
