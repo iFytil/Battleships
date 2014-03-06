@@ -1,18 +1,31 @@
 // Ship directions
 var D = {
-    UP: 0,
-    LEFT: 1,
-    DOWN: 2,
-    RIGHT: 3
+  Up: 0,
+  Left: 1,
+  Down: 2,
+  Right: 3
 };
 
-Player = function(side){
+var Turn = {
+  First: 1,
+  Second: 2
+}
+
+var ShipType = {
+  1: Cruiser,
+  2: Destroyer,
+  3: TorpedoBoat,
+  4: MineLayer,
+  5: RadarBoat
+}
+
+Player = function(turn){
   
   // true - it is this player's turn
-  var turn = false;
+  var is_turn = false;
   
   // initial fleet
-  this.fleet = new Fleet(side);
+  this.fleet = new Fleet(turn);
   
   // current ship
   this.selected = 0; //index
@@ -20,7 +33,7 @@ Player = function(side){
   
   this.Turn = function()
   {
-    turn = !turn;
+    is_turn = !is_turn;
   }
 
   this.NextShipUp = function()
@@ -64,8 +77,8 @@ Game = function(ctx)
   
   // 2 players
   this.players=new Array();
-  this.players.push(new Player(D.LEFT));
-  this.players.push(new Player(D.RIGHT));
+  this.players.push(new Player(Turn.First));
+  this.players.push(new Player(Turn.Second));
   
   this.turn = 0;
   this.players[this.turn].Turn();

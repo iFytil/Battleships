@@ -1,7 +1,7 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
-<%= content_tag :div, id: "game-data", data: {coral: @game.coral} do %>
+<%= content_tag :div, id: "game-data", data: {coral: @game.coral, ships: get_ship_json(@game)} do %>
 <% end %>
 
 <canvas id="myCanvas" width="600" height="600"></canvas>

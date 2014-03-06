@@ -5,7 +5,6 @@ class CreateShiptypes < ActiveRecord::Migration
       t.integer :speed
       t.integer :armor
       t.string :name
-      t.timestamps
     end
   end
 end

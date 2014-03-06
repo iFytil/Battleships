@@ -58,6 +58,10 @@ ActiveRecord::Schema.define(version: 20140305063215) do
   create_table "ships", force: true do |t|
     t.integer  "shiptype_id"
     t.integer  "game_id"
+    t.integer  "turn"
+    t.string   "direction"
+    t.integer  "location_x"
+    t.integer  "location_y"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
