@@ -9,10 +9,10 @@ Battleship::Application.routes.draw do
   get 'lobby' => 'pages#lobby', :as => :lobby
 
   # Create an invite_id from :sender to :receiver 
-  post 'invite/send' => 'invites#new', :as => :send_invite
+  get 'invite/send' => 'invites#new', :as => :send_invite
 
   # Respond to an invite_id with an optional :accept decision
-  delete 'invite/respond' => 'invites#destroy', :as => :respond_invite
+  get 'invite/respond' => 'invites#destroy', :as => :respond_invite
 
   # List all invites available to user
   get 'invite/all' => 'invites#list', :as => :list_invites
