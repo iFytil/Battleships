@@ -40,6 +40,10 @@ gem 'rails_admin'
 
 gem 'devise'
 
+# Used for software modelling
+# Run rake erd and then view erd.pdf
+gem 'rails-erd'
+
 # Used for live-chatting
 gem 'websocket-rails', :git => 'git://github.com/DanKnox/websocket-rails.git'
 gem 'jquery-rails', :git => 'git://github.com/rails/jquery-rails'
