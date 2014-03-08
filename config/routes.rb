@@ -12,7 +12,7 @@ Battleship::Application.routes.draw do
   get 'invite/send' => 'invites#new', :as => :send_invite
 
   # Respond to an invite_id with an optional :accept decision
-  get 'invite/respond' => 'invites#destroy', :as => :respond_invite
+  get 'invite/respond/:id' => 'invites#destroy', :as => :respond_invite
 
   # List all invites available to user
   get 'invite/all' => 'invites#list', :as => :list_invites

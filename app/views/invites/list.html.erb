@@ -1,16 +1,24 @@
+<h2>Received Invites</h2>
 <% unless @myinvites.blank? %>
   <ul>
   <% @myinvites.each do |invite| %>
-    <li><%= invite %></li>
+    <li>
+  Invite from <%= invite.sender.name %>.
+  <div class='pull-right'>
+    <a href='<%= respond_invite_path(invite) %>?accept=true' class='btn btn-sm btn-success'>Accept</a>
+    <a href='<%= respond_invite_path(invite) %>?accept=false' class='btn btn-sm btn-danger'>Reject</a>
+  </div>
+  </li>
 <% end %>
 </ul>
 <% else %>
   <p>You have no pending invitations to accept or reject.</p>
 <% end %>
+<h2>Sent Invites</h2>
 <% unless @sentinvites.blank? %>
-</ul>
-<% @sentinvites.each do |invite| %>
-<li><%= invite %></li>
+  <ul>
+  <% @sentinvites.each do |invite| %>
+    <li>Invite to <%= invite.receiver.name  %>.</li>
 <% end %>
 </ul>
 <% else %>
