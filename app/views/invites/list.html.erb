@@ -1,0 +1,18 @@
+<% unless @myinvites.blank? %>
+  <ul>
+  <% @myinvites.each do |invite| %>
+    <li><%= invite %></li>
+<% end %>
+</ul>
+<% else %>
+  <p>You have no pending invitations to accept or reject.</p>
+<% end %>
+<% unless @sentinvites.blank? %>
+</ul>
+<% @sentinvites.each do |invite| %>
+<li><%= invite %></li>
+<% end %>
+</ul>
+<% else %>
+  <p>You have not sent any invites that are still pending</p>
+<% end %>

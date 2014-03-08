@@ -13,6 +13,11 @@ class InvitesController < ApplicationController
     redirect_to request.referer
   end
 
+  def list
+    @myinvites = Invite.where(:receiver => current_user)
+    @sentinvites = Invite.where(:sender  => current_user)
+  end
+
   private
 
   def user_params
