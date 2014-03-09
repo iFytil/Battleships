@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  def index
+  def list
     @users = User.where("id <> ?", current_user.id)
   end
 
