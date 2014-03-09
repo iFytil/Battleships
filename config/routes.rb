@@ -5,6 +5,8 @@ Battleship::Application.routes.draw do
   # Acces a game's view
   get 'game/:id' => 'games#show', :as => :game
 
+  get 'mygames' => 'users#games', :as => :mygames
+
   # Access the lobby
   get 'lobby' => 'pages#lobby', :as => :lobby
 

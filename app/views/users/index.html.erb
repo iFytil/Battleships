@@ -1,12 +1,10 @@
-<h1>This is the list of all players</h1>
+<h1>Players</h1>
 <ul>
 <% @users.each do |user|%>
   <li>
     <%= link_to user.name, user%>
-    <% if current_user.id == user.id %>
-    	(You)
-    <% elsif isGameGoingOn(user.id).nil? %>
-      <%= link_to "Invite him", send_invite_path(:sender_id => current_user.id, :receiver_id => user.id) %>
+    <% if isGameGoingOn(user.id).nil? %>
+      <div class="pull-right"><a href="<%= send_invite_path(:sender_id => current_user.id, :receiver_id => user.id) %>" class="btn btn-success btn-sm">Invite</a></div>
     <% else %>
       Already invited!
     <% end %>
