@@ -1,11 +1,7 @@
 Battleship::Application.routes.draw do
 
-  get 'newgame' => 'games#new', :as => :new_game
-
-  # Acces a game's view
   get 'game/:id' => 'games#show', :as => :game
-
-  get 'mygames' => 'users#games', :as => :mygames
+  get 'user/:id' => 'users#show', :as => :user
 
   # Access the lobby
   get 'lobby' => 'pages#lobby', :as => :lobby
@@ -16,14 +12,9 @@ Battleship::Application.routes.draw do
   # Respond to an invite_id with an optional :accept decision
   get 'invite/respond/:id' => 'invites#destroy', :as => :respond_invite
 
-  # List all invites available to user
-  get 'invite/all' => 'invites#list', :as => :list_invites
-
-  # Access a user's view
-  get 'user/:id' => 'users#show', :as => :user
-
-  # Access the list of users
-  get 'users' => 'users#index', :as => :users
+  get 'invites/all' => 'invites#list', :as => :list_invites
+  get 'games/all' => 'games#list', :as => :list_games
+  get 'users/all' => 'users#list', :as => :list_users
 
   devise_for :users
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'

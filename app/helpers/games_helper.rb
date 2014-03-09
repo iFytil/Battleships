@@ -1,7 +1,4 @@
 module GamesHelper
-  def all_my_games(id)
-    Game.where(player_1_id: id) + Game.where(player_2_id: id)
-  end
 
   def generateCoral
     coral = ""
