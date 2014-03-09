@@ -56,8 +56,10 @@ Ship = function (x, y, speed, radar, length, facing) {
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
 
   var t = SQ_WIDTH / 2;
-  var bowx = (x) * SQ_WIDTH + t; // bow tip coordinates
-  var bowy = (y) * SQ_WIDTH + t;
+  this.sternx = (x) * SQ_WIDTH; // bow tip coordinates
+  this.sterny = (y) * SQ_WIDTH;
+  
+  
   
   this.radar = radar;
 
@@ -67,29 +69,29 @@ Ship = function (x, y, speed, radar, length, facing) {
   var s = 4;
 
   if (facing == D.Right) {
-      this.points.push(new Point(bowx - t, bowy - t + s));
-      this.points.push(new Point(bowx, bowy));
-      this.points.push(new Point(bowx - t, bowy + t - s));
-      this.points.push(new Point(bowx - t - (length - 1) * SQ_WIDTH + s, bowy + t - s));
-      this.points.push(new Point(bowx - t - (length - 1) * SQ_WIDTH + s, bowy - t + s));
+	  this.points.push(new Point(this.sternx+s,this.sterny+s));
+      this.points.push(new Point(this.sternx+s,this.sterny+SQ_WIDTH-s));
+      this.points.push(new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+SQ_WIDTH-s));
+      this.points.push(new Point(this.sternx+(length)*SQ_WIDTH-t,this.sterny+t));
+      this.points.push(new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+s));
   } else if (facing == D.Left) {
-      this.points.push(new Point(bowx + t, bowy + t - s));
-      this.points.push(new Point(bowx, bowy));
-      this.points.push(new Point(bowx + t, bowy - t + s));
-      this.points.push(new Point(bowx + t + (length - 1) * SQ_WIDTH - s, bowy - t + s));
-      this.points.push(new Point(bowx + t + (length - 1) * SQ_WIDTH - s, bowy + t - s));
+	  this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+s));
+      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s));
+      this.points.push(new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+SQ_WIDTH-s));
+      this.points.push(new Point(this.sternx-(length-1)*SQ_WIDTH+t,this.sterny+t));
+      this.points.push(new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+s));
   } else if (facing == D.Up) {
-      this.points.push(new Point(bowx - t + s, bowy + t));
-      this.points.push(new Point(bowx, bowy));
-      this.points.push(new Point(bowx + t - s, bowy + t));
-      this.points.push(new Point(bowx + t - s, bowy + t + (length - 1) * SQ_WIDTH - s));
-      this.points.push(new Point(bowx - t + s, bowy + t + (length - 1) * SQ_WIDTH - s));
+	  this.points.push(new Point(this.sternx+s,this.sterny+SQ_WIDTH-s));
+      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s));
+      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny-(length-2)*SQ_WIDTH));
+      this.points.push(new Point(this.sternx+t,this.sterny-(length-1)*SQ_WIDTH+t));
+      this.points.push(new Point(this.sternx+s,this.sterny-(length-2)*SQ_WIDTH));
   } else if (facing == D.Down) {
-      this.points.push(new Point(bowx - t + s, bowy - t));
-      this.points.push(new Point(bowx, bowy));
-      this.points.push(new Point(bowx + t - s, bowy - t));
-      this.points.push(new Point(bowx + t - s, bowy - t - (length - 1) * SQ_WIDTH + s));
-      this.points.push(new Point(bowx - t + s, bowy - t - (length - 1) * SQ_WIDTH + s));
+      this.points.push(new Point(this.sternx+s,this.sterny+s));
+      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+s));
+      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+(length-1)*SQ_WIDTH));
+      this.points.push(new Point(this.sternx+t,this.sterny+(length)*SQ_WIDTH-t));
+      this.points.push(new Point(this.sternx+s,this.sterny+(length-1)*SQ_WIDTH));
   }
 
   this.Forward = function (a) {
