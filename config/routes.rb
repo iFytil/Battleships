@@ -1,11 +1,7 @@
 Battleship::Application.routes.draw do
 
-  get 'newgame' => 'games#new', :as => :new_game
-
   # Acces a game's view
   get 'game/:id' => 'games#show', :as => :game
-
-  get 'mygames' => 'users#games', :as => :mygames
 
   # Access the lobby
   get 'lobby' => 'pages#lobby', :as => :lobby
@@ -17,7 +13,10 @@ Battleship::Application.routes.draw do
   get 'invite/respond/:id' => 'invites#destroy', :as => :respond_invite
 
   # List all invites available to user
-  get 'invite/all' => 'invites#list', :as => :list_invites
+  get 'invites/all' => 'invites#list', :as => :list_invites
+
+  # List all games available to user
+  get 'games/all' => 'games#list', :as => :list_games
 
   # Access a user's view
   get 'user/:id' => 'users#show', :as => :user

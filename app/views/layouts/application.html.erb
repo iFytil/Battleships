@@ -21,6 +21,8 @@
       <li><a href='<%= new_user_registration_path %>'>sign up</a></li>
     <% else %>
       <li><%= link_to "lobby", lobby_path %></li>
+      <li><%= link_to "invites", list_invites_path %></li>
+      <li><%= link_to "games", list_games_path %></li>
       <li><a data-method="delete" href='<%= destroy_user_session_path %>'>log out</a><li>
     <% end %>
   </ul>
