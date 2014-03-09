@@ -5,33 +5,37 @@ Point = function (x, y) {
 
 // relative to bow coordinates
 // b = backward offset
-RadarRange = function (x,y,b, w, h,facing) {
+RadarRange = function (x,y,back, width, length,facing) {
   // identified by the top left corner
   // w by h range
 
-  this.w = w;
-  this.h = h;
-
-  this.Set =function(bx,by){
+  this.h = width;
+  this.w = length;
+console.log
+  this.Set =function(sternx,sterny){
     if (facing == D.Right) 
     {
-      this.x = bx-b;
-      this.y = by-Math.floor(this.h/2);
+      this.x = sternx+back;
+      this.y = sterny-Math.floor(this.h/2);
     } 
     else if (facing == D.Left) 
     {
-      this.x = bx+b-this.w+1;
-      this.y = by-Math.floor(this.h/2);
+      this.x = sternx+1-back-this.length;
+      this.y = sterny-Math.floor(this.h/2);
     } 
     else if (facing == D.Up) 
     {
-      this.x = bx-Math.floor(this.h/2);
-      this.y = by-b;
+      this.h = length;
+      this.w = width;
+      this.x = sternx-Math.floor(this.w/2);
+      this.y = sterny+1-back-this.length;
     } 
     else if (facing == D.Down) 
     {
-      this.x = bx-Math.floor(this.h/2);
-      this.y = by+b;
+      this.h = length;
+      this.w = width;
+      this.x = sternx-Math.floor(this.w/2);
+      this.y = sterny+back;
     }
   }
   this.Set(x,y);
@@ -51,7 +55,7 @@ RadarRange = function (x,y,b, w, h,facing) {
 
 };
 
-Ship = function (x, y, speed, radar, length, facing) {
+Ship = function (x, y, length, speed, facing, radar) {
 
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
 
@@ -59,7 +63,7 @@ Ship = function (x, y, speed, radar, length, facing) {
   this.sternx = (x) * SQ_WIDTH; // bow tip coordinates
   this.sterny = (y) * SQ_WIDTH;
   
-  
+ 
   
   this.radar = radar;
 
@@ -197,28 +201,28 @@ Ship = function (x, y, speed, radar, length, facing) {
 };
 
 
-Cruiser = function (x, y, facing) {
-    var r = new RadarRange(x, y,3, 10, 3,facing);
-    return new Ship(x, y, 10, r, 5, facing);
+Cruiser = function (x, y, facing, radar) {
+    //var r = new RadarRange(x, y,3, 10, 3,facing);
+    return new Ship(x, y, 10, 5, facing, radar);
 };
-Destroyer = function (x, y, facing) {
-    var r = new RadarRange(x, y,2, 8, 3,facing);
-    return new Ship(x, y, 8, r, 4, facing);
-};
-
-TorpedoBoat = function (x, y, facing) {
-    var r = new RadarRange(x, y,1, 6, 3,facing);
-    return new Ship(x, y, 9, r, 3, facing);
+Destroyer = function (x, y, facing, radar) {
+    //var r = new RadarRange(x, y,2, 8, 3,facing);
+    return new Ship(x, y, 8, 4, facing, radar);
 };
 
-MineLayer = function (x, y, facing) {
-    var r = new RadarRange(x, y,3, 6, 5,facing);
-    return new Ship(x, y, 6, r, 2, facing);
+TorpedoBoat = function (x, y, facing, radar) {
+    //var r = new RadarRange(x, y,1, 6, 3,facing);
+    return new Ship(x, y, 9, 3, facing, radar);
 };
 
-RadarBoat = function (x, y, facing) {
-    var r = new RadarRange(x, y,1, 12, 3,facing);
-    return new Ship(x, y, 3, r, 3, facing);
+MineLayer = function (x, y, facing, radar) {
+    //var r = new RadarRange(x, y,3, 6, 5,facing);
+    return new Ship(x, y, 6, 2, facing, radar);
+};
+
+RadarBoat = function (x, y, facing, radar) {
+    //var r = new RadarRange(x, y,1, 12, 3,facing);
+    return new Ship(x, y, 3, 3, facing, radar);
 };
 
 
@@ -232,10 +236,6 @@ Base = function (x, y) {
     points.push(new Point(x0 + SQ_WIDTH, y0));
     points.push(new Point(x0 + SQ_WIDTH, y0 + SQ_WIDTH * 10));
     points.push(new Point(x0, y0 + SQ_WIDTH * 10));
-    /*points.push(new Point(10,50));
-  points.push(new Point(20,50));
-  points.push(new Point(20,100));
-  points.push(new Point(10,100));*/
 
     this.Draw = function (ctx, color) {
         ctx.beginPath();
@@ -258,13 +258,21 @@ Fleet = function (turn) {
   this.ships = new Array();
 
   var all_ships = $('#game-data').data("ships")
+  var all_types = $('#game-data').data("shiptype")
 
   for (each in all_ships) {
     var ship = all_ships[each];
     if (ship.turn == turn) {
-      this.ships.push(ShipType[ship.shiptype_id](ship.location_x, ship.location_y, D[ship.direction]))
-    }
+		for (each in all_types) { // THIS LOOP CAN PROBABLY BE OPTIMIZED
+			var type = all_types[each];
+			if(type.id == ship.shiptype_id){
+				var radar = new RadarRange(ship.location_x, ship.location_y, type.radar_back,type.radar_w,type.radar_l,D[ship.direction]);
+				this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction],radar))
+			}
+		}
+	}
   }
+  
 
   if (turn == Turn.First) 
   {

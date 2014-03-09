@@ -86,8 +86,8 @@ Game = function(ctx)
     }
     this.players[this.turn].changeTurn();
 
-    this.V.ranges = this.players[this.turn].Ranges();
-    this.V.Set();
+   this.V.ranges = this.players[this.turn].Ranges();
+   this.V.Set();
       
   };
   
