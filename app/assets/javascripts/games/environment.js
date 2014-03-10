@@ -11,14 +11,14 @@ Environment = function (ctx) {
 
   Coral = function () {
     var c = $('#game-data').data("coral");
-    for (var i = 10; i < 20; i++) {
-      for (var j = 3; j < 27; j++) {
-        if (c[j + i * 10] == 1) {
-          ctx.beginPath();
-          ctx.rect(i * SQ_WIDTH, j * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-          ctx.fillStyle = 'orange';
-          ctx.fill();
-        }
+    for (var i = 0; i < c.length; i++) {
+      if (c[i] == 1) {
+        var x = 10 + i%10   // start_x + i%size_x
+        var y = 3 + i%24    // start_y + i%size_y
+        ctx.beginPath();
+        ctx.rect(x * SQ_WIDTH, y * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+        ctx.fillStyle = 'orange';
+        ctx.fill();
       }
     }
   };
