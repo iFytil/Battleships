@@ -11,14 +11,6 @@ var Turn = {
   Second: 2
 }
 
-var ShipType = {
-  1: Cruiser,
-  2: Destroyer,
-  3: TorpedoBoat,
-  4: MineLayer,
-  5: RadarBoat
-}
-
 Player = function(turn){
   
   // true - it is this player's turn
@@ -86,8 +78,8 @@ Game = function(ctx)
     }
     this.players[this.turn].changeTurn();
 
-   this.V.ranges = this.players[this.turn].Ranges();
-   this.V.Set();
+    this.V.ranges = this.players[this.turn].Ranges();
+    this.V.Set();
       
   };
   

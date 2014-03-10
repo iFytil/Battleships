@@ -11,7 +11,7 @@ RadarRange = function (x,y,back, width, length,facing) {
 
   this.h = width;
   this.w = length;
-console.log
+
   this.Set =function(sternx,sterny){
     if (facing == D.Right) 
     {
@@ -72,48 +72,55 @@ Ship = function (x, y, length, speed, facing, radar) {
   // spacing 
   var s = 4;
 
-  if (facing == D.Right) {
-	  this.points.push(new Point(this.sternx+s,this.sterny+s));
-      this.points.push(new Point(this.sternx+s,this.sterny+SQ_WIDTH-s));
-      this.points.push(new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+SQ_WIDTH-s));
-      this.points.push(new Point(this.sternx+(length)*SQ_WIDTH-t,this.sterny+t));
-      this.points.push(new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+s));
-  } else if (facing == D.Left) {
-	  this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+s));
-      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s));
-      this.points.push(new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+SQ_WIDTH-s));
-      this.points.push(new Point(this.sternx-(length-1)*SQ_WIDTH+t,this.sterny+t));
-      this.points.push(new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+s));
-  } else if (facing == D.Up) {
-	  this.points.push(new Point(this.sternx+s,this.sterny+SQ_WIDTH-s));
-      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s));
-      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny-(length-2)*SQ_WIDTH));
-      this.points.push(new Point(this.sternx+t,this.sterny-(length-1)*SQ_WIDTH+t));
-      this.points.push(new Point(this.sternx+s,this.sterny-(length-2)*SQ_WIDTH));
-  } else if (facing == D.Down) {
-      this.points.push(new Point(this.sternx+s,this.sterny+s));
-      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+s));
-      this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+(length-1)*SQ_WIDTH));
-      this.points.push(new Point(this.sternx+t,this.sterny+(length)*SQ_WIDTH-t));
-      this.points.push(new Point(this.sternx+s,this.sterny+(length-1)*SQ_WIDTH));
+  if (facing == D.Right) 
+  {
+    this.points.push(new Point(this.sternx+s,this.sterny+s));
+    this.points.push(new Point(this.sternx+s,this.sterny+SQ_WIDTH-s));
+    this.points.push(new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+SQ_WIDTH-s));
+    this.points.push(new Point(this.sternx+(length)*SQ_WIDTH-t,this.sterny+t));
+    this.points.push(new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+s));
+  } 
+  else if (facing == D.Left) 
+  {
+    this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+s));
+    this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s));
+    this.points.push(new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+SQ_WIDTH-s));
+    this.points.push(new Point(this.sternx-(length-1)*SQ_WIDTH+t,this.sterny+t));
+    this.points.push(new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+s));
+  } 
+  else if (facing == D.Up) 
+  {
+    this.points.push(new Point(this.sternx+s,this.sterny+SQ_WIDTH-s));
+    this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s));
+    this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny-(length-2)*SQ_WIDTH));
+    this.points.push(new Point(this.sternx+t,this.sterny-(length-1)*SQ_WIDTH+t));
+    this.points.push(new Point(this.sternx+s,this.sterny-(length-2)*SQ_WIDTH));
+  } 
+  else if (facing == D.Down) 
+  {
+    this.points.push(new Point(this.sternx+s,this.sterny+s));
+    this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+s));
+    this.points.push(new Point(this.sternx+SQ_WIDTH-s,this.sterny+(length-1)*SQ_WIDTH));
+    this.points.push(new Point(this.sternx+t,this.sterny+(length)*SQ_WIDTH-t));
+    this.points.push(new Point(this.sternx+s,this.sterny+(length-1)*SQ_WIDTH));
   }
 
   this.Forward = function (a) {
     if (facing == D.Right) {
         for (var i = 0; i < 5; i++) {
-            this.points[i].x += SQ_WIDTH * a;
+          this.points[i].x += SQ_WIDTH * a;
         }
     } else if (facing == D.Left) {
         for (var i = 0; i < 5; i++) {
-            this.points[i].x -= SQ_WIDTH * a;
+          this.points[i].x -= SQ_WIDTH * a;
         }
     } else if (facing == D.Up) {
         for (var i = 0; i < 5; i++) {
-            this.points[i].y -= SQ_WIDTH * a;
+          this.points[i].y -= SQ_WIDTH * a;
         }
     } else if (facing == D.Down) {
         for (var i = 0; i < 5; i++) {
-            this.points[i].y += SQ_WIDTH * a;
+          this.points[i].y += SQ_WIDTH * a;
         }
     }
   }
@@ -200,32 +207,6 @@ Ship = function (x, y, length, speed, facing, radar) {
 
 };
 
-
-Cruiser = function (x, y, facing, radar) {
-    //var r = new RadarRange(x, y,3, 10, 3,facing);
-    return new Ship(x, y, 10, 5, facing, radar);
-};
-Destroyer = function (x, y, facing, radar) {
-    //var r = new RadarRange(x, y,2, 8, 3,facing);
-    return new Ship(x, y, 8, 4, facing, radar);
-};
-
-TorpedoBoat = function (x, y, facing, radar) {
-    //var r = new RadarRange(x, y,1, 6, 3,facing);
-    return new Ship(x, y, 9, 3, facing, radar);
-};
-
-MineLayer = function (x, y, facing, radar) {
-    //var r = new RadarRange(x, y,3, 6, 5,facing);
-    return new Ship(x, y, 6, 2, facing, radar);
-};
-
-RadarBoat = function (x, y, facing, radar) {
-    //var r = new RadarRange(x, y,1, 12, 3,facing);
-    return new Ship(x, y, 3, 3, facing, radar);
-};
-
-
 Base = function (x, y) {
 
     var x0 = x * SQ_WIDTH;
@@ -258,21 +239,15 @@ Fleet = function (turn) {
   this.ships = new Array();
 
   var all_ships = $('#game-data').data("ships")
-  var all_types = $('#game-data').data("shiptype")
 
   for (each in all_ships) {
     var ship = all_ships[each];
     if (ship.turn == turn) {
-		for (each in all_types) { // THIS LOOP CAN PROBABLY BE OPTIMIZED
-			var type = all_types[each];
-			if(type.id == ship.shiptype_id){
-				var radar = new RadarRange(ship.location_x, ship.location_y, type.radar_back,type.radar_w,type.radar_l,D[ship.direction]);
-				this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction],radar))
-			}
-		}
-	}
+      var type = ship.shiptype;
+      var radar = new RadarRange(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
+      this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar))
+    }
   }
-  
 
   if (turn == Turn.First) 
   {
