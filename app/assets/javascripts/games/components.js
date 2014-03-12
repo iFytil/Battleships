@@ -200,10 +200,8 @@ Base = function (x, y) {
 Fleet = function (turn) {
   this.ships = new Array();
 
-  var all_ships = $('#game-data').data("ships")
-
-  for (each in all_ships) {
-    var ship = all_ships[each];
+  for (each in SHIPS) {
+    var ship = SHIPS[each];
     if (ship.turn == turn) {
       var type = ship.shiptype;
       var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])

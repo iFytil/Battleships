@@ -27,10 +27,6 @@ class ChatController < WebsocketRails::BaseController
 
   def send_message
     Message.create(message)
-    new_message
-  end
-  
-  def new_message
     user_msg :new_message, message[:msg_body].dup
   end
   

@@ -10,7 +10,7 @@ Environment = function (ctx) {
   };
 
   Coral = function () {
-    var c = $('#game-data').data("coral");
+    var c = GAME_DATA.coral
     for (var i = 0; i < c.length; i++) {
       if (c[i] == 1) {
         var x = 10 + i%10   // start_x + i%size_x

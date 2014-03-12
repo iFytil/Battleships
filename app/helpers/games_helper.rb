@@ -13,9 +13,5 @@ module GamesHelper
     end
     coral
   end
-
-  def get_ship_json(game)
-    game.ships.to_json(:include => :shiptype, :only => [:turn, :location_x, :location_y, :direction])
-  end
   
 end

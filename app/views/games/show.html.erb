@@ -1,11 +1,13 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
-<%= content_tag :div, id: "game-data", data: {coral: @game.coral, ships: get_ship_json(@game)} do %>
+<%= content_tag :div, id: "game-data", data: {game: @game} do %>
 <% end %>
 
 <canvas id="myCanvas" width="600" height="600"></canvas>
 <script>
+
+  var dispatcher = new WebSocketRails(window.location.host + "/websocket", true)
 
   var canvas = document.getElementById('myCanvas');
   var ctx = canvas.getContext('2d');
@@ -13,31 +15,57 @@
   var HEIGHT = canvas.height
   var WIDTH = canvas.width
   var SQ_WIDTH = Math.floor(WIDTH/N)
+  var GAME_DATA = $('#game-data').data("game")
+  var SHIPS = [];
 
-  // Inputs
-  window.addEventListener('keydown', this.check, false);
-
-  // game logistics
-  game = new Game(ctx);
-
-  function check(e) {
-    var code = e.keyCode;
-    switch (code) {
-      case 13: game.FinalizeMove(); break; //Space Bar
-      case 65:  game.Traverse(1); break; //A key
-      case 87:  game.Traverse(0); break; //W key
-      case 68:  game.Traverse(3); break; //D key
-      case 83:  game.Traverse(2); break; //S key
-      case 81:  game.Rotate(1); break; //Q key
-      case 69:  game.Rotate(0); break; //E key
-      case 39:  game.NextShipDown(); break; // Right key
-      case 37:  game.NextShipUp(); break; // Left key
-      default:  //Everything else
-    }
+  dispatcher.on_open = function() {
+    dispatcher.trigger('get_ships', GAME_DATA)
   }
 
-  setInterval(function () {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    game.Display();
-  }, 36);
+  // This is how you send a move
+  //dispatcher.trigger('send_move', {game_id: 1, ship_id: 5, pos_x: 7, pos_y: 15})
+
+  dispatcher.bind('move_response', function(message) {
+    if (message.valid_json) {
+      // Refresh or redraw canvas, it's next players turn
+    } else {
+      // Error in our program. Do nothing
+      console.log("ERROR: Invalid move format")
+    }
+  });
+
+  dispatcher.bind('receive_ships', function(message) {
+    SHIPS = JSON.parse(message.ships)
+    createGame()
+  });
+
+  function createGame() {
+
+    // Inputs
+    window.addEventListener('keydown', check, false);
+
+    // game logistics
+    game = new Game(ctx);
+
+    function check(e) {
+      var code = e.keyCode;
+      switch (code) {
+        case 13: game.FinalizeMove(); break; //Space Bar
+        case 65:  game.Traverse(1); break; //A key
+        case 87:  game.Traverse(0); break; //W key
+        case 68:  game.Traverse(3); break; //D key
+        case 83:  game.Traverse(2); break; //S key
+        case 81:  game.Rotate(1); break; //Q key
+        case 69:  game.Rotate(0); break; //E key
+        case 39:  game.NextShipDown(); break; // Right key
+        case 37:  game.NextShipUp(); break; // Left key
+        default:  //Everything else
+      }
+    }
+
+    setInterval(function () {
+      ctx.clearRect(0, 0, WIDTH, HEIGHT);
+      game.Display();
+    }, 36);
+  }
 </script>
