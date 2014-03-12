@@ -3,6 +3,8 @@ class CreateShiptypes < ActiveRecord::Migration
     create_table :shiptypes do |t|
       t.integer :size
       t.integer :speed
+      t.integer :turn_speed
+      t.integer :turn_index
       t.integer :armor
       t.integer :radar_back
       t.integer :radar_w
