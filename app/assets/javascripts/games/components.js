@@ -20,7 +20,7 @@ RadarRange = function (x,y,back, width, length,facing) {
     } 
     else if (facing == D.Left) 
     {
-      this.x = sternx+1-back-this.length;
+      this.x = sternx+1-back-this.w;
       this.y = sterny-Math.floor(this.h/2);
     } 
     else if (facing == D.Up) 
@@ -28,7 +28,7 @@ RadarRange = function (x,y,back, width, length,facing) {
       this.h = length;
       this.w = width;
       this.x = sternx-Math.floor(this.w/2);
-      this.y = sterny+1-back-this.length;
+      this.y = sterny+1-back-this.h;
     } 
     else if (facing == D.Down) 
     {
@@ -38,8 +38,10 @@ RadarRange = function (x,y,back, width, length,facing) {
       this.y = sterny+back;
     }
   }
+
   this.Set(x,y);
-  
+    console.log(facing +" "+this.x +" "+this.y);
+    
   this.Draw = function (ctx, color) {
     ctx.beginPath();
     ctx.moveTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH);
