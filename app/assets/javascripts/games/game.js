@@ -45,6 +45,10 @@ Player = function(turn){
     return r;
   };
   
+  this.Selected = function(){
+	  return this.fleet.ships[this.selected];
+  }
+  
 };
 
 Game = function(ctx)
@@ -82,6 +86,31 @@ Game = function(ctx)
     this.V.Set();
       
   };
+  
+  // moves a ship in a specified direction
+  // restricts based on speed and damage
+  this.Traverse = function(d){
+	  
+	  var s = this.players[this.turn].Selected();
+	  console.log(d);
+	if (d == D.Right) 
+    {
+      s.Right();
+    } 
+    else if (d == D.Left) 
+    {
+      s.Left();
+    } 
+    else if (d == D.Up) 
+    {
+		console.log("traverse call Up");
+      s.Up();
+    } 
+    else if (d == D.Down) 
+    {
+      s.Down();
+    }
+  }
   
   GetIndex = function(x,y)
   {

@@ -40,7 +40,6 @@ RadarRange = function (x,y,back, width, length,facing) {
   }
 
   this.Set(x,y);
-    console.log(facing +" "+this.x +" "+this.y);
     
   this.Draw = function (ctx, color) {
     ctx.beginPath();
@@ -146,45 +145,28 @@ Ship = function (x, y, length, speed, facing, radar) {
       }
   }
   this.Left = function () {
-      if (facing == D.Right) {
-          for (var i = 0; i < 5; i++) {
-              this.points[i].y -= SQ_WIDTH;
-          }
-      } else if (facing == D.Left) {
-          for (var i = 0; i < 5; i++) {
-              this.points[i].y += SQ_WIDTH;
-          }
-      } else if (facing == D.Up) {
-          for (var i = 0; i < 5; i++) {
+      for (var i = 0; i < 5; i++) {
               this.points[i].x -= SQ_WIDTH;
+              
           }
-      } else if (facing == D.Down) {
-          for (var i = 0; i < 5; i++) {
-              this.points[i].x += SQ_WIDTH;
-          }
-      }
   }
   this.Right = function () {
-      if (facing == D.Right) {
-          for (var i = 0; i < 5; i++) {
-              this.points[i].y += SQ_WIDTH;
-          }
-      } else if (facing == D.Left) {
-          for (var i = 0; i < 5; i++) {
-              this.points[i].y -= SQ_WIDTH;
-          }
-      } else if (facing == D.Up) {
-          for (var i = 0; i < 5; i++) {
+      for (var i = 0; i < 5; i++) {
               this.points[i].x += SQ_WIDTH;
           }
-      } else if (facing == D.Down) {
-          for (var i = 0; i < 5; i++) {
-              this.points[i].x -= SQ_WIDTH;
-          }
-      }
   }
-
-
+ 
+  this.Up = function () {
+      for (var i = 0; i < 5; i++) {
+              this.points[i].y -= SQ_WIDTH;
+          }
+  }
+  
+  this.Down = function () {
+      for (var i = 0; i < 5; i++) {
+              this.points[i].y += SQ_WIDTH;
+          }
+  }
     this.highlighted = false;
     this.Draw = function (ctx, color) {
         ctx.beginPath();
