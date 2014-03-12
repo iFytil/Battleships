@@ -5,6 +5,11 @@ var D = {
   Down: 2,
   Right: 3
 };
+// Ship rotations
+var R = {
+  CW: 0,
+  CCW: 1
+};
 
 var Turn = {
   First: 1,
@@ -92,7 +97,7 @@ Game = function(ctx)
   this.Traverse = function(d){
 	  
 	  var s = this.players[this.turn].Selected();
-	  console.log(d);
+	  
 	if (d == D.Right) 
     {
       s.Right();
@@ -103,13 +108,28 @@ Game = function(ctx)
     } 
     else if (d == D.Up) 
     {
-		console.log("traverse call Up");
       s.Up();
     } 
     else if (d == D.Down) 
     {
       s.Down();
     }
+  }
+  
+  // rotates a ship in a specified direction
+  // restricts based on turn speed
+  this.Rotate = function(r){
+	  
+	var s = this.players[this.turn].Selected();
+	  
+	if (r == R.CW) 
+    {
+      s.CW();
+    } 
+    else if (r == R.CCW) 
+    {
+      s.CCW();
+    } 
   }
   
   GetIndex = function(x,y)

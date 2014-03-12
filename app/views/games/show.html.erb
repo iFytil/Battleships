@@ -24,12 +24,14 @@
     var code = e.keyCode;
     switch (code) {
       case 13: game.FinalizeMove(); break; //Space Bar
-      case 65:  game.Traverse(1); break; //Left key
-      case 87:  game.Traverse(0); break; //Up key
-      case 68:  game.Traverse(3); break; //Right key
-      case 83:  game.Traverse(2); break; //Down key
-      case 39:  game.NextShipDown(); break; // 'a' key
-      case 37:  game.NextShipUp(); break; // 's' key
+      case 65:  game.Traverse(1); break; //A key
+      case 87:  game.Traverse(0); break; //W key
+      case 68:  game.Traverse(3); break; //D key
+      case 83:  game.Traverse(2); break; //S key
+      case 81:  game.Rotate(1); break; //Q key
+      case 69:  game.Rotate(0); break; //E key
+      case 39:  game.NextShipDown(); break; // Right key
+      case 37:  game.NextShipUp(); break; // Left key
       default:  //Everything else
     }
   }
