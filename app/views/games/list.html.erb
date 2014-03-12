@@ -1,6 +1,6 @@
 <h1>Games</h1>
 <% unless @games.blank? %>
-  <ul>
+  <ul class='inlinebuttonlist'>
   <% @games.each do |game| %>
     <li>Game between <%= game.player_1.name %> and <%= game.player_2.name %>.<div class="pull-right"><a href="<%= game_path(game) %>" class='btn btn-sm btn-success'>Go</a></div></li>
   <% end %>
