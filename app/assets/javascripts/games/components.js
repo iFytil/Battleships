@@ -136,16 +136,6 @@ Ship = function (x, y, length, speed, facing, radar,cannon) {
     }
   }
 
-  this.CW = function () {
-    this.facing = (this.facing + 1)%4
-    this.Set();
-  }
-
-  this.CCW = function () {
-    this.facing = (this.facing + 3)%4
-    this.Set();
-  }
-
   this.highlighted = false;
   this.Draw = function (ctx, color) {
       ctx.beginPath();
@@ -199,7 +189,7 @@ Base = function (x, y) {
 
 Fleet = function (turn) {
   this.ships = new Array();
-
+  
   for (each in SHIPS) {
     var ship = SHIPS[each];
     if (ship.turn == turn) {
