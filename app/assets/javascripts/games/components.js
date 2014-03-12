@@ -3,9 +3,9 @@ Point = function (x, y) {
   this.y = y;
 };
 
-// relative to bow coordinates
+// relative to stern coordinates
 // b = backward offset
-RadarRange = function (x,y,back, width, length,facing) {
+Range = function (x,y,back, width, length,facing) {
   // identified by the top left corner
   // w by h range
 
@@ -58,7 +58,7 @@ RadarRange = function (x,y,back, width, length,facing) {
 
 };
 
-Ship = function (x, y, length, speed, facing, radar) {
+Ship = function (x, y, length, speed, facing, radar,cannon) {
 
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
 
@@ -69,6 +69,7 @@ Ship = function (x, y, length, speed, facing, radar) {
   this.facing = facing;
   
   this.radar = radar;
+  this.cannon = cannon;
 
   this.points = new Array();
 
@@ -222,6 +223,7 @@ this.Set();
         ctx.fill();
         
         this.radar.Draw(ctx, 'yellow');
+        this.cannon.Draw(ctx, 'orange');
     }
 
 
@@ -264,8 +266,9 @@ Fleet = function (turn) {
     var ship = all_ships[each];
     if (ship.turn == turn) {
       var type = ship.shiptype;
-      var radar = new RadarRange(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
-      this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar))
+      var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
+      var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
+      this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar,cannon))
     }
   }
 
