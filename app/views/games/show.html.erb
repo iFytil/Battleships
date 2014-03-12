@@ -26,7 +26,7 @@
   }
 
   // This is how you send a move
-  //dispatcher.trigger('send_move', {ship_id: 5, pos_x: 7, pos_y: 15})
+  //dispatcher.trigger('send_move', {ship_id: 5, pos_x: 7, pos_y: 15, type: "cannon"})
 
   dispatcher.bind('move_response', function(message) {
     if (message.valid_json) {

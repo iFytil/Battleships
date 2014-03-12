@@ -60,17 +60,6 @@ Game = function(ctx)
   // environment
   var env = new Environment(ctx);
   
-  // 2 players
-  this.players=new Array();
-  this.players.push(new Player(Turn.First));
-  this.players.push(new Player(Turn.Second));
-  
-  this.turn = GAME_DATA.moves.length%2
-  this.players[this.turn].changeTurn();
-  
-  // Visibility
-  this.V = new Visibility(this.players[this.turn].Ranges());
-  
   this.NextShipUp = function()
   {
     this.players[this.turn].nextShip(1);
@@ -95,14 +84,18 @@ Game = function(ctx)
 
   this.reload = function()
   {
-    for (each in this.players) 
-    {
-      player = this.players[each];
-      player.fleet = new Fleet(player.turn)
-    }
+    // 2 players
+    this.players=new Array();
+    this.players.push(new Player(Turn.First));
+    this.players.push(new Player(Turn.Second));
+    
     this.turn = GAME_DATA.moves.length%2
+    this.players[this.turn].changeTurn();
+    
+    // Visibility
     this.V = new Visibility(this.players[this.turn].Ranges());
-    this.Display();
   }
+
+  this.reload();
   
 };
