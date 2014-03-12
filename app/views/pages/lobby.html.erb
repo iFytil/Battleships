@@ -8,16 +8,16 @@
 <div id="chat-wrapper" class="well">
   <div id="chat-users" class="well">
     <h3>Active players</h3>
-    <ul id="user-list">
+    <ul id="user-list" class="list-unstyled">
       <li>Chat is inactive</li>
     </ul>
   </div>
   <div id="chat-messages" class="well">
   </div>
   <div id="chat-submit" class="well">
-    <fieldset>
-      <input type="text" id="message">
-      <button id="send" class="btn btn-primary">Send</button>
-    </fieldset>
+    <div class='input-group'>
+      <input class='form-control' type="text" id="message">
+      <span class='input-group-btn'><button type='button' id="send" class="btn btn-primary">Send</button></span>
+    </div>
   </div>
 </div>
