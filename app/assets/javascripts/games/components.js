@@ -68,8 +68,8 @@ Ship = function (x, y, length, speed, facing, radar,cannon) {
   
   this.facing = facing;
   
-  this.radar = radar;
-  this.cannon = cannon;
+  this.radarzone = radar;
+  this.cannonzone = cannon;
 
   this.points = new Array();
 
@@ -222,8 +222,8 @@ this.Set();
         ctx.fillStyle = color;
         ctx.fill();
         
-        this.radar.Draw(ctx, 'yellow');
-        this.cannon.Draw(ctx, 'orange');
+        this.radarzone.Draw(ctx, 'yellow');
+        this.cannonzone.Draw(ctx, 'orange');
     }
 
 

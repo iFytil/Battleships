@@ -45,7 +45,7 @@ Player = function(turn){
   {
     var r = new Array();
     for(var i=0;i<this.fleet.ships.length;i++){
-      r.push(this.fleet.ships[i].radar);
+      r.push(this.fleet.ships[i].radarzone);
     }
     return r;
   };
