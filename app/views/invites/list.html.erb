@@ -1,7 +1,7 @@
 <h1>Invites</h1>
 <h2>Received Invites</h2>
 <% unless @myinvites.blank? %>
-  <ul>
+  <ul class='inlinebuttonlist'>
   <% @myinvites.each do |invite| %>
     <li>
   Invite from <%= invite.sender.name %>.
@@ -17,7 +17,7 @@
 <% end %>
 <h2>Sent Invites</h2>
 <% unless @sentinvites.blank? %>
-  <ul>
+  <ul class='inlinebuttonlist'>
   <% @sentinvites.each do |invite| %>
     <li>Invite to <%= invite.receiver.name  %>.</li>
 <% end %>
