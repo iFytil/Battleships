@@ -5,4 +5,5 @@ class Ship < ActiveRecord::Base
   
   belongs_to :shiptype
   belongs_to :game
+  has_many   :moves
 end

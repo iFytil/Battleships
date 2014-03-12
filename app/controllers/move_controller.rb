@@ -11,7 +11,7 @@ class MoveController < WebsocketRails::BaseController
   private
 
   def is_valid_json(message)
-    !(message[:game_id].nil? || message[:ship_id].nil? || message[:pos_x].nil? || message[:pos_y].nil?)
+    !(message[:ship_id].nil? || message[:pos_x].nil? || message[:pos_y].nil?)
   end
 
 end
