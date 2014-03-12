@@ -1,7 +1,7 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
-<%= content_tag :div, id: "game-data", data: {game: @game} do %>
+<%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves)} do %>
 <% end %>
 
 <canvas id="myCanvas" width="600" height="600"></canvas>
@@ -22,7 +22,7 @@
   game = new Game(ctx);
 
   dispatcher.on_open = function() {
-    dispatcher.trigger('get_ships', GAME_DATA)
+    dispatcher.trigger('get_data', GAME_DATA)
   }
 
   // This is how you send a move
@@ -31,15 +31,16 @@
   dispatcher.bind('move_response', function(message) {
     if (message.valid_json) {
       // Reload ships
-      dispatcher.trigger('get_ships', GAME_DATA)
+      dispatcher.trigger('get_data', GAME_DATA)
     } else {
       // Error in our program. Do nothing
       console.log("ERROR: Invalid move format")
     }
   });
 
-  dispatcher.bind('receive_ships', function(message) {
-    SHIPS = JSON.parse(message.ships)
+  dispatcher.bind('receive_data', function(message) {
+    SHIPS = JSON.parse(message.ships);
+    GAME_DATA = JSON.parse(message.game);
     game.reload();
   });
 

@@ -4,8 +4,9 @@ class MoveController < WebsocketRails::BaseController
     send_message :move_response, {valid_json: is_valid_json(message)}
   end
 
-  def handle_ship_request
-    send_message :receive_ships, {ships: Game.find(message[:id]).ships.to_json(:include => :shiptype)}
+  def handle_data_request
+    game = Game.find(message[:id])
+    send_message :receive_data, {ships: game.ships.to_json(:include => :shiptype), game: game.to_json(:include => :moves)}
   end
 
   private
