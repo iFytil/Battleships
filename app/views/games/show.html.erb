@@ -27,7 +27,7 @@
   function check(e) {
     var code = e.keyCode;
     switch (code) {
-      case 13:  dispatcher.trigger('send_move', {ship_id: 5, pos_x: 1, pos_y: 0, kind: "Move"}); break;
+      case 13:  request_move(5,1,0, "Move"); break;
       case 39:  game.NextShipDown(); break; // Right key
       case 37:  game.NextShipUp(); break; // Left key
       default:  //Everything else

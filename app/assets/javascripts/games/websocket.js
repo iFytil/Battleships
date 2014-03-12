@@ -7,9 +7,6 @@ function dispatch() {
     dispatcher.trigger('get_data', GAME_DATA)
   }
 
-  // This is how you send a move
-  //dispatcher.trigger('send_move', {ship_id: 5, pos_x: 7, pos_y: 15, type: "cannon"})
-
   dispatcher.bind('move_response', function(message) {
     if (message.valid_json) {
       // Reload ships
@@ -26,4 +23,8 @@ function dispatch() {
     GAME_DATA = JSON.parse(message.game);
     game.reload();
   });
+}
+
+function request_move(ship_id, x, y, kind) {
+  dispatcher.trigger('send_move', {ship_id: ship_id, pos_x: x, pos_y: y, kind: kind})
 }
