@@ -1,6 +1,9 @@
 class MoveController < WebsocketRails::BaseController
 
   def handle_move
+
+    move = Move.create(message)
+
     send_message :move_response, {valid_json: is_valid_json(message)}
   end
 
