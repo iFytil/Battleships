@@ -5,11 +5,6 @@ var D = {
   Down: 2,
   Right: 3
 };
-// Ship rotations
-var R = {
-  CW: 0,
-  CCW: 1
-};
 
 var Turn = {
   First: 1,
@@ -20,13 +15,16 @@ Player = function(turn){
   
   // true - it is this player's turn
   var is_turn = false;
+
+  this.turn = turn;
   
   // initial fleet
-  this.fleet = new Fleet(turn);
-  
+  this.fleet = new Fleet(this.turn);
+
   // current ship
   this.selected = 0; //index
-  this.fleet.ships[this.selected].highlighted = true;
+  if (this.fleet.ships[this.selected])
+    this.fleet.ships[this.selected].highlighted = true;
   
   this.changeTurn = function()
   {
@@ -92,46 +90,6 @@ Game = function(ctx)
       
   };
   
-  // moves a ship in a specified direction
-  // restricts based on speed and damage
-  this.Traverse = function(d){
-	  
-	  var s = this.players[this.turn].Selected();
-	  
-	if (d == D.Right) 
-    {
-      s.Right();
-    } 
-    else if (d == D.Left) 
-    {
-      s.Left();
-    } 
-    else if (d == D.Up) 
-    {
-      s.Up();
-    } 
-    else if (d == D.Down) 
-    {
-      s.Down();
-    }
-  }
-  
-  // rotates a ship in a specified direction
-  // restricts based on turn speed
-  this.Rotate = function(r){
-	  
-	var s = this.players[this.turn].Selected();
-	  
-	if (r == R.CW) 
-    {
-      s.CW();
-    } 
-    else if (r == R.CCW) 
-    {
-      s.CCW();
-    } 
-  }
-  
   GetIndex = function(x,y)
   {
     
@@ -164,5 +122,14 @@ Game = function(ctx)
     // "cloud of invisibitily"
     //this.V.Draw(ctx,'grey');
   };
+
+  this.reload = function()
+  {
+    for (each in this.players) 
+    {
+      player = this.players[each];
+      player.fleet = new Fleet(player.turn)
+    }
+  }
   
 };
