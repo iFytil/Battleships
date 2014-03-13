@@ -11,6 +11,18 @@ var Turn = {
   Second: 1
 }
 
+// displayed movezones
+var Z = {
+  None: -1,
+  Translate: 0,
+  Rotate: 1,
+  Cannon: 2,
+  Torpedo: 3,
+  Mine: 4,
+  Radar: 5,
+  Heal: 6
+}
+
 Player = function(turn){
   
   // true - it is this player's turn
@@ -58,10 +70,13 @@ Game = function(ctx)
 {
 
   // environment
-  var env = new Environment(ctx);
+  this.env = new Environment(ctx);
   
   // sidebar
   this.sidebar = new Sidebar(ctx);
+  
+  // currently displayed zones
+  this.movezone = Z.None;
   
   // 2 players
   this.players=new Array();
@@ -86,17 +101,28 @@ Game = function(ctx)
   
   this.Display = function()
   {
-    
-    // environment
-    env.Draw();
-    
+    this.env.draw();
+
     // ships
     this.players[0].fleet.Draw(ctx,'#B80B0B');
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
     //this.V.Draw(ctx,'grey');
-    Listeners([{x:0,y:0},{x:10,y:10}]);
+    
+    // zones
+    if(this.movezone == Z.None){
+        // do nothing
+    }else if(this.movezone == Z.Translate){
+      
+    } else if(this.movezone ==Z.Rotate){
+        DrawRotationZone(this.players[this.turn].fleet.Selected(), ctx);
+    }else if(this.movezone == Z.Cannon){
+      
+    }else if(this.movezone == Z.Torpedo){
+      
+    }else if(this.movezone ==Z.Mine){
+    };
     
     // sidebar
     this.sidebar.Draw();
@@ -119,20 +145,20 @@ Game = function(ctx)
   this.reload();
   
   // forward, backward, up, down
-  this.MoveOptions = function(){
-    
+  this.TranslateOptions = function(){
+    this.movezone = Z.Translate;
     };
   this.RotateOptions = function(){
-    
+    this.movezone = Z.Rotate;
     };
   this.CannonOptions = function(){
-    
+    this.movezone = Z.Cannon;
     };
   this.TorpedoOptions = function(){
-    
+    this.movezone = Z.Torpedo;
     };
   this.MineOptions = function(){
-    
+    this.movezone = Z.Mine;
     };
   
 };

@@ -88,6 +88,6 @@ DrawRotationZone = function (ship){
 		// Draw turn around radius
 
 	}
-
       	
 }
+
