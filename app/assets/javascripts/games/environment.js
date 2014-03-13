@@ -91,10 +91,7 @@ Environment = function (ctx) {
       }
 
       this.eleAtPoint = function(ex,ey){
-          if(ex < this.x + this.w && ex > this.x 
-              && ey > this.y && ey < this.y + this.h) 
-              return true;
-          return false;
+        return ex < this.x + this.w && ex > this.x && ey > this.y && ey < this.y + this.h
       }
     }
   };
