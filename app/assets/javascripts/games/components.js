@@ -72,8 +72,6 @@ Ship = function (ship, radar, cannon) {
   this.turnSpeed  = ship.shiptype.turn_speed;
   this.turnIndex  = ship.shiptype.turn_index;
   this.speed      = ship.shiptype.speed;
-  this.sternx     = (this.x) * SQ_WIDTH; // bow tip coordinates
-  this.sterny     = (this.y) * SQ_WIDTH;
   this.facing     = D[ship.direction];
   this.radarzone  = radar;
   this.cannonzone = cannon;
@@ -85,8 +83,7 @@ Ship = function (ship, radar, cannon) {
   // spacing 
   var s = 4;
 
-  this.Set = function(){
-
+  this.Set = function() {
     var dx = 0;
     var dy = 0;
     switch (this.facing) {
@@ -189,12 +186,21 @@ Ship = function (ship, radar, cannon) {
       this.cannonzone.Draw(ctx, 'orange');
   }
 
+  // Duplicate!
+  this.Duplicate = function(){
+    return new Ship(ship, radar, cannon);
+  }
+
+
 };
 
 Base = function (x, y) {
 
   var x0 = x * SQ_WIDTH;
   var y0 = y * SQ_WIDTH;
+  
+  // visibiltiy
+  this.radarzone = new Range(x,y,-1, 3, 12,D.Down);
 
   this.Draw = function (ctx, color) {
     ctx.fillStyle = color;
@@ -218,18 +224,20 @@ Fleet = function (turn) {
 
   if (turn == Turn.First) 
   {
-    var base = new Base(0, 10);
+    this.base = new Base(0, 10);
   } 
   else if (turn == Turn.Second)
   {
-    var base = new Base(29, 10);
+    this.base = new Base(29, 10);
   }
 
   this.Draw = function (ctx, color) {
-    for (var i = 0; i < this.ships.length; i++) {
-        this.ships[i].Draw(ctx, color, true);
-    }
-    base.Draw(ctx, color);
+
+      for (var i = 0; i < this.ships.length; i++) {
+          this.ships[i].Draw(ctx, color, true);
+      }
+      this.base.Draw(ctx, color);
+      this.base.radarzone.Draw(ctx, color);
   };
 
 };
