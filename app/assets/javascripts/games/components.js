@@ -80,71 +80,48 @@ Ship = function (ship, radar, cannon) {
   this.health     = ship.health;
   this.armor      = ship.shiptype.armor;
 	
-  this.points = new Array();
+  this.points = new Array(this.length);
 
   // spacing 
   var s = 4;
 
   this.Set = function(){
-    
-    if (this.facing == D.Right) 
-    {
-      this.points[0] =new Point(this.sternx+s,this.sterny+s);
-      this.points[1] =new Point(this.sternx+s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx+(this.length-1)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
-      this.points[3] =new Point(this.sternx+(this.length)*SQ_WIDTH-t,this.sterny+t);
-      this.points[4] =new Point(this.sternx+(this.length-1)*SQ_WIDTH,this.sterny+s);
-    } 
-    else if (this.facing == D.Left) 
-    {
-      this.points[0] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+s);
-      this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx-(this.length-2)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
-      this.points[3] =new Point(this.sternx-(this.length-1)*SQ_WIDTH+t,this.sterny+t);
-      this.points[4] =new Point(this.sternx-(this.length-2)*SQ_WIDTH,this.sterny+s);
-    } 
-    else if (this.facing == D.Up) 
-    {
-      this.points[0] =new Point(this.sternx+s,this.sterny+SQ_WIDTH-s);
-      this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny-(this.length-2)*SQ_WIDTH);
-      this.points[3] =new Point(this.sternx+t,this.sterny-(this.length-1)*SQ_WIDTH+t);
-      this.points[4] =new Point(this.sternx+s,this.sterny-(this.length-2)*SQ_WIDTH);
-    } 
-    else if (this.facing == D.Down) 
-    {
-      this.points[0] =new Point(this.sternx+s,this.sterny+s);
-      this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+s);
-      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+(this.length-1)*SQ_WIDTH);
-      this.points[3] =new Point(this.sternx+t,this.sterny+(this.length)*SQ_WIDTH-t);
-      this.points[4] =new Point(this.sternx+s,this.sterny+(this.length-1)*SQ_WIDTH);
+
+    var dx = 0;
+    var dy = 0;
+    switch (this.facing) {
+    case D.Up:
+      dy = -1;
+      break;
+    case D.Down:
+      dy = 1;
+      break;
+    case D.Left:
+      dx = -1;
+      break;
+    case D.Right:
+      dx = 1;
+      break;
+    }
+    for (var i = 0; i < this.length; i++) {
+      this.points.push(new Point(this.x+i*dx, this.y+i*dy))
     }
   }
   this.Set();
 
   this.highlighted = false;
   this.Draw = function (ctx, color, damage) {
-      ctx.beginPath();
-      ctx.moveTo(this.points[0].x, this.points[0].y);
-      ctx.lineTo(this.points[1].x, this.points[1].y);
-      ctx.lineTo(this.points[2].x, this.points[2].y);
-      ctx.lineTo(this.points[3].x, this.points[3].y);
-      ctx.lineTo(this.points[4].x, this.points[4].y);
-      ctx.closePath();
       ctx.lineWidth = 2;
-      if (this.highlighted){
-          ctx.strokeStyle = 'yellow';
-      }else{
-          ctx.strokeStyle = color;
-        }
-      ctx.stroke();
-      
+      ctx.strokeStyle = (this.highlighted) ? 'yellow' : color
       ctx.fillStyle = color;
 
-      ctx.fill();
+      for (each in this.points) {
+        var pt = this.points[each];
+        ctx.fillRect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+      }
 
       // Paint damaged squares black
-      if(damage)
+      if(damage && false)
       {
         for(var i = 0; i < this.length; i++){
             if(parseInt(this.health.charAt(i)) != this.armor)
