@@ -18,6 +18,7 @@
   var SQ_WIDTH = Math.floor(WIDTH/N)
   var GAME_DATA = $('#game-data').data("game")
   var USERID = $('#game-data').data("userid")
+  var pid = ((USERID == GAME_DATA.player_1_id) ? Turn.First : Turn.Second)
   var SHIPS = [];
 
   // game logistics
@@ -31,7 +32,7 @@
   function check(e) {
     var code = e.keyCode;move
     switch (code) {
-      case 13:  request_move(6,1,0, "Move"); break;
+      case 13:  request_move(1,1,0, "Move"); break;
       case 39:  game.NextShipDown(); break; // Right key
       case 37:  game.NextShipUp(); break; // Left key
       default:  //Everything else
