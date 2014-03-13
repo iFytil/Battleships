@@ -15,6 +15,8 @@ class GamesController < ApplicationController
     shiplist = params[:shiporder]
     shiporder = []
     shiplist.split(",").each {|ship| shiporder << ship}
-    shiporder.each_with_index {|ship,index| Ship.create{:shiptype => Shiptype.findByName(ship), :location_x => x, :location_y => index+10, :game => game, :turn => turn}}
+    shiporder.each_with_index do |ship,index|
+      Ship.create(:shiptype => Shiptype.findByName(ship), :location_x => x, :location_y => index+10, :game => game, :turn => turn)
+    end
   end
 end
