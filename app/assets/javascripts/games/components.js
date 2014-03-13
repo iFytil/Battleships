@@ -246,7 +246,7 @@ Fleet = function (turn) {
       for (var i = 0; i < this.ships.length; i++) {
           this.ships[i].Draw(ctx, color);
       }
-      base.Draw(ctx, 'black');
+      base.Draw(ctx, color);
   };
 
 };
