@@ -24,9 +24,7 @@ function loadMouseEvents() {
     
     // check if in grid or on sidebar
     if(x>0 && x<WIDTH && y>0 && y<WIDTH){
-      // on grid
-
-      
+      var sq = game.env.getSquare();
     }else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
       // on sidebar
       game.sidebar.Click(x,y);
