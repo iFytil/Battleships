@@ -8,6 +8,7 @@ class CreateShips < ActiveRecord::Migration
       t.integer    :location_x
       t.integer    :location_y
       t.timestamps
+      t.string     :health
     end
   end
 end

@@ -3,7 +3,6 @@ class MoveController < WebsocketRails::BaseController
   def handle_move
 
     is_valid = is_valid_json(message) && is_valid_turn(message)
-    puts is_valid_turn(message)
 
     if is_valid
       move = Move.create(message)
@@ -14,7 +13,7 @@ class MoveController < WebsocketRails::BaseController
 
   def handle_data_request
     game = Game.find(message[:id])
-    send_message :receive_data, {ships: game.ships.to_json(:include => :shiptype), game: game.to_json(:include => :moves)}
+    broadcast_message :receive_data, {ships: game.ships.to_json(:include => :shiptype), game: game.to_json(:include => :moves)}
   end
 
   private

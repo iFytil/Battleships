@@ -18,6 +18,7 @@
   var SQ_WIDTH = Math.floor(WIDTH/N)
   var GAME_DATA = $('#game-data').data("game")
   var USERID = $('#game-data').data("userid")
+  var pid = ((USERID == GAME_DATA.player_1_id) ? Turn.First : Turn.Second)
   var SHIPS = [];
 
   // game logistics
@@ -25,16 +26,53 @@
 
   // Inputs
   window.addEventListener('keydown', check, false);
+  window.addEventListener("mousedown", click, false);
+  window.addEventListener("mousemove", hover, false);
 
   function check(e) {
     var code = e.keyCode;
     switch (code) {
-      case 13:  request_move(5,1,0, "Move"); break;
+      case 13:  request_move(1,1,0, "Move"); break;
       case 39:  game.NextShipDown(); break; // Right key
       case 37:  game.NextShipUp(); break; // Left key
       default:  //Everything else
     }
   }
+  function click(e) {
+  
+    var x = e.x-canvas.getBoundingClientRect().left;
+    var y = e.y-canvas.getBoundingClientRect().top;
+    
+    // check if in grid or on sidebar
+    if(x>0 && x<WIDTH && y>0 && y<WIDTH){
+      // on grid
+      ctx.fillStyle = "yellow";
+		ctx.fillRect(x,y,10,10);
+      
+    }else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
+      // on sidebar
+      game.sidebar.Hover(x,y);
+    }
+
+  }
+  function hover(e) {
+    var x = e.x-canvas.getBoundingClientRect().left;
+    var y = e.y-canvas.getBoundingClientRect().top;
+    
+    // check if in grid or on sidebar
+    if(x>0 && x<WIDTH && y>0 && y<WIDTH){
+      // on grid
+      ctx.fillStyle = "green";
+		ctx.fillRect(x,y,10,10);
+      
+    }else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
+      // on sidebar
+      ctx.fillStyle = "purple";
+      ctx.fillRect(x,y,10,10);
+    }
+  }
+  
+
 
   setInterval(function () {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);

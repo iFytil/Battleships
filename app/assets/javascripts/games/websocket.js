@@ -19,9 +19,12 @@ function dispatch() {
   });
 
   dispatcher.bind('receive_data', function(message) {
-    SHIPS = JSON.parse(message.ships);
-    GAME_DATA = JSON.parse(message.game);
-    game.reload();
+    var newdata = JSON.parse(message.game);
+    if (newdata.id == GAME_DATA.id) {
+      SHIPS = JSON.parse(message.ships);
+      GAME_DATA = newdata;
+      game.reload();
+    }
   });
 }
 

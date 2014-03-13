@@ -16,8 +16,8 @@ Environment = function (ctx) {
       for (var i = 0; i < c.length; i++) {
         if (c[i] == 1) {
           var x = 10 + i%10   // start_x + i%size_x
-            var y = 3 + i%24    // start_y + i%size_y
-            ctx.beginPath();
+          var y = 3 + i%24    // start_y + i%size_y
+          ctx.beginPath();
           ctx.rect(x * SQ_WIDTH, y * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
           ctx.fillStyle = 'orange';
           ctx.fill();
