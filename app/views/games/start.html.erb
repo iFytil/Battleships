@@ -27,6 +27,9 @@ function drop(ev)
   currentdrag.outerHTML = temp;
   ev.target.classList.remove("dragover");
   }
+
+  var shiplist = document.getElementById("shiporder");
+  shiplist.value = getShipList();
 }
 
 function dragenter(ev)
@@ -55,40 +58,45 @@ function getShipList()
   }
   return shiplist;
 }
+
+setTimeout(function(){var shiplist = document.getElementById("shiporder");shiplist.value = getShipList();},100);
 </script>
 
 <h2>These are your boats to choose from</h2>
 <p>This is the order in which your ships will spawn, drag and drop the types above to pick/order them.</p>
 <ul class="list-unstyled shipdrag" id="shiplistcontainer">
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="cruiser">====> cruiser</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Cruiser">====> cruiser</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="cruiser">====> cruiser</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Cruiser">====> cruiser</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="destroyer">===> destroyer</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Destroyer">===> destroyer</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="destroyer">===> destroyer</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Destroyer">===> destroyer</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="destroyer">===> destroyer</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Destroyer">===> destroyer</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="torpedo">==> torpedo boat</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Torpedo Boat">==> torpedo boat</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="torpedo">==> torpedo boat</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Torpedo Boat">==> torpedo boat</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="minelayer">=> mine layer</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Mine Layer">=> mine layer</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="minelayer">=> mine layer</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Mine Layer">=> mine layer</div>
   </li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"> 
-    <div draggable="true" ondrag="drag(event)" data-shiptype="radar">==> radar boat</div>
+    <div draggable="true" ondrag="drag(event)" data-shiptype="Radar Boat">==> radar boat</div>
   </li>
 </ul>
+<form action="" method="post">
+  <input type="hidden" name="shiporder" value="" id="shiporder">
 <div class='text-right'><button class='btn btn-sm btn-success' id="shipstartnext">Next Step</button></div>
+</form>
