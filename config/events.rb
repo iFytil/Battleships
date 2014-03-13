@@ -36,5 +36,5 @@ WebsocketRails::EventMap.describe do
   subscribe :client_disconnected, to: ChatController, with_method: :client_disconnected
 
   subscribe :send_move, to: MoveController, with_method: :handle_move
-  subscribe :get_ships, to: MoveController, with_method: :handle_ship_request
+  subscribe :get_data, to: MoveController, with_method: :handle_data_request
 end
