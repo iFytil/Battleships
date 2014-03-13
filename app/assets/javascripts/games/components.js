@@ -135,19 +135,6 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor) {
       
       ctx.fillStyle = color;
       ctx.fill();
-      
-      // Initialize health and armor for testing purposes
-      this.armor = 2;
-      // this.health = "";
-      // for(var i = 0; i < length; i++)
-      // {
-      //   this.health += this.armor.toString();
-      // }
-      // this.health = this.health.substr(0,length-2)+"1";
-
-      this.health = "22121"
-
-      // console.log(this.health);
 
       // Paint damaged squares black
       for(var i = 0; i < length; i++){
@@ -238,7 +225,7 @@ Fleet = function (turn) {
       var type = ship.shiptype;
       var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
       var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
-      this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar,cannon, ship.health))
+      this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar,cannon, ship.health, type.armor))
     }
   }
 
@@ -259,7 +246,7 @@ Fleet = function (turn) {
       for (var i = 0; i < this.ships.length; i++) {
           this.ships[i].Draw(ctx, color);
       }
-      base.Draw(ctx, 'black');
+      base.Draw(ctx, color);
   };
 
 };
