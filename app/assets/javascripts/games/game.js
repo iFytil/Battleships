@@ -63,7 +63,7 @@ Game = function(ctx)
   var pid = ((USERID == GAME_DATA.player_1_id) ? Turn.First : Turn.Second);
   
   // sidebar
-  var bar = new Sidebar(ctx);
+  this.sidebar = new Sidebar(ctx);
   
   // 2 players
   this.players=new Array();
@@ -101,7 +101,7 @@ Game = function(ctx)
     Listeners([{x:0,y:0},{x:10,y:10}]);
     
     // sidebar
-    bar.Draw();
+    this.sidebar.Draw();
   };
 
   this.reload = function()

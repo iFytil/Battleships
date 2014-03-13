@@ -58,6 +58,13 @@ Sidebar = function(ctx){
   this.buttons[5].name = "Radar";
   this.buttons[6].name = "Repair";
 
+  this.Hover = function(){
+    
+  }
+  this.Click = function(){
+    
+  }
+  
 	this.Draw = function(){
     
     ctx.save();
