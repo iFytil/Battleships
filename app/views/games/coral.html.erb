@@ -1,0 +1,45 @@
+<%= stylesheet_link_tag "games" %>
+
+<script>
+var corola = [];
+function hasClass(element, cls) {
+  return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+function generateCoral()
+{
+  corola = [];
+  var coralblock = document.getElementById("coralblock");
+  var coral = 24;
+  coralblock.innerHTML = "";
+  for(var i = 0; i < 240; i++)
+  {
+    coralblock.innerHTML += "<div class='water'></div>";
+  }
+
+  while(coral > 0)
+  {
+    var rand = Math.floor(Math.random() * 240);
+    if(hasClass(coralblock.children[rand],"water"))
+    {
+      coralblock.children[rand].classList.add("coral");
+      coralblock.children[rand].classList.remove("water");
+      corola.push(rand);
+      coral--;
+    }
+  }
+}
+setTimeout(generateCoral,100);
+</script>
+
+<h2>Coral Generation</h2>
+<p>This is the destructible terrain that appears in the middle of the map, orange is coral, blue is water.</p>
+
+<div>
+  <div id="coralblock"></div>
+</div>
+
+<div class='text-right'>
+  <button class='btn btn-sm btn-danger' onclick="generateCoral();" id="shipstartnext">Regenerate Coral</button>
+  <button class='btn btn-sm btn-success' id="shipstartnext">Next Step</button>
+</div>

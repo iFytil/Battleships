@@ -22,6 +22,13 @@ var Z = {
   Radar: 5,
   Heal: 6
 }
+var T = {
+  R:"Radar Boat",
+  M:"Mine Layer",
+  T:"Torpedo Boat",
+  D:"Destroyer",
+  C:"Cruiser"
+}
 
 Player = function(turn){
   
@@ -90,10 +97,18 @@ Game = function(ctx)
   this.NextShipUp = function()
   {
     this.players[pid].nextShip(1);
+    this.sidebar.RegisterShipChange();
+    this.movezone = Z.None;
   };
   this.NextShipDown = function()
   {
     this.players[pid].nextShip(-1);
+    this.sidebar.RegisterShipChange();
+    this.movezone = Z.None;
+  };
+  
+  this.CurrentPlayer =function(){
+      return this.players[this.turn].Selected();
   };
   
   this.Display = function()
@@ -105,23 +120,24 @@ Game = function(ctx)
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    // this.V.Draw(ctx,'grey');
+    //this.V.Draw(ctx,'grey');
     
     // zones
     if(this.movezone == Z.None){
         // do nothing
     }else if(this.movezone == Z.Translate){
-        DrawTranslationZone(this.players[this.turn].Selected(), ctx);
+        // DrawTranslationZone(this.players[this.turn].Selected(), ctx);
     } else if(this.movezone ==Z.Rotate){
-        DrawRotationZone(this.players[this.turn].Selected(), ctx);
+        // DrawRotationZone(this.players[this.turn].Selected(), ctx);
     }else if(this.movezone == Z.Cannon){
-      
+        this.players[this.turn].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
     }else if(this.movezone == Z.Torpedo){
-      
+        this.players[this.turn].Selected().torpedozone.Draw(ctx,"rgb(0,0,255)");
     }else if(this.movezone ==Z.Mine){
     };
     
     // sidebar
+    game.sidebar.RegisterShipChange();
     this.sidebar.Draw();
     
    
@@ -139,6 +155,8 @@ Game = function(ctx)
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
+    
+    
     
   }
 
@@ -160,5 +178,13 @@ Game = function(ctx)
   this.MineOptions = function(){
     this.movezone = Z.Mine;
     };
+  this.DisplayRadarOptions = function(){
+    this.movezone = Z.Radar;
+    };
+  this.DisplayHealingOptions = function(){
+    this.movezone = Z.Heal;
+    };
+    
+  
   
 };

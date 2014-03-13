@@ -5,16 +5,12 @@ Button = function(x, y, w, h,bar){
   this.x = x;
   this.y =y;
   
-  var activeColour = 'red';
-  var inactiveColour = 'grey';
-  var hoverColour = 'pink';
+  var activeColour = '#66A3D2';
+  var inactiveColour = '#24262A';
+  var hoverColour = '#ff7f50';
   this.colour = activeColour;
   
   this.active = false;
-  
-  this.Activate = function(){
-    this.active = !this.active;
-  }
   
   // this is the function that will be called when this button 
   //is pressed
@@ -23,6 +19,7 @@ Button = function(x, y, w, h,bar){
     };
   
   this.Click = function(x,y){
+    if(this.active){
     if(x>this.x && x<this.x+w && y>this.y && y<this.y+h){
       this.Press();
       return true;
@@ -30,7 +27,9 @@ Button = function(x, y, w, h,bar){
       return false;
     }
   }
+  }
   this.Hover = function(x,y){
+    if(this.active){
     if(x>this.x && x<this.x+w && y>this.y && y<this.y+h){
       this.colour = hoverColour;
       return true;
@@ -39,9 +38,15 @@ Button = function(x, y, w, h,bar){
       return false;
     }
   }
+  }
   
   this.Draw = function(ctx){
     
+    if(this.active)
+      this.colour = activeColour;
+    else
+        this.colour = inactiveColour;
+      
     ctx.fillStyle = this.colour;
     ctx.fillRect(this.x, this.y, w,h, 30);
     
@@ -49,11 +54,6 @@ Button = function(x, y, w, h,bar){
     ctx.font = 'bold 12pt Calibri';
     ctx.fillText(this.name, this.x+w/2, this.y+15);
     
-    if(this.active){
-      
-    }else{
-      
-    }
   }
   
 }
@@ -108,10 +108,10 @@ Sidebar = function(ctx,game){
       this.game.TorpedoOptions();
     if(f==4)
       this.game.MineOptions();
-   /* if(f==5)
-      this.game.DisplayMovements();
+    if(f==5)
+      this.game.DisplayRadarOptions();
     if(f==6)
-      this.game.DisplayMovements();*/
+      this.game.DisplayHealingOptions();
   };
      
  
@@ -131,15 +131,49 @@ Sidebar = function(ctx,game){
     }
   }
   
+  this.RegisterShipChange = function(){
+    var t = this.game.CurrentPlayer().name;
+    
+    // all ships have move capabilities
+    // all ships have rotation abilities
+    // all ships have cannon abilities
+    this.buttons[0].active = true;
+    this.buttons[1].active = true;
+    this.buttons[2].active = true;
+    this.buttons[3].active = false;
+    this.buttons[4].active = false;
+    this.buttons[5].active = false;
+    this.buttons[6].active = false;
+    
+    if(t == T.R){
+      // only radar boats can change their ranges
+      this.buttons[5].active = true;
+    }else if(t == T.M){
+      // only mine layers can drip/pick up mines
+      this.buttons[4].active = true;
+    }else if(t == T.T){
+      // torpedo boats have torpedos
+      this.buttons[3].active = true;
+    }else if(t == T.D){
+      // destroyers have torpedos
+      this.buttons[3].active = true;
+    }else if(t == T.C){
+      // rapairs can only be made if
+      //this.buttons[6].active = true;
+      
+    }
+  }
+  
+  
   this.Draw = function(){
     
     ctx.save();
     
-    this.ctx.fillStyle = '#00B25C';
+    this.ctx.fillStyle = '#254055';
     this.ctx.fillRect(WIDTH, 0, WIDTH+BAR_WIDTH, WIDTH);
     
     // title
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = '#66A3D2';
     ctx.textAlign = 'center';
     ctx.font = 'bold 10pt Calibri';
     ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);

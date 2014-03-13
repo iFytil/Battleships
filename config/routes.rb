@@ -2,6 +2,8 @@ Battleship::Application.routes.draw do
 
   get 'game/:id' => 'games#show', :as => :game
   get 'user/:id' => 'users#show', :as => :user
+  get '/games/:id/start' => 'games#start', :as => :game_start
+  get '/games/:id/coral' => 'games#coral', :as => :game_coral
 
   # Access the lobby
   get 'lobby' => 'pages#lobby', :as => :lobby
@@ -15,7 +17,6 @@ Battleship::Application.routes.draw do
   get 'invites/all' => 'invites#list', :as => :list_invites
   get 'games/all' => 'games#list', :as => :list_games
   get 'users/all' => 'users#list', :as => :list_users
-  get '/games/start' => 'games#start'
 
   devise_for :users
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
