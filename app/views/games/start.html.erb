@@ -21,6 +21,7 @@ function drop(ev)
   {
     ev.target.innerHTML = currentdrag.outerHTML;
   }
+  ev.target.classList.remove("dragover");
 }
 
 function dragenter(ev)
