@@ -38,6 +38,9 @@ Environment = function (ctx) {
       for(var i=0; i < this.sq.length; i++) {
         this.sq[i].draw();
       }
+      for(var i=0; i < this.dirty.length; i++) {
+        this.dirty[i].over();
+      }
     },
 
     differ: function(sq) {
@@ -100,6 +103,7 @@ Environment = function (ctx) {
   Grid.draw()
 
   this.draw = function () {
+    Grid.draw();
     Coral.draw();
   }
 
