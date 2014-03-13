@@ -6,6 +6,7 @@ class CreateMoves < ActiveRecord::Migration
       t.belongs_to :ship, index: true
       t.integer :pos_x
       t.integer :pos_y
+      t.string :kind
 
       t.timestamps
     end
