@@ -1,42 +1,42 @@
 Button = function(x, y, w, h){
-	
-	this.name = "";
-	
-	var inactiveColour = 'grey';
-	
-	this.active = false;
-	
-	this.Activate = function(){
-		this.active = !this.active;
-	}
-	
-	this.Draw = function(ctx,colour){
-		
+  
+  this.name = "";
+  
+  var inactiveColour = 'grey';
+  
+  this.active = false;
+  
+  this.Activate = function(){
+    this.active = !this.active;
+  }
+  
+  this.Draw = function(ctx,colour){
+    
     ctx.fillStyle = colour;
-		ctx.fillRect(x, y, w,h, 30);
+    ctx.fillRect(x, y, w,h, 30);
     
     ctx.fillStyle = 'black';
-		ctx.font = 'bold 12pt Calibri';
-		ctx.fillText(this.name, x+w/2, y+15);
-		
-		if(this.active){
-			
-		}else{
-			
-		}
-	}
-	
+    ctx.font = 'bold 12pt Calibri';
+    ctx.fillText(this.name, x+w/2, y+15);
+    
+    if(this.active){
+      
+    }else{
+      
+    }
+  }
+  
 }
 
 Sidebar = function(ctx){
-	
-	// top left corner
-	this.x = WIDTH;
-	this.y = 0;
+  
+  // top left corner
+  this.x = WIDTH;
+  this.y = 0;
   
   this.ctx = ctx;
-	
-	this.buttons = new Array();
+  
+  this.buttons = new Array();
   
   var numButtons = 7;
   var spacing = 10;
@@ -46,7 +46,7 @@ Sidebar = function(ctx){
   
   var x = this.x + spacing;
   var y = this.y + infospace ;
-	for (i = 0; i < numButtons; i++) {
+  for (i = 0; i < numButtons; i++) {
     this.buttons.push(new Button(x,y,bW,bH));
     y+=bH+spacing;
   }
@@ -58,30 +58,30 @@ Sidebar = function(ctx){
   this.buttons[5].name = "Radar";
   this.buttons[6].name = "Repair";
 
-	this.Draw = function(){
+  this.Draw = function(){
     
     ctx.save();
     
     this.ctx.fillStyle = '#00B25C';
-		this.ctx.fillRect(WIDTH, 0, WIDTH+BAR_WIDTH, WIDTH);
-		
-		// title
-		ctx.fillStyle = 'black';
+    this.ctx.fillRect(WIDTH, 0, WIDTH+BAR_WIDTH, WIDTH);
+    
+    // title
+    ctx.fillStyle = 'black';
     ctx.textAlign = 'center';
-		ctx.font = 'bold 12pt Calibri';
-		ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);
-		ctx.fillText('Moves', WIDTH+BAR_WIDTH/2, 40);
+    ctx.font = 'bold 12pt Calibri';
+    ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);
+    ctx.fillText('Moves', WIDTH+BAR_WIDTH/2, 40);
     
     // number of moves
     ctx.fillText("#:"+GAME_DATA.moves.length, WIDTH+BAR_WIDTH/2, 60);
     
-		// buttons
-		for (i = 0; i < this.buttons.length; i++) {
-			this.buttons[i].Draw(ctx,"orange");
-		}
+    // buttons
+    for (i = 0; i < this.buttons.length; i++) {
+      this.buttons[i].Draw(ctx,"orange");
+    }
 
     ctx.restore();
-		
     
-	};
+    
+  };
 };
