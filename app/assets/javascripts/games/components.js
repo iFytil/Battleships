@@ -58,7 +58,7 @@ Range = function (x,y,back, width, length,facing) {
 
 };
 
-Ship = function (ship, radar, cannon) {
+Ship = function (ship, radar, cannon, torpedo) {
 
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
 
@@ -77,7 +77,8 @@ Ship = function (ship, radar, cannon) {
   this.cannonzone = cannon;
   this.health     = ship.health;
   this.armor      = ship.shiptype.armor;
-	
+  this.torpedozone= torpedo;  
+
   this.points = new Array(this.length);
 
   // spacing 
@@ -188,7 +189,6 @@ Ship = function (ship, radar, cannon) {
         }
       }
       this.radarzone.Draw(ctx, 'yellow');
-      this.cannonzone.Draw(ctx, 'orange');
   }
 
   // Duplicate!
@@ -223,7 +223,9 @@ Fleet = function (turn) {
       var type = ship.shiptype;
       var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
       var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
-      this.ships.push(new Ship(ship, radar, cannon))
+      var torpedo = new Range(ship.location_x, ship.location_y, type.size, 1, 10, D[ship.direction])
+
+      this.ships.push(new Ship(ship, radar, cannon, torpedo))
     }
   }
 
