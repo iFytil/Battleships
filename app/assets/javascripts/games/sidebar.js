@@ -66,7 +66,7 @@ Sidebar = function(ctx){
     
   }
   
-	this.Draw = function(){
+  this.Draw = function(){
     
     ctx.save();
     
