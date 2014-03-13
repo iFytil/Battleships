@@ -132,7 +132,7 @@ Sidebar = function(ctx,game){
   }
   
   this.RegisterShipChange = function(){
-    var t = this.game.CurrentPlayer().type;
+    var t = this.game.CurrentPlayer().name;
     
     // all ships have move capabilities
     // all ships have rotation abilities

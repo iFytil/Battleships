@@ -49,16 +49,16 @@ Range = function (x,y,back, width, length,facing) {
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
-    ctx.closePath();
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
+    ctx.closePath();
     ctx.stroke();
   }
   
 
 };
 
-Ship = function (ship, radar, cannon) {
+Ship = function (ship, radar, cannon, torpedo) {
 
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
 
@@ -77,75 +77,57 @@ Ship = function (ship, radar, cannon) {
   this.cannonzone = cannon;
   this.health     = ship.health;
   this.armor      = ship.shiptype.armor;
-  this.type       = ship.shiptype.name;
+  this.name       = ship.shiptype.name;
 	
   this.points = new Array();
+
+  this.torpedozone= torpedo;  
+
 
   // spacing 
   var s = 4;
 
-  this.Set = function(){
-    this.sternx     = (this.x) * SQ_WIDTH; // bow tip coordinates
-    this.sterny     = (this.y) * SQ_WIDTH;
-    
-    if (this.facing == D.Right) 
-    {
-      this.points[0] =new Point(this.sternx+s,this.sterny+s);
-      this.points[1] =new Point(this.sternx+s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx+(this.length-1)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
-      this.points[3] =new Point(this.sternx+(this.length)*SQ_WIDTH-t,this.sterny+t);
-      this.points[4] =new Point(this.sternx+(this.length-1)*SQ_WIDTH,this.sterny+s);
-    } 
-    else if (this.facing == D.Left) 
-    {
-      this.points[0] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+s);
-      this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx-(this.length-2)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
-      this.points[3] =new Point(this.sternx-(this.length-1)*SQ_WIDTH+t,this.sterny+t);
-      this.points[4] =new Point(this.sternx-(this.length-2)*SQ_WIDTH,this.sterny+s);
-    } 
-    else if (this.facing == D.Up) 
-    {
-      this.points[0] =new Point(this.sternx+s,this.sterny+SQ_WIDTH-s);
-      this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny-(this.length-2)*SQ_WIDTH);
-      this.points[3] =new Point(this.sternx+t,this.sterny-(this.length-1)*SQ_WIDTH+t);
-      this.points[4] =new Point(this.sternx+s,this.sterny-(this.length-2)*SQ_WIDTH);
-    } 
-    else if (this.facing == D.Down) 
-    {
-      this.points[0] =new Point(this.sternx+s,this.sterny+s);
-      this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+s);
-      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+(this.length-1)*SQ_WIDTH);
-      this.points[3] =new Point(this.sternx+t,this.sterny+(this.length)*SQ_WIDTH-t);
-      this.points[4] =new Point(this.sternx+s,this.sterny+(this.length-1)*SQ_WIDTH);
+  this.Set = function() {
+    var dx = 0;
+    var dy = 0;
+    switch (this.facing) {
+    case D.Up:
+      dy = -1;
+      break;
+    case D.Down:
+      dy = 1;
+      break;
+    case D.Left:
+      dx = -1;
+      break;
+    case D.Right:
+      dx = 1;
+      break;
+    }
+    for (var i = 0; i < this.length; i++) {
+      this.points.push(new Point(this.x+i*dx, this.y+i*dy))
     }
   }
   this.Set();
 
   this.highlighted = false;
-  this.Draw = function (ctx, color, damage) {
-      ctx.beginPath();
-      ctx.moveTo(this.points[0].x, this.points[0].y);
-      ctx.lineTo(this.points[1].x, this.points[1].y);
-      ctx.lineTo(this.points[2].x, this.points[2].y);
-      ctx.lineTo(this.points[3].x, this.points[3].y);
-      ctx.lineTo(this.points[4].x, this.points[4].y);
-      ctx.closePath();
-      ctx.lineWidth = 2;
-      if (this.highlighted){
-          ctx.strokeStyle = 'yellow';
-      }else{
-          ctx.strokeStyle = color;
-        }
-      ctx.stroke();
-      
-      ctx.fillStyle = color;
 
+  this.Draw = function (ctx, color, damage) {
+
+      ctx.beginPath()
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = (this.highlighted && this.data.turn==pid) ? 'black' : color
+      for (each in this.points) {
+        var pt = this.points[each];
+        ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+      }
+      ctx.stroke();
       ctx.fill();
+      ctx.closePath();
 
       // Paint damaged squares black
-      if(damage)
+      if(damage && false)
       {
         for(var i = 0; i < this.length; i++){
             if(parseInt(this.health.charAt(i)) != this.armor)
@@ -210,7 +192,6 @@ Ship = function (ship, radar, cannon) {
         }
       }
       this.radarzone.Draw(ctx, 'yellow');
-      this.cannonzone.Draw(ctx, 'orange');
   }
 
   // Duplicate!
@@ -227,7 +208,6 @@ Base = function (x, y) {
   var y0 = y * SQ_WIDTH;
   
   // visibiltiy
-  console.log(x+" "+y+" ");
   this.radarzone = new Range(x,y,-1, 3, 12,D.Down);
 
   this.Draw = function (ctx, color) {
@@ -246,7 +226,9 @@ Fleet = function (turn) {
       var type = ship.shiptype;
       var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
       var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
-      this.ships.push(new Ship(ship, radar, cannon))
+      var torpedo = new Range(ship.location_x, ship.location_y, type.size, 1, 10, D[ship.direction])
+
+      this.ships.push(new Ship(ship, radar, cannon, torpedo))
     }
   }
 
