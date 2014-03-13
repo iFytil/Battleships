@@ -70,7 +70,7 @@ Game = function(ctx)
 {
 
   // environment
-  var env = new Environment(ctx);
+  this.env = new Environment(ctx);
   
   // sidebar
   this.sidebar = new Sidebar(ctx);
@@ -101,17 +101,14 @@ Game = function(ctx)
   
   this.Display = function()
   {
-    
-    // environment
-    env.Draw();
-    
+    this.env.draw();
+
     // ships
     this.players[0].fleet.Draw(ctx,'#B80B0B');
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
     //this.V.Draw(ctx,'grey');
-    Listeners([{x:0,y:0},{x:10,y:10}]);
     
     // zones
     if(this.movezone == Z.None){
