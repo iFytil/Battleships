@@ -1,6 +1,6 @@
-Button = function(x, y, w, h,text){
+Button = function(x, y, w, h){
 	
-	this.name = text;
+	this.name = "";
 	
 	var inactiveColour = 'grey';
 	
@@ -14,6 +14,10 @@ Button = function(x, y, w, h,text){
 		
     ctx.fillStyle = colour;
 		ctx.fillRect(x, y, w,h, 30);
+    
+    ctx.fillStyle = 'black';
+		ctx.font = 'bold 12pt Calibri';
+		ctx.fillText(this.name, x+w/2, y+15);
 		
 		if(this.active){
 			
@@ -34,7 +38,7 @@ Sidebar = function(ctx){
 	
 	this.buttons = new Array();
   
-  var numButtons = 5;
+  var numButtons = 7;
   var spacing = 10;
   var bW = BAR_WIDTH-2*spacing;
   var bH = (WIDTH - 50 -numButtons*spacing)/numButtons;
@@ -45,24 +49,34 @@ Sidebar = function(ctx){
     this.buttons.push(new Button(x,y,bW,bH));
     y+=bH+spacing;
   }
+  this.buttons[0].name = "Move";
+  this.buttons[1].name = "Rotate";
+  this.buttons[2].name = "Cannons";
+  this.buttons[3].name = "Torpedos";
+  this.buttons[4].name = "Mines";
+  this.buttons[5].name = "Radar";
+  this.buttons[6].name = "Repair";
 
-	
 	this.Draw = function(){
-    //ctx.save();
+    
+    ctx.save();
+    
     this.ctx.fillStyle = '#00B25C';
 		this.ctx.fillRect(WIDTH, 0, WIDTH+BAR_WIDTH, WIDTH);
 		
 		// title
 		ctx.fillStyle = 'black';
+    ctx.textAlign = 'center';
 		ctx.font = 'bold 12pt Calibri';
-		ctx.fillText('Available', WIDTH+15, 20);
-		ctx.fillText('Moves', WIDTH+25, 40);
+		ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);
+		ctx.fillText('Moves', WIDTH+BAR_WIDTH/2, 40);
     
 		// buttons
 		for (i = 0; i < this.buttons.length; i++) {
 			this.buttons[i].Draw(ctx,"orange");
 		}
 
+    ctx.restore();
 		
     
 	};
