@@ -22,6 +22,9 @@ function drop(ev)
     ev.target.innerHTML = currentdrag.outerHTML;
   }
   ev.target.classList.remove("dragover");
+  var shipcount = getShipList().length;
+  document.getElementById("shipcount").innerText = 10 - shipcount;
+  document.getElementById("shipstartnext").disabled = (shipcount != 10);
 }
 
 function dragenter(ev)
@@ -52,15 +55,14 @@ function getShipList()
 }
 </script>
 
-
 <h2>These are your boats to choose from</h2>
+<p>You need to pick <span id="shipcount">10</span> more ships.</p>
 <div draggable="true" ondrag="drag(event)" data-shiptype="cruiser">====> cruiser</div>
 <div draggable="true" ondrag="drag(event)" data-shiptype="destroyer">===> destroyer</div>
 <div draggable="true" ondrag="drag(event)" data-shiptype="torpedo">==> torpedo boat</div>
 <div draggable="true" ondrag="drag(event)" data-shiptype="minelayer">=> mine layer</div>
 <div draggable="true" ondrag="drag(event)" data-shiptype="minelayer">==> radar boat</div>
-<br>
-
+<p>This is the order in which your ships will spawn, drag and drop the types above to pick/order them.</p>
 <ul class="list-unstyled shipdrag" id="shiplistcontainer">
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
@@ -73,3 +75,4 @@ function getShipList()
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
   <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
 </ul>
+<div class='text-right'><button class='btn btn-sm btn-success' disabled id="shipstartnext">Next Step</button></div>
