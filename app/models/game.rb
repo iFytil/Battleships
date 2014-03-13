@@ -25,7 +25,7 @@ class Game < ActiveRecord::Base
                 :direction => "Down", :turn => 1, :location_x => 18, :location_y => 3)
 
     Ship.create(:shiptype_id => Shiptype.find_by(:name => "Mine Layer").id, :game_id => game.id, 
-                :direction => "Left", :turn => 2, :location_x => 3, :location_y => 18)
+    :direction => "Left", :turn => 2, :location_x => 3, :location_y => 18, :health => Shiptype.find_by(name => "Mine Layer").s)
 
     game.save
   end
