@@ -25,7 +25,7 @@ class Chat.Controller
     userHtml = ""
     userListUnique = []
     for user in userList
-      if userListUnique.indexOf(user.user_name) is -1
+      if user && userListUnique.indexOf(user.user_name) is -1
         userListUnique.push(user.user_name)
         userHtml = userHtml + "<li>#{user.user_name}</li>"
     $(userHtml)
