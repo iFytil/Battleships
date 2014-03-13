@@ -57,6 +57,7 @@ Player = function(turn){
     for(var i=0;i<this.fleet.ships.length;i++){
       r.push(this.fleet.ships[i].radarzone);
     }
+    r.push(this.fleet.base.radarzone);
     return r;
   };
   
@@ -86,10 +87,6 @@ Game = function(ctx)
   this.turn = 0;
   this.players[this.turn].changeTurn();
   
-  // Visibility
-  this.V = new Visibility(this.players[this.turn].Ranges());
-  
-  
   this.NextShipUp = function()
   {
     this.players[pid].nextShip(1);
@@ -108,7 +105,7 @@ Game = function(ctx)
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(ctx,'grey');
+    this.V.Draw(ctx,'grey');
     
     // zones
     if(this.movezone == Z.None){
@@ -126,6 +123,8 @@ Game = function(ctx)
     
     // sidebar
     this.sidebar.Draw();
+    
+   
   };
 
   this.reload = function()
@@ -140,6 +139,7 @@ Game = function(ctx)
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
+    
   }
 
   this.reload();

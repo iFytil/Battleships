@@ -218,6 +218,10 @@ Base = function (x, y) {
 
   var x0 = x * SQ_WIDTH;
   var y0 = y * SQ_WIDTH;
+  
+  // visibiltiy
+  console.log(x+" "+y+" ");
+  this.radarzone = new Range(x,y,-1, 3, 12,D.Down);
 
   this.Draw = function (ctx, color) {
     ctx.fillStyle = color;
@@ -241,11 +245,11 @@ Fleet = function (turn) {
 
   if (turn == Turn.First) 
   {
-    var base = new Base(0, 10);
+    this.base = new Base(0, 10);
   } 
   else if (turn == Turn.Second)
   {
-    var base = new Base(29, 10);
+    this.base = new Base(29, 10);
   }
 
   this.Select = function (x, y) {
@@ -256,7 +260,8 @@ Fleet = function (turn) {
       for (var i = 0; i < this.ships.length; i++) {
           this.ships[i].Draw(ctx, color, true);
       }
-      base.Draw(ctx, color);
+      this.base.Draw(ctx, color);
+      this.base.radarzone.Draw(ctx, color);
   };
 
 };
