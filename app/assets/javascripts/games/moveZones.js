@@ -29,14 +29,18 @@ DrawRotationZone = function (ship, ctx){
 	}
 	else if(ship.facing == D.Down) {
 		var lFace = D.Right; 
-		var lXOffset = ; 
-		var lYOffset = 
+		var lXOffset = -ship.turnIndex; 
+		var lYOffset = -ship.turnIndex;
+
+		var rFace = D.Left;
+		var rXOffset = ship.turnIndex; 
+		var rYOffset = -ship.turnIndex;
 	}
 
 	if(ship.facing == D.Right) {}
 	else if(ship.facing == D.Up) {}
 	else if(ship.facing == D.Left) {}
-	else if(ship.facing == D.Down) {var rFace = D.Left; var rXOffset = ; var rYOffset = }
+	else if(ship.facing == D.Down) {}
 
 
 	if( ship.turnSpeed == 1 || ship.turnSpeed == 2)
