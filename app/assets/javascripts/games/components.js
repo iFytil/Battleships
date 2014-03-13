@@ -49,9 +49,9 @@ Range = function (x,y,back, width, length,facing) {
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
-    ctx.closePath();
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
+    ctx.closePath();
     ctx.stroke();
   }
   
@@ -107,15 +107,20 @@ Ship = function (ship, radar, cannon) {
   this.Set();
 
   this.highlighted = false;
-  this.Draw = function (ctx, color, damage) {
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = (this.highlighted) ? 'yellow' : color
-      ctx.fillStyle = color;
 
+  this.Draw = function (ctx, color, damage) {
+
+      ctx.beginPath()
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = (this.highlighted && this.data.turn==pid) ? 'black' : color
       for (each in this.points) {
         var pt = this.points[each];
-        ctx.fillRect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+        ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
       }
+      ctx.stroke();
+      ctx.fill();
+      ctx.closePath();
 
       // Paint damaged squares black
       if(damage && false)

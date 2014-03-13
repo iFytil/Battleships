@@ -42,6 +42,7 @@ Visibility = function(ranges) {
             ctx.rect(i * SQ_WIDTH, j * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
             ctx.fillStyle = color;
             ctx.fill();
+            ctx.closePath();
           }
         }
       } 
