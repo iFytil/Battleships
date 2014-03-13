@@ -6,4 +6,10 @@ class Ship < ActiveRecord::Base
   belongs_to :shiptype
   belongs_to :game
   has_many   :moves
+
+  after_create do |ship|	
+    ship.health = ship.shiptype.armor.to_s * ship.shiptype.size
+
+    ship.save
+  end
 end
