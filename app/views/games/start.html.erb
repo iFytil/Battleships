@@ -40,7 +40,7 @@ function getShipList()
   var shiplist = [];
   for(var i = 0; i < shiplistc.length; i++)
   {
-    try{shiplist.push(shiplistc[i].firstChild.getAttribute("data-shiptype"));}
+    try{shiplist.push(shiplistc[i].children[0].getAttribute("data-shiptype"));}
     catch(err){};
   }
   return shiplist;
