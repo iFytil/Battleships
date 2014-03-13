@@ -7,8 +7,8 @@ var D = {
 };
 
 var Turn = {
-  First: 1,
-  Second: 2
+  First: 0,
+  Second: 1
 }
 
 Player = function(turn){
@@ -57,6 +57,8 @@ Player = function(turn){
 Game = function(ctx)
 {
 
+  var pid = ((USERID == GAME_DATA.player_1_id) ? Turn.First : Turn.Second);
+
   // environment
   var env = new Environment(ctx);
   
@@ -79,7 +81,7 @@ Game = function(ctx)
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(ctx,'grey');
+    this.V.Draw(ctx,'grey');
   };
 
   this.reload = function()
@@ -93,7 +95,7 @@ Game = function(ctx)
     this.players[this.turn].changeTurn();
     
     // Visibility
-    this.V = new Visibility(this.players[this.turn].Ranges());
+    this.V = new Visibility(this.players[pid].Ranges());
   }
 
   this.reload();

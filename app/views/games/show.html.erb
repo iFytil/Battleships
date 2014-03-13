@@ -1,7 +1,7 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
-<%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves)} do %>
+<%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves), userid: current_user.id} do %>
 <% end %>
 
 <canvas id="myCanvas" width="600" height="600"></canvas>
@@ -16,6 +16,7 @@
   var WIDTH = canvas.width
   var SQ_WIDTH = Math.floor(WIDTH/N)
   var GAME_DATA = $('#game-data').data("game")
+  var USERID = $('#game-data').data("userid")
   var SHIPS = [];
 
   // game logistics

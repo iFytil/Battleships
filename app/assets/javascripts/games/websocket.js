@@ -8,13 +8,13 @@ function dispatch() {
   }
 
   dispatcher.bind('move_response', function(message) {
-    if (message.valid_json) {
+    if (message.valid) {
       // Reload ships
       console.log("Move occured")
       dispatcher.trigger('get_data', GAME_DATA)
     } else {
       // Error in our program. Do nothing
-      console.log("ERROR: Invalid move format")
+      console.log("ERROR: Invalid")
     }
   });
 
