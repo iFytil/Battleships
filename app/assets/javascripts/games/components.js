@@ -72,8 +72,6 @@ Ship = function (ship, radar, cannon) {
   this.turnSpeed  = ship.shiptype.turn_speed;
   this.turnIndex  = ship.shiptype.turn_index;
   this.speed      = ship.shiptype.speed;
-  this.sternx     = (this.x) * SQ_WIDTH; // bow tip coordinates
-  this.sterny     = (this.y) * SQ_WIDTH;
   this.facing     = D[ship.direction];
   this.radarzone  = radar;
   this.cannonzone = cannon;
@@ -86,6 +84,8 @@ Ship = function (ship, radar, cannon) {
   var s = 4;
 
   this.Set = function(){
+    this.sternx     = (this.x) * SQ_WIDTH; // bow tip coordinates
+    this.sterny     = (this.y) * SQ_WIDTH;
     
     if (this.facing == D.Right) 
     {
@@ -211,6 +211,12 @@ Ship = function (ship, radar, cannon) {
       this.radarzone.Draw(ctx, 'yellow');
       this.cannonzone.Draw(ctx, 'orange');
   }
+
+  // Duplicate!
+  this.Duplicate = function(){
+    return new Ship(ship, radar, cannon);
+  }
+
 
 };
 

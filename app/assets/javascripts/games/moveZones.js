@@ -59,21 +59,34 @@ DrawRotationZone = function (ship, ctx){
 			var bXOffset = 0;
 			var bYOffset = ship.turnIndex * 2;
 		}
+
+		var bShip = ship.Duplicate();
 	}
 
+	var lShip = ship.Duplicate();
+	var rShip = ship.Duplicate();
+	
 	var color = "rgb(255,255,0)"
 
 	if( ship.turnSpeed == 1 || ship.turnSpeed == 2)
 	{
 		// Get points for left turn zone
-		var lShip = new Ship(ship.x + lXOffset, ship.y + lYOffset, ship.length, ship.speed, lFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
+		// var lShip = new Ship(ship.x + lXOffset, ship.y + lYOffset, ship.length, ship.speed, lFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
+		lShip.x += lXOffset;
+		lShip.y += lYOffset;
+		lShip.facing = lFace;
+		lShip.Set();
 
 		var lPoint1 = lShip.points[2];
 		var lPoint2 = lShip.points[3];
 		var lPoint3 = lShip.points[4];
 
 		// Get points for right turn zone
-		var rShip = new Ship(ship.x + rXOffset, ship.y + rYOffset, ship.length, ship.speed, rFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
+		// var rShip = new Ship(ship.x + rXOffset, ship.y + rYOffset, ship.length, ship.speed, rFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
+		rShip.x += rXOffset;
+		rShip.y += rYOffset;
+		rShip.facing = rFace;
+		rShip.Set();
 
 		var rPoint1 = rShip.points[2];
 		var rPoint2 = rShip.points[3];
@@ -83,7 +96,11 @@ DrawRotationZone = function (ship, ctx){
 	if(ship.turnSpeed == 2)
 	{
 		// Get points for turn around zone
-		var bShip = new Ship(ship.x + bXOffset, ship.y + bYOffset, ship.length, ship.speed, bFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
+		// var bShip = new Ship(ship.x + bXOffset, ship.y + bYOffset, ship.length, ship.speed, bFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
+		bShip.x += bXOffset;
+		bShip.y += bYOffset;
+		bShip.facing = bFace;
+		bShip.Set();
 
 		var bPoint1 = bShip.points[2];
 		var bPoint2 = bShip.points[3];
