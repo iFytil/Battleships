@@ -58,11 +58,20 @@ Range = function (x,y,back, width, length,facing) {
 
 };
 
-Ship = function (x, y, length, speed, facing, radar,cannon, health, armor) {
+Ship = function (x, y, length, speed, facing, radar,cannon, health, armor, turnSpeed, turnIndex) {
 
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
 
   var t = SQ_WIDTH / 2;
+
+  this.x = x;
+  this.y = y;
+  this.length = length;
+
+  this.turnSpeed = turnSpeed;
+  this.turnIndex = turnIndex;
+  this.speed = speed;
+
   this.sternx = (x) * SQ_WIDTH; // bow tip coordinates
   this.sterny = (y) * SQ_WIDTH;
   
@@ -117,7 +126,7 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor) {
   this.Set();
 
   this.highlighted = false;
-  this.Draw = function (ctx, color) {
+  this.Draw = function (ctx, color, damage) {
       ctx.beginPath();
       ctx.moveTo(this.points[0].x, this.points[0].y);
       ctx.lineTo(this.points[1].x, this.points[1].y);
@@ -137,66 +146,69 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor) {
       ctx.fill();
 
       // Paint damaged squares black
-      for(var i = 0; i < length; i++){
-          if(parseInt(this.health.charAt(i)) != this.armor)
-          {
-            var grayLevel = parseInt(this.health.charAt(i))/this.armor;
-
-            var x = Math.floor(grayLevel*255);
-            ctx.fillStyle = "rgb("+x+","+x+","+x+")";
-
-            if(i == length-1)
+      if(damage)
+      {
+        for(var i = 0; i < length; i++){
+            if(parseInt(this.health.charAt(i)) != this.armor)
             {
-                ctx.beginPath();
-                ctx.moveTo(this.points[2].x, this.points[2].y);
-                ctx.lineTo(this.points[3].x, this.points[3].y);
-                ctx.lineTo(this.points[4].x, this.points[4].y);
-                ctx.closePath();
-                ctx.fill();
-            } 
-            else{
-                if (this.facing == D.Right) 
-                {
+              var grayLevel = parseInt(this.health.charAt(i))/this.armor;
+
+              var x = Math.floor(grayLevel*255);
+              ctx.fillStyle = "rgb("+x+","+x+","+x+")";
+
+              if(i == length-1)
+              {
                   ctx.beginPath();
-                  ctx.moveTo(this.points[0].x + i*SQ_WIDTH, this.points[0].y);
-                  ctx.lineTo(this.points[1].x + i*SQ_WIDTH, this.points[1].y);
-                  ctx.lineTo(this.points[1].x + (i+1)*SQ_WIDTH-s, this.points[1].y);
-                  ctx.lineTo(this.points[0].x + (i+1)*SQ_WIDTH-s, this.points[0].y);
+                  ctx.moveTo(this.points[2].x, this.points[2].y);
+                  ctx.lineTo(this.points[3].x, this.points[3].y);
+                  ctx.lineTo(this.points[4].x, this.points[4].y);
                   ctx.closePath();
                   ctx.fill();
-                } 
-                else if (this.facing == D.Left) 
-                {
-                  ctx.beginPath();
-                  ctx.moveTo(this.points[0].x - i*SQ_WIDTH, this.points[0].y);
-                  ctx.lineTo(this.points[1].x - i*SQ_WIDTH, this.points[1].y);
-                  ctx.lineTo(this.points[1].x - (i+1)*SQ_WIDTH+s, this.points[1].y);
-                  ctx.lineTo(this.points[0].x - (i+1)*SQ_WIDTH+s, this.points[0].y);
-                  ctx.closePath();
-                  ctx.fill();
-                } 
-                else if (this.facing == D.Up) 
-                {
-                  ctx.beginPath();
-                  ctx.moveTo(this.points[0].x, this.points[0].y - i*SQ_WIDTH);
-                  ctx.lineTo(this.points[1].x, this.points[1].y - i*SQ_WIDTH);
-                  ctx.lineTo(this.points[1].x, this.points[1].y - (i+1)*SQ_WIDTH+s);
-                  ctx.lineTo(this.points[0].x, this.points[0].y - (i+1)*SQ_WIDTH+s);
-                  ctx.closePath();
-                  ctx.fill();
-                } 
-                else if (this.facing == D.Down) 
-                {
-                  ctx.beginPath();
-                  ctx.moveTo(this.points[0].x, this.points[0].y + i*SQ_WIDTH);
-                  ctx.lineTo(this.points[1].x, this.points[1].y + i*SQ_WIDTH);
-                  ctx.lineTo(this.points[1].x, this.points[1].y + (i+1)*SQ_WIDTH-s);
-                  ctx.lineTo(this.points[0].x, this.points[0].y + (i+1)*SQ_WIDTH-s);
-                  ctx.closePath();
-                  ctx.fill();
-                }
+              } 
+              else{
+                  if (this.facing == D.Right) 
+                  {
+                    ctx.beginPath();
+                    ctx.moveTo(this.points[0].x + i*SQ_WIDTH, this.points[0].y);
+                    ctx.lineTo(this.points[1].x + i*SQ_WIDTH, this.points[1].y);
+                    ctx.lineTo(this.points[1].x + (i+1)*SQ_WIDTH-s, this.points[1].y);
+                    ctx.lineTo(this.points[0].x + (i+1)*SQ_WIDTH-s, this.points[0].y);
+                    ctx.closePath();
+                    ctx.fill();
+                  } 
+                  else if (this.facing == D.Left) 
+                  {
+                    ctx.beginPath();
+                    ctx.moveTo(this.points[0].x - i*SQ_WIDTH, this.points[0].y);
+                    ctx.lineTo(this.points[1].x - i*SQ_WIDTH, this.points[1].y);
+                    ctx.lineTo(this.points[1].x - (i+1)*SQ_WIDTH+s, this.points[1].y);
+                    ctx.lineTo(this.points[0].x - (i+1)*SQ_WIDTH+s, this.points[0].y);
+                    ctx.closePath();
+                    ctx.fill();
+                  } 
+                  else if (this.facing == D.Up) 
+                  {
+                    ctx.beginPath();
+                    ctx.moveTo(this.points[0].x, this.points[0].y - i*SQ_WIDTH);
+                    ctx.lineTo(this.points[1].x, this.points[1].y - i*SQ_WIDTH);
+                    ctx.lineTo(this.points[1].x, this.points[1].y - (i+1)*SQ_WIDTH+s);
+                    ctx.lineTo(this.points[0].x, this.points[0].y - (i+1)*SQ_WIDTH+s);
+                    ctx.closePath();
+                    ctx.fill();
+                  } 
+                  else if (this.facing == D.Down) 
+                  {
+                    ctx.beginPath();
+                    ctx.moveTo(this.points[0].x, this.points[0].y + i*SQ_WIDTH);
+                    ctx.lineTo(this.points[1].x, this.points[1].y + i*SQ_WIDTH);
+                    ctx.lineTo(this.points[1].x, this.points[1].y + (i+1)*SQ_WIDTH-s);
+                    ctx.lineTo(this.points[0].x, this.points[0].y + (i+1)*SQ_WIDTH-s);
+                    ctx.closePath();
+                    ctx.fill();
+                  }
+              }
             }
-          }
+        }
       }
       this.radarzone.Draw(ctx, 'yellow');
       this.cannonzone.Draw(ctx, 'orange');
@@ -225,7 +237,8 @@ Fleet = function (turn) {
       var type = ship.shiptype;
       var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
       var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
-      this.ships.push(new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar,cannon, ship.health, type.armor))
+      var s = new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar,cannon, ship.health, type.armor, type.turn_speed, type.turn_index, type.speed))
+      this.ships.push(s)
     }
   }
 
@@ -244,7 +257,7 @@ Fleet = function (turn) {
 
   this.Draw = function (ctx, color) {
       for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(ctx, color);
+          this.ships[i].Draw(ctx, color, true);
       }
       base.Draw(ctx, color);
   };

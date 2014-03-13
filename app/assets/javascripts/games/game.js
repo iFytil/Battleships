@@ -115,4 +115,21 @@ Game = function(ctx)
 
   this.reload();
   
+  // forward, backward, up, down
+  this.MoveOptions = function(){
+    
+    };
+  this.RotateOptions = function(){
+    
+    };
+  this.CannonOptions = function(){
+    
+    };
+  this.TorpedoOptions = function(){
+    
+    };
+  this.MineOptions = function(){
+    
+    };
+  
 };
