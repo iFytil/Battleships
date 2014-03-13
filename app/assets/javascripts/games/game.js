@@ -73,7 +73,7 @@ Game = function(ctx)
   this.env = new Environment(ctx);
   
   // sidebar
-  this.sidebar = new Sidebar(ctx);
+  this.sidebar = new Sidebar(ctx,this);
   
   // currently displayed zones
   this.movezone = Z.None;
@@ -116,7 +116,7 @@ Game = function(ctx)
     }else if(this.movezone == Z.Translate){
       
     } else if(this.movezone ==Z.Rotate){
-        DrawRotationZone(this.players[this.turn].fleet.Selected(), ctx);
+        DrawRotationZone(this.players[this.turn].Selected(), ctx);
     }else if(this.movezone == Z.Cannon){
       
     }else if(this.movezone == Z.Torpedo){

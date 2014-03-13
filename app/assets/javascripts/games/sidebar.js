@@ -99,7 +99,7 @@ Sidebar = function(ctx,game){
   // handle function
   this.Handle = function(f){
     if(f==0)
-      this.game.MoveOptions();
+      this.game.TranslateOptions();
     if(f==1)
       this.game.RotateOptions();
     if(f==2)

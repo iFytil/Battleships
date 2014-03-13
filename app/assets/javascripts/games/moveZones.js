@@ -37,7 +37,7 @@ DrawRotationZone = function (ship){
 		var rYOffset = -ship.turnIndex;
 	}
 
-	var color = "rgba(255,255,0,100)";
+	var color = "rgba(255,255,0,0.1)";
 
 	if( ship.turnSpeed == 1 || ship.turnSpeed == 2)
 	{
@@ -50,7 +50,7 @@ DrawRotationZone = function (ship){
 
 
 		// Draw right
-		var lShip = new Ship(ship.x + rXOffset, ship.y + rYOffset, ship.length, ship.speed, rFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
+		var rShip = new Ship(ship.x + rXOffset, ship.y + rYOffset, ship.length, ship.speed, rFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
 
 		rShip.Draw(ctx, color, false)
 

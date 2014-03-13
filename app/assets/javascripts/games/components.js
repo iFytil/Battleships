@@ -239,7 +239,6 @@ Fleet = function (turn) {
       var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
 
       var s = new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar,cannon, ship.health, type.armor, type.turn_speed, type.turn_index)
-      
       this.ships.push(s)
     }
   }
