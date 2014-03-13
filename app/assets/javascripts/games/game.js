@@ -7,8 +7,8 @@ var D = {
 };
 
 var Turn = {
-  First: 1,
-  Second: 2
+  First: 0,
+  Second: 1
 }
 
 Player = function(turn){
@@ -57,19 +57,10 @@ Player = function(turn){
 Game = function(ctx)
 {
 
+  var pid = ((USERID == GAME_DATA.player_1_id) ? Turn.First : Turn.Second);
+
   // environment
   var env = new Environment(ctx);
-  
-  // 2 players
-  this.players=new Array();
-  this.players.push(new Player(Turn.First));
-  this.players.push(new Player(Turn.Second));
-  
-  this.turn = GAME_DATA.moves.length%2
-  this.players[this.turn].changeTurn();
-  
-  // Visibility
-  this.V = new Visibility(this.players[this.turn].Ranges());
   
   this.NextShipUp = function()
   {
@@ -90,19 +81,23 @@ Game = function(ctx)
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(ctx,'grey');
+    this.V.Draw(ctx,'grey');
   };
 
   this.reload = function()
   {
-    for (each in this.players) 
-    {
-      player = this.players[each];
-      player.fleet = new Fleet(player.turn)
-    }
+    // 2 players
+    this.players=new Array();
+    this.players.push(new Player(Turn.First));
+    this.players.push(new Player(Turn.Second));
+    
     this.turn = GAME_DATA.moves.length%2
-    this.V = new Visibility(this.players[this.turn].Ranges());
-    this.Display();
+    this.players[this.turn].changeTurn();
+    
+    // Visibility
+    this.V = new Visibility(this.players[pid].Ranges());
   }
+
+  this.reload();
   
 };

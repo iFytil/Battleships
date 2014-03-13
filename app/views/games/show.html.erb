@@ -1,7 +1,7 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
-<%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves)} do %>
+<%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves), userid: current_user.id} do %>
 <% end %>
 
 <canvas id="myCanvas" width="600" height="600"></canvas>
@@ -16,33 +16,11 @@
   var WIDTH = canvas.width
   var SQ_WIDTH = Math.floor(WIDTH/N)
   var GAME_DATA = $('#game-data').data("game")
+  var USERID = $('#game-data').data("userid")
   var SHIPS = [];
 
   // game logistics
-  game = new Game(ctx);
-
-  dispatcher.on_open = function() {
-    dispatcher.trigger('get_data', GAME_DATA)
-  }
-
-  // This is how you send a move
-  //dispatcher.trigger('send_move', {ship_id: 5, pos_x: 7, pos_y: 15})
-
-  dispatcher.bind('move_response', function(message) {
-    if (message.valid_json) {
-      // Reload ships
-      dispatcher.trigger('get_data', GAME_DATA)
-    } else {
-      // Error in our program. Do nothing
-      console.log("ERROR: Invalid move format")
-    }
-  });
-
-  dispatcher.bind('receive_data', function(message) {
-    SHIPS = JSON.parse(message.ships);
-    GAME_DATA = JSON.parse(message.game);
-    game.reload();
-  });
+  var game = new Game(ctx);
 
   // Inputs
   window.addEventListener('keydown', check, false);
@@ -50,7 +28,7 @@
   function check(e) {
     var code = e.keyCode;
     switch (code) {
-      case 13:  dispatcher.trigger('send_move', {ship_id: 5, pos_x: 7, pos_y: 15}); break;
+      case 13:  request_move(5,1,0, "Move"); break;
       case 39:  game.NextShipDown(); break; // Right key
       case 37:  game.NextShipUp(); break; // Left key
       default:  //Everything else
