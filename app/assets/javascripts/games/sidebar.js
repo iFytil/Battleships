@@ -68,12 +68,13 @@ Sidebar = function(ctx){
     // title
     ctx.fillStyle = 'black';
     ctx.textAlign = 'center';
-    ctx.font = 'bold 12pt Calibri';
+    ctx.font = 'bold 10pt Calibri';
     ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);
     ctx.fillText('Moves', WIDTH+BAR_WIDTH/2, 40);
     
     // number of moves
-    ctx.fillText("#:"+GAME_DATA.moves.length, WIDTH+BAR_WIDTH/2, 60);
+    var s = ((pid === GAME_DATA.moves.length%2) ? "Your turn" : "Opponent turn")
+    ctx.fillText("("+s+")", WIDTH+BAR_WIDTH/2, 60);
     
     // buttons
     for (i = 0; i < this.buttons.length; i++) {
