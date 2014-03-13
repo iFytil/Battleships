@@ -44,7 +44,7 @@ Range = function (x,y,back, width, length,facing) {
   this.Set(x,y);
     
   this.Draw = function (ctx, color) {
-    ctx.beginPath();
+   ctx.beginPath();
     ctx.moveTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
@@ -126,11 +126,13 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor) {
       ctx.lineTo(this.points[4].x, this.points[4].y);
       ctx.closePath();
       ctx.lineWidth = 2;
-      if (this.highlighted)
+      if (this.highlighted){
           ctx.strokeStyle = 'yellow';
-      else
+      }else{
           ctx.strokeStyle = color;
+        }
       ctx.stroke();
+      
       ctx.fillStyle = color;
       ctx.fill();
       
@@ -220,24 +222,9 @@ Base = function (x, y) {
   var x0 = x * SQ_WIDTH;
   var y0 = y * SQ_WIDTH;
 
-  var points = new Array();
-  points.push(new Point(x0, y0));
-  points.push(new Point(x0 + SQ_WIDTH, y0));
-  points.push(new Point(x0 + SQ_WIDTH, y0 + SQ_WIDTH * 10));
-  points.push(new Point(x0, y0 + SQ_WIDTH * 10));
-
   this.Draw = function (ctx, color) {
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    ctx.lineTo(points[1].x, points[1].y);
-    ctx.lineTo(points[2].x, points[2].y);
-    ctx.lineTo(points[3].x, points[3].y);
-    ctx.closePath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = color;
-    ctx.stroke();
     ctx.fillStyle = color;
-    ctx.fill();
+    ctx.fillRect(x0,y0,SQ_WIDTH,10*SQ_WIDTH);
   }
 
 };
