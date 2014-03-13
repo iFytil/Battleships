@@ -58,33 +58,30 @@ Range = function (x,y,back, width, length,facing) {
 
 };
 
-Ship = function (x, y, length, speed, facing, radar,cannon, health, armor, turnSpeed, turnIndex) {
+Ship = function (ship, radar, cannon) {
 
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
 
   var t = SQ_WIDTH / 2;
 
-  this.x = x;
-  this.y = y;
-  this.length = length;
+  this.data = ship
 
-  this.turnSpeed = turnSpeed;
-  this.turnIndex = turnIndex;
-  this.speed = speed;
-
-  this.sternx = (x) * SQ_WIDTH; // bow tip coordinates
-  this.sterny = (y) * SQ_WIDTH;
-  
-  this.facing = facing;
-  
-  this.radarzone = radar;
+  this.length     = ship.shiptype.size;
+  this.x          = ship.location_x
+  this.y          = ship.location_y
+  this.turnSpeed  = ship.shiptype.turn_speed;
+  this.turnIndex  = ship.shiptype.turn_index;
+  this.speed      = ship.shiptype.speed;
+  this.sternx     = (this.x) * SQ_WIDTH; // bow tip coordinates
+  this.sterny     = (this.y) * SQ_WIDTH;
+  this.facing     = D[ship.direction];
+  this.radarzone  = radar;
   this.cannonzone = cannon;
-
+  this.health     = ship.health;
+  this.armor      = ship.shiptype.armor;
+	
   this.points = new Array();
 
-  this.health = health;
-  this.armor = armor;
-	
   // spacing 
   var s = 4;
 
@@ -94,33 +91,33 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor, turnS
     {
       this.points[0] =new Point(this.sternx+s,this.sterny+s);
       this.points[1] =new Point(this.sternx+s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
-      this.points[3] =new Point(this.sternx+(length)*SQ_WIDTH-t,this.sterny+t);
-      this.points[4] =new Point(this.sternx+(length-1)*SQ_WIDTH,this.sterny+s);
+      this.points[2] =new Point(this.sternx+(this.length-1)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
+      this.points[3] =new Point(this.sternx+(this.length)*SQ_WIDTH-t,this.sterny+t);
+      this.points[4] =new Point(this.sternx+(this.length-1)*SQ_WIDTH,this.sterny+s);
     } 
     else if (this.facing == D.Left) 
     {
       this.points[0] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+s);
       this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
-      this.points[3] =new Point(this.sternx-(length-1)*SQ_WIDTH+t,this.sterny+t);
-      this.points[4] =new Point(this.sternx-(length-2)*SQ_WIDTH,this.sterny+s);
+      this.points[2] =new Point(this.sternx-(this.length-2)*SQ_WIDTH,this.sterny+SQ_WIDTH-s);
+      this.points[3] =new Point(this.sternx-(this.length-1)*SQ_WIDTH+t,this.sterny+t);
+      this.points[4] =new Point(this.sternx-(this.length-2)*SQ_WIDTH,this.sterny+s);
     } 
     else if (this.facing == D.Up) 
     {
       this.points[0] =new Point(this.sternx+s,this.sterny+SQ_WIDTH-s);
       this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+SQ_WIDTH-s);
-      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny-(length-2)*SQ_WIDTH);
-      this.points[3] =new Point(this.sternx+t,this.sterny-(length-1)*SQ_WIDTH+t);
-      this.points[4] =new Point(this.sternx+s,this.sterny-(length-2)*SQ_WIDTH);
+      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny-(this.length-2)*SQ_WIDTH);
+      this.points[3] =new Point(this.sternx+t,this.sterny-(this.length-1)*SQ_WIDTH+t);
+      this.points[4] =new Point(this.sternx+s,this.sterny-(this.length-2)*SQ_WIDTH);
     } 
     else if (this.facing == D.Down) 
     {
       this.points[0] =new Point(this.sternx+s,this.sterny+s);
       this.points[1] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+s);
-      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+(length-1)*SQ_WIDTH);
-      this.points[3] =new Point(this.sternx+t,this.sterny+(length)*SQ_WIDTH-t);
-      this.points[4] =new Point(this.sternx+s,this.sterny+(length-1)*SQ_WIDTH);
+      this.points[2] =new Point(this.sternx+SQ_WIDTH-s,this.sterny+(this.length-1)*SQ_WIDTH);
+      this.points[3] =new Point(this.sternx+t,this.sterny+(this.length)*SQ_WIDTH-t);
+      this.points[4] =new Point(this.sternx+s,this.sterny+(this.length-1)*SQ_WIDTH);
     }
   }
   this.Set();
@@ -149,7 +146,7 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor, turnS
       // Paint damaged squares black
       if(damage)
       {
-        for(var i = 0; i < length; i++){
+        for(var i = 0; i < this.length; i++){
             if(parseInt(this.health.charAt(i)) != this.armor)
             {
               var grayLevel = parseInt(this.health.charAt(i))/this.armor;
@@ -157,7 +154,7 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor, turnS
               var x = Math.floor(grayLevel*255);
               ctx.fillStyle = "rgb("+x+","+x+","+x+")";
 
-              if(i == length-1)
+              if(i == this.length-1)
               {
                   ctx.beginPath();
                   ctx.moveTo(this.points[2].x, this.points[2].y);
@@ -238,9 +235,7 @@ Fleet = function (turn) {
       var type = ship.shiptype;
       var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
       var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
-
-      var s = new Ship(ship.location_x, ship.location_y, type.size, type.speed, D[ship.direction], radar,cannon, ship.health, type.armor, type.turn_speed, type.turn_index)
-      this.ships.push(s)
+      this.ships.push(new Ship(ship, radar, cannon))
     }
   }
 
