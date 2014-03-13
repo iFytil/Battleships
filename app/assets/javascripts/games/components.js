@@ -44,7 +44,7 @@ Range = function (x,y,back, width, length,facing) {
   this.Set(x,y);
     
   this.Draw = function (ctx, color) {
-   ctx.beginPath();
+    ctx.beginPath();
     ctx.moveTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH);
     ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
