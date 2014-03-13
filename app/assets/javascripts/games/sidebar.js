@@ -71,7 +71,7 @@ Sidebar = function(ctx,game){
   
   var numButtons = 7;
   var spacing = 10;
-  var infospace = 70;
+  var infospace = 150;
   var bW = BAR_WIDTH-2*spacing;
   var bH = (WIDTH - infospace -numButtons*spacing)/numButtons;
   
@@ -145,9 +145,9 @@ Sidebar = function(ctx,game){
     ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);
     ctx.fillText('Moves', WIDTH+BAR_WIDTH/2, 40);
     
-    // number of moves
     var s = ((pid === GAME_DATA.moves.length%2) ? "Your turn" : "Opponent turn")
     ctx.fillText("("+s+")", WIDTH+BAR_WIDTH/2, 60);
+    ctx.fillText("Ship selected: ", WIDTH+BAR_WIDTH/2, 80);
     
     // buttons
     for (i = 0; i < this.buttons.length; i++) {

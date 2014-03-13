@@ -256,10 +256,10 @@ Fleet = function (turn) {
   };
 
   this.Draw = function (ctx, color) {
-      for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(ctx, color, true);
-      }
-      base.Draw(ctx, color);
+    for (var i = 0; i < this.ships.length; i++) {
+      this.ships[i].Draw(ctx, color, true);
+    }
+    base.Draw(ctx, color);
   };
 
 };

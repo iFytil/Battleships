@@ -35,7 +35,6 @@ Environment = function (ctx) {
     },
 
     draw: function(){
-      ctx.clearRect(0,0,600,400);
       for(var i=0; i < this.sq.length; i++) {
         this.sq[i].draw();
       }
