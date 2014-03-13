@@ -126,7 +126,7 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor, turnS
   this.Set();
 
   this.highlighted = false;
-  this.Draw = function (ctx, color, damage, hollow) {
+  this.Draw = function (ctx, color, damage) {
       ctx.beginPath();
       ctx.moveTo(this.points[0].x, this.points[0].y);
       ctx.lineTo(this.points[1].x, this.points[1].y);
@@ -144,7 +144,7 @@ Ship = function (x, y, length, speed, facing, radar,cannon, health, armor, turnS
       
       ctx.fillStyle = color;
 
-      if(!hollow) ctx.fill();
+      ctx.fill();
 
       // Paint damaged squares black
       if(damage)
@@ -259,7 +259,7 @@ Fleet = function (turn) {
 
   this.Draw = function (ctx, color) {
       for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(ctx, color, true, false);
+          this.ships[i].Draw(ctx, color, true);
       }
       base.Draw(ctx, color);
   };
