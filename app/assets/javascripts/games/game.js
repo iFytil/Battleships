@@ -60,6 +60,9 @@ Game = function(ctx)
   // environment
   var env = new Environment(ctx);
   
+  // sidebar
+  var bar = new Sidebar(ctx);
+  
   // 2 players
   this.players=new Array();
   this.players.push(new Player(Turn.First));
@@ -91,6 +94,9 @@ Game = function(ctx)
     
     // "cloud of invisibitily"
     //this.V.Draw(ctx,'grey');
+    
+    // sidebar
+    bar.Draw();
   };
 
   this.reload = function()
