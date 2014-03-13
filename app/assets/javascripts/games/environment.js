@@ -10,7 +10,7 @@ Environment = function (ctx) {
           var y = 3 + i%24    // start_y + i%size_y
           ctx.beginPath();
           ctx.rect(x * SQ_WIDTH, y * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-          ctx.fillStyle = 'orange';
+          ctx.fillStyle = '#ff7f50';
           ctx.fill();
           ctx.closePath();
         }
@@ -37,6 +37,9 @@ Environment = function (ctx) {
     draw: function(){
       for(var i=0; i < this.sq.length; i++) {
         this.sq[i].draw();
+      }
+      for(var i=0; i < this.dirty.length; i++) {
+        this.dirty[i].over();
       }
     },
 
@@ -88,10 +91,7 @@ Environment = function (ctx) {
       }
 
       this.eleAtPoint = function(ex,ey){
-          if(ex < this.x + this.w && ex > this.x 
-              && ey > this.y && ey < this.y + this.h) 
-              return true;
-          return false;
+        return ex < this.x + this.w && ex > this.x && ey > this.y && ey < this.y + this.h
       }
     }
   };
@@ -100,6 +100,7 @@ Environment = function (ctx) {
   Grid.draw()
 
   this.draw = function () {
+    Grid.draw();
     Coral.draw();
   }
 

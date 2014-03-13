@@ -1,8 +1,2 @@
-//= require games/components
-//= require games/environment
-//= require games/game
-//= require games/visibility
-//= require games/moveZones
-//= require games/sidebar
-//= require games/websocket
+//= require_tree ./games
 //= require websocket_rails/main
