@@ -27,7 +27,12 @@
   // Inputs
   window.addEventListener('keydown', check, false);
   window.addEventListener("mousedown", click, false);
-  window.addEventListener("mousemove", hover, false);
+  window.addEventListener("mousemove", over, false);
+
+  function over(){
+    var e = window.event;
+    game.env.Hover(e.clientX  ,e.clientY)
+  }
 
   function check(e) {
     var code = e.keyCode;
@@ -75,7 +80,6 @@
 
 
   setInterval(function () {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
     game.Display();
   }, 36);
 
