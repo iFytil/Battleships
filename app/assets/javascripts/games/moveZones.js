@@ -58,9 +58,6 @@ DrawRotationZone = function (ship, ctx){
 	// 	else if(ship.facing == D.Up) var bFace = D.Down
 	// 	else if(ship.facing == D.Left) var bFace = D.Right
 	// 	else if(ship.facing == D.Down) var bFace = D.Up
-	// 	// Draw behind
-
-
-	}    	
+	// 	// Draw behind 	
 }
 
