@@ -76,11 +76,11 @@ Game = function(ctx)
   
   this.NextShipUp = function()
   {
-    this.players[this.turn].nextShip(1);
+    this.players[pid].nextShip(1);
   };
   this.NextShipDown = function()
   {
-    this.players[this.turn].nextShip(-1);
+    this.players[pid].nextShip(-1);
   };
   
   this.Display = function()
@@ -94,7 +94,7 @@ Game = function(ctx)
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(ctx,'grey');
+    this.V.Draw(ctx,'grey');
     Listeners([{x:0,y:0},{x:10,y:10}]);
   };
 
