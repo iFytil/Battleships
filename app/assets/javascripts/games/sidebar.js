@@ -40,11 +40,12 @@ Sidebar = function(ctx){
   
   var numButtons = 7;
   var spacing = 10;
+  var infospace = 70;
   var bW = BAR_WIDTH-2*spacing;
-  var bH = (WIDTH - 50 -numButtons*spacing)/numButtons;
+  var bH = (WIDTH - infospace -numButtons*spacing)/numButtons;
   
   var x = this.x + spacing;
-  var y = this.y + 50 ;
+  var y = this.y + infospace ;
 	for (i = 0; i < numButtons; i++) {
     this.buttons.push(new Button(x,y,bW,bH));
     y+=bH+spacing;
@@ -70,6 +71,9 @@ Sidebar = function(ctx){
 		ctx.font = 'bold 12pt Calibri';
 		ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);
 		ctx.fillText('Moves', WIDTH+BAR_WIDTH/2, 40);
+    
+    // number of moves
+    ctx.fillText("#:"+GAME_DATA.moves.length, WIDTH+BAR_WIDTH/2, 60);
     
 		// buttons
 		for (i = 0; i < this.buttons.length; i++) {
