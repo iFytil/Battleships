@@ -15,7 +15,7 @@ Battleship::Application.routes.draw do
   get 'invites/all' => 'invites#list', :as => :list_invites
   get 'games/all' => 'games#list', :as => :list_games
   get 'users/all' => 'users#list', :as => :list_users
-  get '/test' => 'games#start'
+  get '/games/start' => 'games#start'
 
   devise_for :users
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
