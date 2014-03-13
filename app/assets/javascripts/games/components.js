@@ -248,15 +248,11 @@ Fleet = function (turn) {
     var base = new Base(29, 10);
   }
 
-  this.Select = function (x, y) {
-      return false; //true if something gets selected, false if nothing is selected
-  };
-
   this.Draw = function (ctx, color) {
-      for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(ctx, color, true);
-      }
-      base.Draw(ctx, color);
+    for (var i = 0; i < this.ships.length; i++) {
+        this.ships[i].Draw(ctx, color, true);
+    }
+    base.Draw(ctx, color);
   };
 
 };

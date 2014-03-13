@@ -10,7 +10,7 @@ Environment = function (ctx) {
           var y = 3 + i%24    // start_y + i%size_y
           ctx.beginPath();
           ctx.rect(x * SQ_WIDTH, y * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-          ctx.fillStyle = 'orange';
+          ctx.fillStyle = '#ff7f50';
           ctx.fill();
           ctx.closePath();
         }
