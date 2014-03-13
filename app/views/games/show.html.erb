@@ -27,12 +27,7 @@
   // Inputs
   window.addEventListener('keydown', check, false);
   window.addEventListener("mousedown", click, false);
-  window.addEventListener("mousemove", over, false);
-
-  function over(){
-    var e = window.event;
-    game.env.Hover(e.clientX  ,e.clientY)
-  }
+  window.addEventListener("mousemove", hover, false);
 
   function check(e) {
     var code = e.keyCode;
@@ -60,6 +55,7 @@
     
   }
   function hover(e) {
+    game.env.Hover(e.clientX  ,e.clientY)
     var x = e.x-canvas.getBoundingClientRect().left;
     var y = e.y-canvas.getBoundingClientRect().top;
     
