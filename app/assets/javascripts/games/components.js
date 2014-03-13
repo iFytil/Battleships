@@ -77,6 +77,7 @@ Ship = function (ship, radar, cannon) {
   this.cannonzone = cannon;
   this.health     = ship.health;
   this.armor      = ship.shiptype.armor;
+  this.type       = ship.shiptype.name;
 	
   this.points = new Array();
 
