@@ -105,13 +105,13 @@ Game = function(ctx)
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(ctx,'grey');
+    // this.V.Draw(ctx,'grey');
     
     // zones
     if(this.movezone == Z.None){
         // do nothing
     }else if(this.movezone == Z.Translate){
-      
+        DrawTranslationZone(this.players[this.turn].Selected(), ctx);
     } else if(this.movezone ==Z.Rotate){
         DrawRotationZone(this.players[this.turn].Selected(), ctx);
     }else if(this.movezone == Z.Cannon){

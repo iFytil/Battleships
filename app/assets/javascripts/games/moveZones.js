@@ -65,13 +65,12 @@ DrawRotationZone = function (ship, ctx){
 
 	var lShip = ship.Duplicate();
 	var rShip = ship.Duplicate();
-	
+
 	var color = "rgb(255,255,0)"
 
 	if( ship.turnSpeed == 1 || ship.turnSpeed == 2)
 	{
 		// Get points for left turn zone
-		// var lShip = new Ship(ship.x + lXOffset, ship.y + lYOffset, ship.length, ship.speed, lFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
 		lShip.x += lXOffset;
 		lShip.y += lYOffset;
 		lShip.facing = lFace;
@@ -82,7 +81,6 @@ DrawRotationZone = function (ship, ctx){
 		var lPoint3 = lShip.points[4];
 
 		// Get points for right turn zone
-		// var rShip = new Ship(ship.x + rXOffset, ship.y + rYOffset, ship.length, ship.speed, rFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
 		rShip.x += rXOffset;
 		rShip.y += rYOffset;
 		rShip.facing = rFace;
@@ -96,7 +94,6 @@ DrawRotationZone = function (ship, ctx){
 	if(ship.turnSpeed == 2)
 	{
 		// Get points for turn around zone
-		// var bShip = new Ship(ship.x + bXOffset, ship.y + bYOffset, ship.length, ship.speed, bFace, ship.radarzone, ship.cannonzone, ship.health, ship.armor, ship.turnSpeed, ship.turnIndex)
 		bShip.x += bXOffset;
 		bShip.y += bYOffset;
 		bShip.facing = bFace;
@@ -107,11 +104,119 @@ DrawRotationZone = function (ship, ctx){
 		var bPoint3 = bShip.points[4];
 	}
 
+	// Draw rotate zone
 	drawTriangle(lPoint1, lPoint2, lPoint3, ctx, color)
 	drawTriangle(rPoint1, rPoint2, rPoint3, ctx, color)
 	if(ship.turnSpeed == 2) {drawTriangle(bPoint1, bPoint2, bPoint3, ctx, color)}
-
       	
+}
+
+DrawTranslationZone = function(ship, ctx){
+	if(ship.facing == D.Right) {
+		var lXOffset = 0; 
+		var lYOffset = -1;
+
+		var rXOffset = 0;
+		var rYOffset = 1;
+
+		var bXOffset = -1;
+		var bYOffset = 0;
+
+		var fXOffset = 1;
+		var fYOffset = 0;
+	}
+	else if(ship.facing == D.Up) {
+		var lXOffset = -1;
+		var lYOffset = 0;
+
+		var rXOffset = 1; 
+		var rYOffset = 0;
+
+		var bXOffset = 0;
+		var bYOffset = 1;
+
+		var fXOffset = 0;
+		var fYOffset = -1;
+	}
+	else if(ship.facing == D.Left) {
+		var lXOffset = 0; 
+		var lYOffset = 1;
+
+		var rXOffset = 0; 
+		var rYOffset = -1;
+
+		var bXOffset = 1;
+		var bYOffset = 0;
+
+		var fXOffset = -1;
+		var fYOffset = 0;
+	}
+	else if(ship.facing == D.Down) {
+		var lXOffset = -1; 
+		var lYOffset = 0;
+
+		var rXOffset = 1; 
+		var rYOffset = 0;
+
+		var bXOffset = 0;
+		var bYOffset = -1;
+
+		var fXOffset = 0;
+		var fYOffset = 1;
+	}
+
+	var lShip = ship.Duplicate();
+	var rShip = ship.Duplicate();
+	var bShip = ship.Duplicate();
+	var fShip = ship.Duplicate();
+
+	// Get points for left move zone
+	lShip.x += lXOffset;
+	lShip.y += lYOffset;
+	lShip.Set();
+
+	var lPoint1 = lShip.points[2];
+	var lPoint2 = lShip.points[3];
+	var lPoint3 = lShip.points[4];
+
+	// Get points for right turn zone
+	rShip.x += rXOffset;
+	rShip.y += rYOffset;
+	rShip.Set();
+
+	var rPoint1 = rShip.points[2];
+	var rPoint2 = rShip.points[3];
+	var rPoint3 = rShip.points[4];
+
+	// Get points for backwards move zone
+	bShip.x += bXOffset;
+	bShip.y += bYOffset;
+	bShip.Set();
+
+	var bPoint1 = bShip.points[2];
+	var bPoint2 = bShip.points[3];
+	var bPoint3 = bShip.points[4];
+
+	var color = "rgb(255,255,0)"
+
+	// Draw left, right, backwards zones
+	drawTriangle(lPoint1, lPoint2, lPoint3, ctx, color)
+	drawTriangle(rPoint1, rPoint2, rPoint3, ctx, color)
+	drawTriangle(bPoint1, bPoint2, bPoint3, ctx, color)
+
+	// Get points for and draw forward move zone
+	for(var i = 0; i < ship.speed; i++)
+	{
+		fShip.x += fXOffset;
+		fShip.y += fYOffset;
+		fShip.Set();
+
+		var fPoint1 = fShip.points[2];
+		var fPoint2 = fShip.points[3];
+		var fPoint3 = fShip.points[4];
+
+		drawTriangle(fPoint1, fPoint2, fPoint3, ctx, color)
+	}
 }
 
 function drawTriangle(point1, point2, point3, ctx, color)
