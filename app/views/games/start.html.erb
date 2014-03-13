@@ -13,10 +13,20 @@ function drag(ev)
 
 function drop(ev)
 {
+  if(ev.target.nodeName == "DIV")
+  {
+  var temp = ev.target.parentNode.innerHTML;
+  ev.target.parentNode.innerHTML = currentdrag.outerHTML;
+  currentdrag.outerHTML = temp;
+  ev.target.classList.remove("dragover");
+  }
+  else
+  {
   var temp = ev.target.innerHTML;
   ev.target.innerHTML = currentdrag.outerHTML;
   currentdrag.outerHTML = temp;
   ev.target.classList.remove("dragover");
+  }
 }
 
 function dragenter(ev)
