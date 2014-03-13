@@ -121,6 +121,7 @@ Game = function(ctx)
     
     // "cloud of invisibitily"
     //this.V.Draw(ctx,'grey');
+    Listeners([{x:0,y:0},{x:10,y:10}]);
   };
 
   this.reload = function()

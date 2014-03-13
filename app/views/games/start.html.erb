@@ -1,0 +1,74 @@
+<%= stylesheet_link_tag "games" %>
+
+<script>
+
+var currentdrag;
+var currentparent;
+
+function drag(ev)
+{
+  currentdrag = ev.target;
+  ev.preventDefault();
+}
+
+function drop(ev)
+{
+  if(ev.target.nodeName == "DIV")
+  {
+    ev.target.parentNode.innerHTML = currentdrag.outerHTML;
+  }
+  else
+  {
+    ev.target.innerHTML = currentdrag.outerHTML;
+  }
+}
+
+function dragenter(ev)
+{
+  ev.target.classList.add("dragover");
+}
+
+function dragleave(ev)
+{
+  ev.target.classList.remove("dragover");
+}
+
+function allowdrop(ev)
+{
+  ev.preventDefault();
+}
+
+function getShipList()
+{
+  var shiplistc = document.getElementById("shiplistcontainer").children;
+  var shiplist = [];
+  for(var i = 0; i < shiplistc.length; i++)
+  {
+    try{shiplist.push(shiplistc[i].firstChild.getAttribute("data-shiptype"));}
+    catch(err){};
+  }
+  return shiplist;
+}
+</script>
+
+
+<h2>These are your boats to choose from</h2>
+<div draggable="true" ondrag="drag(event)" data-shiptype="cruiser">====> cruiser</div>
+<div draggable="true" ondrag="drag(event)" data-shiptype="destroyer">===> destroyer</div>
+<div draggable="true" ondrag="drag(event)" data-shiptype="torpedo">==> torpedo boat</div>
+<div draggable="true" ondrag="drag(event)" data-shiptype="minelayer">=> mine layer</div>
+<div draggable="true" ondrag="drag(event)" data-shiptype="minelayer">==> radar boat</div>
+<br>
+
+<ul class="list-unstyled shipdrag" id="shiplistcontainer">
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+  <li ondragenter="dragenter(event)" ondragleave="dragleave(event)" ondragover="allowdrop(event)" ondrop="drop(event)"></li>
+</ul>
