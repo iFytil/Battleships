@@ -37,12 +37,6 @@ DrawRotationZone = function (ship, ctx){
 		var rYOffset = -ship.turnIndex;
 	}
 
-	if(ship.facing == D.Right) {}
-	else if(ship.facing == D.Up) {}
-	else if(ship.facing == D.Left) {}
-	else if(ship.facing == D.Down) {}
-
-
 	if( ship.turnSpeed == 1 || ship.turnSpeed == 2)
 	{
 		// Draw left
@@ -54,15 +48,19 @@ DrawRotationZone = function (ship, ctx){
 
 		rShip.Draw(ctx, 'translucentYellow', false)
 	}
-	if(ship.turnSpeed == 2)
-	{
-		if(ship.facing == D.Right) var bFace = D.Left
-		else if(ship.facing == D.Up) var bFace = D.Down
-		else if(ship.facing == D.Left) var bFace = D.Right
-		else if(ship.facing == D.Down) var bFace = D.Up
-		// Draw behind
+	// if(ship.turnSpeed == 2)
+	// {
+	// 	if(ship.facing == D.Right) {
+	// 		var bFace = D.Left;
+	// 		var bXOffset = ;
+	// 		var bYOffset = ;
+	// 	}
+	// 	else if(ship.facing == D.Up) var bFace = D.Down
+	// 	else if(ship.facing == D.Left) var bFace = D.Right
+	// 	else if(ship.facing == D.Down) var bFace = D.Up
+	// 	// Draw behind
 
-	}
+	// }
 
       	
 }
