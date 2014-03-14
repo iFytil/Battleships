@@ -96,7 +96,7 @@ setTimeout(function(){var shiplist = document.getElementById("shiporder");shipli
     <div draggable="true" ondrag="drag(event)" data-shiptype="Radar Boat">==> radar boat</div>
   </li>
 </ul>
-<form action="" method="post">
+<%= form_tag game_order_path(@id),{:method => :post} do %>
   <input type="hidden" name="shiporder" value="" id="shiporder">
 <div class='text-right'><button class='btn btn-sm btn-success' id="shipstartnext">Next Step</button></div>
-</form>
+<% end %>
