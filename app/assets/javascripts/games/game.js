@@ -87,12 +87,14 @@ Game = function(ctx)
   {
     this.players[pid].nextShip(1);
     this.sidebar.RegisterShipChange();
+    this.sidebar.ClearButtons();
     this.movezone = Z.None;
   };
   this.NextShipDown = function()
   {
     this.players[pid].nextShip(-1);
     this.sidebar.RegisterShipChange();
+    this.sidebar.ClearButtons();
     this.movezone = Z.None;
   };
   
