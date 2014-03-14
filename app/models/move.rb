@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate" ]
+  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar" ]
 
   belongs_to :ship
   belongs_to :game
@@ -28,6 +28,14 @@ class Move < ActiveRecord::Base
       d1 = shipToDelta(ship,ship.shiptype.turn_index)
       ship.direction = whereToRotate(move,ship)
       d2 = shipToDelta(ship,ship.shiptype.turn_index)
+    
+
+    when "Radar"
+      if ship.shiptype.name == "Radar Boat"
+        ship.shiptype_id = Shiptype.find_by(:name => "Radar Boat Extended").id
+      else
+        ship.shiptype_id = Shiptype.find_by(:name => "Radar Boat").id
+      end
     end
 
     ship.save
