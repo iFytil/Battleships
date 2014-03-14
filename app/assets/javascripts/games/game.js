@@ -23,6 +23,8 @@ var Z = {
   Heal: 6
 }
 
+var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
+
 var T = {
   R:"Radar Boat",
   M:"Mine Layer",

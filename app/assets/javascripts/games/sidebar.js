@@ -91,41 +91,30 @@ Sidebar = function(ctx,game){
     this.buttons.push(new Button(x,y,bW,bH,this));
     y+=bH+spacing;
   }
-  this.buttons[0].name = "Move";
-  this.buttons[1].name = "Rotate";
-  this.buttons[2].name = "Cannons";
-  this.buttons[3].name = "Torpedos";
-  this.buttons[4].name = "Mines";
-  this.buttons[5].name = "Radar";
-  this.buttons[6].name = "Repair";
-  this.buttons[0].func  = 0;
-  this.buttons[1].func  = 1;
-  this.buttons[2].func  = 2;
-  this.buttons[3].func  = 3;
-  this.buttons[4].func  = 4;
-  this.buttons[5].func  = 5;
-  this.buttons[6].func  = 6;
+
+  for (var i = 0; i < Object.keys(Abilities).length; i++) {
+    this.buttons[i].name = Abilities[i];
+    this.buttons[i].func = i;
+  }
+
 
   // handle function
   this.Handle = function(f){
   this.ClearButtons();
 
-  for (var i = 0; i < Object.keys(Z).length; i++) {
-    if(f==i && this.buttons[i].active) {
-      if(this.selected!=i){
-        this.game.movezone = i;
-        this.selected = i;
-        this.buttons[i].selected = true;
-      }else{
-        this.game.movezone = -1;
-        this.selected = -1;
+    for (var i = 0; i < Object.keys(Abilities).length; i++) {
+      if(f==i && this.buttons[i].active) {
+        if(this.selected!=i){
+          this.game.movezone = i;
+          this.selected = i;
+          this.buttons[i].selected = true;
+        }else{
+          this.game.movezone = -1;
+          this.selected = -1;
+        }
       }
     }
-  }
 
-    /* if(this.selcted>0){
-      this.buttons[this.selcted].selected = true;
-    }*/
   };
     this.ClearButtons = function(){
       
@@ -221,7 +210,9 @@ Sidebar = function(ctx,game){
 
     ctx.fillText("Ship: " + game.players[pid].Selected().name, WIDTH+BAR_WIDTH/2, 100);
 
-    ctx.fillText("Move: " + game.movezone, WIDTH+BAR_WIDTH/2, 120);
+    var ability = game.movezone == -1 ? "None" : Abilities[game.movezone]
+
+    ctx.fillText("Move: " + ability, WIDTH+BAR_WIDTH/2, 120);
     
     // buttons
     for (i = 0; i < this.buttons.length; i++) {
