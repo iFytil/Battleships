@@ -66,7 +66,7 @@ DrawRotationZone = function (ship, ctx){
 	var lShip = ship.Duplicate();
 	var rShip = ship.Duplicate();
 
-	var color = "rgb(255,255,0)"
+	var length = ship.length;
 
 	if( ship.turnSpeed == 1 || ship.turnSpeed == 2)
 	{
@@ -76,9 +76,7 @@ DrawRotationZone = function (ship, ctx){
 		lShip.facing = lFace;
 		lShip.Set();
 
-		var lPoint1 = lShip.points[2];
-		var lPoint2 = lShip.points[3];
-		var lPoint3 = lShip.points[4];
+		var lPoint = lShip.points[length-1];
 
 		// Get points for right turn zone
 		rShip.x += rXOffset;
@@ -86,9 +84,7 @@ DrawRotationZone = function (ship, ctx){
 		rShip.facing = rFace;
 		rShip.Set();
 
-		var rPoint1 = rShip.points[2];
-		var rPoint2 = rShip.points[3];
-		var rPoint3 = rShip.points[4];
+		var rPoint = rShip.points[length-1];
 	}
 
 	if(ship.turnSpeed == 2)
@@ -99,15 +95,19 @@ DrawRotationZone = function (ship, ctx){
 		bShip.facing = bFace;
 		bShip.Set();
 
-		var bPoint1 = bShip.points[2];
-		var bPoint2 = bShip.points[3];
-		var bPoint3 = bShip.points[4];
+		var bPoint = bShip.points[length-1]
 	}
 
 	// Draw rotate zone
-	drawTriangle(lPoint1, lPoint2, lPoint3, ctx, color)
-	drawTriangle(rPoint1, rPoint2, rPoint3, ctx, color)
-	if(ship.turnSpeed == 2) {drawTriangle(bPoint1, bPoint2, bPoint3, ctx, color)}
+	ctx.beginPath()
+    ctx.rect(lPoint.x*SQ_WIDTH + SQ_WIDTH/4, lPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
+    ctx.rect(rPoint.x*SQ_WIDTH + SQ_WIDTH/4, rPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
+	if(ship.turnSpeed == 2) {ctx.rect(bPoint.x*SQ_WIDTH + SQ_WIDTH/4, bPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
+	ctx.strokeStyle = "rgb(255,255,255)"
+	ctx.fillStyle = "rgb(0,0,255)"
+	ctx.stroke()
+	ctx.fill()
+	ctx.closePath()
       	
 }
 
@@ -170,39 +170,36 @@ DrawTranslationZone = function(ship, ctx){
 	var bShip = ship.Duplicate();
 	var fShip = ship.Duplicate();
 
+	var length = ship.length;
+
 	// Get points for left move zone
 	lShip.x += lXOffset;
 	lShip.y += lYOffset;
 	lShip.Set();
 
-	var lPoint1 = lShip.points[2];
-	var lPoint2 = lShip.points[3];
-	var lPoint3 = lShip.points[4];
+	var lPoint = lShip.points[length-1];
 
 	// Get points for right turn zone
 	rShip.x += rXOffset;
 	rShip.y += rYOffset;
 	rShip.Set();
 
-	var rPoint1 = rShip.points[2];
-	var rPoint2 = rShip.points[3];
-	var rPoint3 = rShip.points[4];
+	var rPoint = rShip.points[length-1];
 
 	// Get points for backwards move zone
 	bShip.x += bXOffset;
 	bShip.y += bYOffset;
 	bShip.Set();
 
-	var bPoint1 = bShip.points[2];
-	var bPoint2 = bShip.points[3];
-	var bPoint3 = bShip.points[4];
-
-	var color = "rgb(255,255,0)"
+	var bPoint = bShip.points[length-1];
 
 	// Draw left, right, backwards zones
-	drawTriangle(lPoint1, lPoint2, lPoint3, ctx, color)
-	drawTriangle(rPoint1, rPoint2, rPoint3, ctx, color)
-	drawTriangle(bPoint1, bPoint2, bPoint3, ctx, color)
+	ctx.beginPath()
+	ctx.strokeStyle = "rgb(255,255,255)"
+	ctx.fillStyle = "rgb(0,0,255)"
+	ctx.rect(lPoint.x*SQ_WIDTH + SQ_WIDTH/4, lPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
+    ctx.rect(rPoint.x*SQ_WIDTH + SQ_WIDTH/4, rPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
+    ctx.rect(bPoint.x*SQ_WIDTH + SQ_WIDTH/4, bPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
 
 	// Get points for and draw forward move zone
 	for(var i = 0; i < ship.speed; i++)
@@ -211,26 +208,14 @@ DrawTranslationZone = function(ship, ctx){
 		fShip.y += fYOffset;
 		fShip.Set();
 
-		var fPoint1 = fShip.points[2];
-		var fPoint2 = fShip.points[3];
-		var fPoint3 = fShip.points[4];
+		var fPoint = fShip.points[length-1];
 
-		drawTriangle(fPoint1, fPoint2, fPoint3, ctx, color)
+    	ctx.rect(fPoint.x*SQ_WIDTH + SQ_WIDTH/4, fPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
 	}
-}
 
-function drawTriangle(point1, point2, point3, ctx, color)
-{
-	ctx.beginPath();
-    ctx.moveTo(point1.x, point1.y);
-    ctx.lineTo(point2.x, point2.y);
-    ctx.lineTo(point3.x, point3.y);
-    ctx.closePath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-    ctx.fillStyle = color;
-    ctx.fill();
+	ctx.stroke()
+	ctx.fill()
+	ctx.closePath()
 }
 
 

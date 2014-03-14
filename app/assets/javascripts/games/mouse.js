@@ -11,7 +11,6 @@ function loadMouseEvents() {
   function check(e) {
     var code = e.keyCode;
     switch (code) {
-      case 13:  request_move(1,1,0, "Move"); break;
       case 39:  game.NextShipDown(); break; // Right key
       case 37:  game.NextShipUp(); break; // Left key
       default:  //Everything else
@@ -24,9 +23,10 @@ function loadMouseEvents() {
     
     // check if in grid or on sidebar
     if(x>0 && x<WIDTH && y>0 && y<WIDTH){
-      // on grid
-
-      
+      var sq = game.env.getSquare();
+      var shipid = game.players[pid].Selected().id
+      var move = "Move";
+      request_move(shipid,sq.x,sq.y, move)
     }else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
       // on sidebar
       game.sidebar.Click(x,y);

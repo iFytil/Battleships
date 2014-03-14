@@ -11,22 +11,6 @@ class Game < ActiveRecord::Base
 
   after_create do |game|
     game.coral = generateCoral
-
-    Ship.create(:shiptype_id => Shiptype.find_by(:name => "Cruiser").id, :game_id => game.id, 
-                :direction => "Left", :turn => 0, :location_x => 12, :location_y => 14)
-
-    Ship.create(:shiptype_id => Shiptype.find_by(:name => "Destroyer").id, :game_id => game.id, 
-                :direction => "Right", :turn => 1, :location_x => 7, :location_y => 5)
-
-    Ship.create(:shiptype_id => Shiptype.find_by(:name => "Radar Boat").id, :game_id => game.id, 
-                :direction => "Up", :turn => 1, :location_x => 21, :location_y => 14)
-
-    Ship.create(:shiptype_id => Shiptype.find_by(:name => "Torpedo Boat").id, :game_id => game.id, 
-                :direction => "Down", :turn => 0, :location_x => 18, :location_y => 3)
-
-    Ship.create(:shiptype_id => Shiptype.find_by(:name => "Mine Layer").id, :game_id => game.id, 
-                :direction => "Left", :turn => 1, :location_x => 3, :location_y => 18)
-
     game.save
   end
 end
