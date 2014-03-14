@@ -73,6 +73,9 @@ Sidebar = function(ctx,game){
   this.ctx = ctx;
   this.game = game;
   
+  // index of selected button
+  this.selected = -1;
+  
   // list of buttons
   this.buttons = new Array();
   
@@ -105,71 +108,32 @@ Sidebar = function(ctx,game){
 
   // handle function
   this.Handle = function(f){
-    //this.game.NoOptions();
+  this.ClearButtons();
 
-    
-   if(f==0 && this.buttons[0].active){
-     
-      if(!this.buttons[0].selected){
-        this.game.TranslateOptions();
-        this.buttons[0].selected  = true;
+  for (var i = 0; i < Object.keys(Z).length; i++) {
+    if(f==i && this.buttons[i].active) {
+      if(this.selected!=i){
+        this.game.movezone = i;
+        this.selected = i;
+        this.buttons[i].selected = true;
       }else{
-        this.game.NoOptions();
-        this.buttons[0].selected  = false;
+        this.game.movezone = -1;
+        this.selected = -1;
       }
-        
-    }else if(f==1 && this.buttons[1].active){
-      if(!this.buttons[1].selected){
-        this.game.RotateOptions();
-        this.buttons[1].selected  = true;
-      }else{
-        this.game.NoOptions();
-        this.buttons[1].selected  = false;
-      }
-    }else if(f==2 && this.buttons[2].active){
-      if(!this.buttons[2].selected){
-        this.game.CannonOptions();
-        this.buttons[2].selected  = true;
-      }else{
-        this.game.NoOptions();
-        this.buttons[2].selected  = false;
-      }
-    }else if(f==3 && this.buttons[3].active){
-      if(!this.buttons[3].selected){
-        this.game.TorpedoOptions();
-        this.buttons[3].selected  = true;
-      }else{
-        this.game.NoOptions();
-        this.buttons[3].selected  = false;
-      }
-    }else if(f==4 && this.buttons[4].active){
-      if(!this.buttons[4].selected){
-        this.game.MineOptions();
-        this.buttons[4].selected  = true;
-      }else{
-        this.game.NoOptions();
-        this.buttons[4].selected  = false;
-      }
-    }else if(f==5 && this.buttons[5].active){
-      if(!this.buttons[5].selected){
-        this.game.DisplayRadarOptions();
-        this.buttons[5].selected  = true;
-      }else{
-        this.game.NoOptions();
-        this.buttons[5].selected  = false;
-      }
-    }else if(f==6 && this.buttons[6].active){
-      if(!this.buttons[6].selected){
-        this.game.DisplayHealingOptions();
-        this.buttons[6].selected  = true;
-      }else{
-        this.game.NoOptions();
-        this.buttons[6].selected  = false;
-      }
-     }
+    }
+  }
+
+    /* if(this.selcted>0){
+      this.buttons[this.selcted].selected = true;
+    }*/
   };
-     
- 
+    this.ClearButtons = function(){
+      
+ for(var i = 0;i<this.buttons.length;i++){
+      this.buttons[i].selected = false;
+    }
+    
+  }
 
   this.Hover = function(x,y){
     // if true, break
@@ -191,6 +155,8 @@ Sidebar = function(ctx,game){
     var ship = player.Selected();
     var t = ship.name; // currently selected ship's name
     var baseRadar = player.fleet.base.radarzone
+    
+    
     
     // all ships have move capabilities
     // all ships have rotation abilities
@@ -254,6 +220,8 @@ Sidebar = function(ctx,game){
     ctx.fillText("Square: " + sq.toString(), WIDTH+BAR_WIDTH/2, 80);
 
     ctx.fillText("Ship: " + game.players[pid].Selected().name, WIDTH+BAR_WIDTH/2, 100);
+
+    ctx.fillText("Move: " + game.movezone, WIDTH+BAR_WIDTH/2, 120);
     
     // buttons
     for (i = 0; i < this.buttons.length; i++) {

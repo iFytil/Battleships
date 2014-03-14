@@ -177,21 +177,21 @@ DrawTranslationZone = function(ship, ctx){
 	lShip.y += lYOffset;
 	lShip.Set();
 
-	var lPoint = lShip.points[length-1];
+	var lPoint = lShip.points[0];
 
 	// Get points for right turn zone
 	rShip.x += rXOffset;
 	rShip.y += rYOffset;
 	rShip.Set();
 
-	var rPoint = rShip.points[length-1];
+	var rPoint = rShip.points[0];
 
 	// Get points for backwards move zone
 	bShip.x += bXOffset;
 	bShip.y += bYOffset;
 	bShip.Set();
 
-	var bPoint = bShip.points[length-1];
+	var bPoint = bShip.points[0];
 
 	// Draw left, right, backwards zones
 	ctx.beginPath()
@@ -208,7 +208,7 @@ DrawTranslationZone = function(ship, ctx){
 		fShip.y += fYOffset;
 		fShip.Set();
 
-		var fPoint = fShip.points[length-1];
+		var fPoint = fShip.points[0];
 
     	ctx.rect(fPoint.x*SQ_WIDTH + SQ_WIDTH/4, fPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
 	}

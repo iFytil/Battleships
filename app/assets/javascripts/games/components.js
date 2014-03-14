@@ -155,7 +155,6 @@ Ship = function (ship, radar, cannon, torpedo) {
             }
         }
       }
-      this.radarzone.Draw(ctx, 'yellow');
   }
 
   // Duplicate!

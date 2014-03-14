@@ -87,12 +87,14 @@ Game = function(ctx)
   {
     this.players[pid].nextShip(1);
     this.sidebar.RegisterShipChange();
+    this.sidebar.ClearButtons();
     this.movezone = Z.None;
   };
   this.NextShipDown = function()
   {
     this.players[pid].nextShip(-1);
     this.sidebar.RegisterShipChange();
+    this.sidebar.ClearButtons();
     this.movezone = Z.None;
   };
   
@@ -147,32 +149,5 @@ Game = function(ctx)
   }
 
   this.reload();
-  
-  this.NoOptions = function(){
-    this.movezone = Z.None;
-    };
-  this.TranslateOptions = function(){
-    this.movezone = Z.Translate;
-    };
-  this.RotateOptions = function(){
-    this.movezone = Z.Rotate;
-    };
-  this.CannonOptions = function(){
-    this.movezone = Z.Cannon;
-    };
-  this.TorpedoOptions = function(){
-    this.movezone = Z.Torpedo;
-    };
-  this.MineOptions = function(){
-    this.movezone = Z.Mine;
-    };
-  this.DisplayRadarOptions = function(){
-    this.movezone = Z.Radar;
-    };
-  this.DisplayHealingOptions = function(){
-    this.movezone = Z.Heal;
-    };
-    
-  
   
 };
