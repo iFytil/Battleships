@@ -1,4 +1,4 @@
-DrawRotationZone = function (ship, ctx){
+RotationZone = function (ship){
 
 	if(ship.facing == D.Right) {
 		var lFace = D.Up; 
@@ -68,6 +68,8 @@ DrawRotationZone = function (ship, ctx){
 
 	var length = ship.length;
 
+	this.array = new Array();
+
 	if( ship.turnSpeed == 1 || ship.turnSpeed == 2)
 	{
 		// Get points for left turn zone
@@ -78,6 +80,8 @@ DrawRotationZone = function (ship, ctx){
 
 		var lPoint = lShip.points[length-1];
 
+		this.array.push(new Point(lPoint.x, lPoint.y))
+
 		// Get points for right turn zone
 		rShip.x += rXOffset;
 		rShip.y += rYOffset;
@@ -85,6 +89,8 @@ DrawRotationZone = function (ship, ctx){
 		rShip.Set();
 
 		var rPoint = rShip.points[length-1];
+
+		this.array.push(new Point(rPoint.x, rPoint.y))
 	}
 
 	if(ship.turnSpeed == 2)
@@ -96,22 +102,29 @@ DrawRotationZone = function (ship, ctx){
 		bShip.Set();
 
 		var bPoint = bShip.points[length-1]
+
+		this.array.push(new Point(bPoint.x, bPoint.y))
 	}
 
 	// Draw rotate zone
-	ctx.beginPath()
-    ctx.rect(lPoint.x*SQ_WIDTH + SQ_WIDTH/4, lPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
-    ctx.rect(rPoint.x*SQ_WIDTH + SQ_WIDTH/4, rPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
-	if(ship.turnSpeed == 2) {ctx.rect(bPoint.x*SQ_WIDTH + SQ_WIDTH/4, bPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
-	ctx.strokeStyle = "rgb(255,255,255)"
-	ctx.fillStyle = "rgb(0,0,255)"
-	ctx.stroke()
-	ctx.fill()
-	ctx.closePath()
+	this.Draw = function(ctx)
+	{
+		ctx.beginPath()
+	    for(var i = 0; i < this.array.length; i++){ctx.rect(this.array[i].x*SQ_WIDTH + SQ_WIDTH/4, this.array[i].y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
+		ctx.strokeStyle = "rgb(255,255,255)"
+		ctx.fillStyle = "rgb(0,0,255)"
+		ctx.stroke()
+		ctx.fill()
+		ctx.closePath()
+	}
       	
+    this.GetPoints = function()
+  	{
+		return this.array
+	}
 }
 
-DrawTranslationZone = function(ship, ctx){
+TranslationZone = function(ship){
 	if(ship.facing == D.Right) {
 		var lXOffset = 0; 
 		var lYOffset = -1;
@@ -172,12 +185,16 @@ DrawTranslationZone = function(ship, ctx){
 
 	var length = ship.length;
 
+	this.array = new Array();
+
 	// Get points for left move zone
 	lShip.x += lXOffset;
 	lShip.y += lYOffset;
 	lShip.Set();
 
 	var lPoint = lShip.points[0];
+
+	this.array.push(new Point(lPoint.x, lPoint.y))
 
 	// Get points for right turn zone
 	rShip.x += rXOffset;
@@ -186,22 +203,18 @@ DrawTranslationZone = function(ship, ctx){
 
 	var rPoint = rShip.points[0];
 
+	this.array.push(new Point(rPoint.x, rPoint.y))
+
 	// Get points for backwards move zone
 	bShip.x += bXOffset;
 	bShip.y += bYOffset;
 	bShip.Set();
 
 	var bPoint = bShip.points[0];
+	
+	this.array.push(new Point(bPoint.x, bPoint.y))
 
-	// Draw left, right, backwards zones
-	ctx.beginPath()
-	ctx.strokeStyle = "rgb(255,255,255)"
-	ctx.fillStyle = "rgb(0,0,255)"
-	ctx.rect(lPoint.x*SQ_WIDTH + SQ_WIDTH/4, lPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
-    ctx.rect(rPoint.x*SQ_WIDTH + SQ_WIDTH/4, rPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
-    ctx.rect(bPoint.x*SQ_WIDTH + SQ_WIDTH/4, bPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
-
-	// Get points for and draw forward move zone
+	// Get points for forward move zone
 	for(var i = 0; i < ship.speed; i++)
 	{
 		fShip.x += fXOffset;
@@ -210,13 +223,97 @@ DrawTranslationZone = function(ship, ctx){
 
 		var fPoint = fShip.points[0];
 
-    	ctx.rect(fPoint.x*SQ_WIDTH + SQ_WIDTH/4, fPoint.y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);
+		this.array.push(new Point(fPoint.x, fPoint.y))
 	}
 
-	ctx.stroke()
-	ctx.fill()
-	ctx.closePath()
+	// Draw points for move zone
+	this.Draw = function(ctx)
+	{
+		ctx.beginPath()
+		ctx.strokeStyle = "rgb(255,255,255)"
+		ctx.fillStyle = "rgb(0,0,255)"
+		for(var i = 0; i < this.array.length; i++){ctx.rect(this.array[i].x*SQ_WIDTH + SQ_WIDTH/4, this.array[i].y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
+		ctx.stroke()
+		ctx.fill()
+		ctx.closePath()
+	}
+
+	this.GetPoints = function()
+  	{
+  		return this.array;
+  	}
 }
 
+// relative to stern coordinates
+// b = backward offset
+Range = function (x,y,back, width, length,facing) {
+  // identified by the top left corner
+  // w by h range
 
+  this.h = width;
+  this.w = length;
+  
+  this.facing = facing;
+
+  this.Set =function(sternx,sterny){
+    if (this.facing == D.Right) 
+    {
+      this.x = sternx+back;
+      this.y = sterny-Math.floor(this.h/2);
+    } 
+    else if (this.facing == D.Left) 
+    {
+      this.x = sternx+1-back-this.w;
+      this.y = sterny-Math.floor(this.h/2);
+    } 
+    else if (this.facing == D.Up) 
+    {
+      this.h = length;
+      this.w = width;
+      this.x = sternx-Math.floor(this.w/2);
+      this.y = sterny+1-back-this.h;
+    } 
+    else if (this.facing == D.Down) 
+    {
+      this.h = length;
+      this.w = width;
+      this.x = sternx-Math.floor(this.w/2);
+      this.y = sterny+back;
+    }
+
+    this.pointTL = new Point(this.x, this.y)
+    this.pointTR = new Point(this.x+this.w, this.y)
+    this.pointBL = new Point(this.x, this.y+this.h)
+    this.pointBR = new Point(this.x+this.w, this.y+this.h)
+  }
+
+  this.Set(x,y);
+    
+  this.Draw = function (ctx, color) {
+    ctx.beginPath();
+    ctx.moveTo(this.pointTL.x*SQ_WIDTH, this.pointTL.y*SQ_WIDTH);
+    ctx.lineTo(this.pointTR.x*SQ_WIDTH, this.pointTR.y*SQ_WIDTH);
+    ctx.lineTo(this.pointBR.x*SQ_WIDTH, this.pointBR.y*SQ_WIDTH);
+    ctx.lineTo(this.pointBL.x*SQ_WIDTH, this.pointBL.y*SQ_WIDTH);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = color;
+    ctx.closePath();
+    ctx.stroke();
+  }
+  
+  this.GetPoints = function()
+  {
+  	this.array = new Array()
+
+  	for(var i = 0; i < this.h; i++)
+  	{
+  		for(var j = 0; j < this.w; j++)
+  		{
+  			this.array.push(new Point(this.pointTL.x + j, this.pointTL.y + i))
+  		}
+  	}
+
+  	return this.array
+  }
+};
 

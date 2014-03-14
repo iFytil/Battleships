@@ -106,6 +106,7 @@ Sidebar = function(ctx,game){
       if(f==i && this.buttons[i].active) {
         if(this.selected!=i){
           this.game.movezone = i;
+          this.game.UpdateZones();
           this.selected = i;
           this.buttons[i].selected = true;
         }else{

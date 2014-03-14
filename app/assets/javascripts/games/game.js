@@ -99,6 +99,15 @@ Game = function(ctx)
     this.players[pid].nextShip(-1);
   };
   
+  this.UpdateZones = function()
+  {
+    this.translationZone = new TranslationZone(this.players[pid].Selected())
+    this.rotationZone = new RotationZone(this.players[pid].Selected())
+    this.cannonZone = this.players[pid].Selected().cannonzone
+    this.torpedoZone = this.players[pid].Selected().torpedozone
+    console.log("LOL");
+  };
+
   this.CurrentPlayer =function(){
       return this.players[pid].Selected();
   };
@@ -118,13 +127,17 @@ Game = function(ctx)
     if(this.movezone == Z.None){
         // do nothing
     }else if(this.movezone == Z.Translate){
-        DrawTranslationZone(this.players[pid].Selected(), ctx);
-    } else if(this.movezone ==Z.Rotate){
-        DrawRotationZone(this.players[pid].Selected(), ctx);
+        this.currentZone = this.translationZone
+        this.currentZone.Draw(ctx);
+    } else if(this.movezone == Z.Rotate){
+        this.currentZone = this.rotationZone
+        this.currentZone.Draw(ctx);
     }else if(this.movezone == Z.Cannon){
-        this.players[pid].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
+        this.currentZone = this.cannonZone
+        this.currentZone.Draw(ctx,"rgb(0,0,255)");
     }else if(this.movezone == Z.Torpedo){
-        this.players[pid].Selected().torpedozone.Draw(ctx,"rgb(0,0,255)");
+        this.currentZone = this.torpedoZone
+        this.currentZone.Draw(ctx,"rgb(0,0,255)");
     }else if(this.movezone ==Z.Mine){
     };
     
@@ -152,3 +165,5 @@ Game = function(ctx)
   this.reload();
   
 };
+
+
