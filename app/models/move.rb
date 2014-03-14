@@ -58,13 +58,10 @@ class Move < ActiveRecord::Base
   def addToShip(delta)
     ship.shiptype.size.times { |i|
       shipSq = directionToDelta(ship.direction,i)
-      puts shipSq
       if isCoral(ship.location_x + delta[:x] + shipSq[:x], ship.location_y + delta[:y] + shipSq[:y])
         return
       end
     }
-
-    puts "We can move correctly"
     ship.location_x += delta[:x]
     ship.location_y += delta[:y]
   end
