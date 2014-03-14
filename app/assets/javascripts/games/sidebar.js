@@ -106,6 +106,7 @@ Sidebar = function(ctx,game){
       if(f==i && this.buttons[i].active) {
         if(this.selected!=i){
           this.game.movezone = i;
+          this.game.UpdateZones();
           this.selected = i;
           this.buttons[i].selected = true;
         }else{
@@ -211,8 +212,10 @@ Sidebar = function(ctx,game){
     ctx.fillText("Move: " + ability, WIDTH+BAR_WIDTH/2, 120);
     
     // buttons
-    for (i = 0; i < this.buttons.length; i++) {
-      this.buttons[i].Draw(ctx,"orange");
+    if(this.game.turn == pid){
+      for (i = 0; i < this.buttons.length; i++) {
+        this.buttons[i].Draw(ctx,"orange");
+      }
     }
 
     ctx.restore();

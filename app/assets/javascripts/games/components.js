@@ -7,66 +7,6 @@ Point = function (x, y) {
   }
 };
 
-// relative to stern coordinates
-// b = backward offset
-Range = function (x,y,back, width, length,facing) {
-  // identified by the top left corner
-  // w by h range
-
-  this.h = width;
-  this.w = length;
-  
-  this.facing = facing;
-
-  this.Set =function(sternx,sterny){
-    if (this.facing == D.Right) 
-    {
-      this.x = sternx+back;
-      this.y = sterny-Math.floor(this.h/2);
-    } 
-    else if (this.facing == D.Left) 
-    {
-      this.x = sternx+1-back-this.w;
-      this.y = sterny-Math.floor(this.h/2);
-    } 
-    else if (this.facing == D.Up) 
-    {
-      this.h = length;
-      this.w = width;
-      this.x = sternx-Math.floor(this.w/2);
-      this.y = sterny+1-back-this.h;
-    } 
-    else if (this.facing == D.Down) 
-    {
-      this.h = length;
-      this.w = width;
-      this.x = sternx-Math.floor(this.w/2);
-      this.y = sterny+back;
-    }
-
-    this.pointTL = new Point(this.x, this.y)
-    this.pointTR = new Point(this.x+this.w, this.y)
-    this.pointBL = new Point(this.x, this.y+this.h)
-    this.pointBR = new Point(this.x+this.w, this.y+this.h)
-  }
-
-  this.Set(x,y);
-    
-  this.Draw = function (ctx, color) {
-    ctx.beginPath();
-    ctx.moveTo(this.pointTL.x*SQ_WIDTH, this.pointTL.y*SQ_WIDTH);
-    ctx.lineTo(this.pointTR.x*SQ_WIDTH, this.pointTR.y*SQ_WIDTH);
-    ctx.lineTo(this.pointBR.x*SQ_WIDTH, this.pointBR.y*SQ_WIDTH);
-    ctx.lineTo(this.pointBL.x*SQ_WIDTH, this.pointBL.y*SQ_WIDTH);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = color;
-    ctx.closePath();
-    ctx.stroke();
-  }
-  
-
-};
-
 Ship = function (ship, radar, cannon, torpedo) {
 
   // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
@@ -122,11 +62,16 @@ Ship = function (ship, radar, cannon, torpedo) {
 
   this.highlighted = false;
 
+  this.DrawStern = function(){
+    ctx.fillStyle = "black"
+    ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
+  }
+
   this.Draw = function (ctx, color, damage) {
 
       ctx.beginPath()
       ctx.fillStyle = color;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 5;
       ctx.strokeStyle = (this.highlighted && this.data.turn==pid) ? 'black' : color
       for (each in this.points) {
         var pt = this.points[each];
@@ -155,6 +100,8 @@ Ship = function (ship, radar, cannon, torpedo) {
             }
         }
       }
+
+      this.DrawStern();
   }
 
   // Duplicate!

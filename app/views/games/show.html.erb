@@ -4,7 +4,7 @@
 <%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves), userid: current_user.id, ships: @game.ships.to_json(:include => :shiptype)} do %>
 <% end %>
 
-<canvas id="myCanvas" width="700" height="600"></canvas>
+<canvas id="myCanvas" width="700" height="630"></canvas>
 <script>
 
   var dispatcher = new WebSocketRails(window.location.host + "/websocket", true)
@@ -12,9 +12,10 @@
   var canvas = document.getElementById('myCanvas');
   var ctx = canvas.getContext('2d');
   var N = 30;
-  var HEIGHT = canvas.height
-  var WIDTH = canvas.height //make it square
-  var BAR_WIDTH = canvas.width-canvas.height
+  var HEIGHT = canvas.height-30
+  var WIDTH = canvas.height-30 //make it square
+  var BAR_WIDTH = canvas.width-HEIGHT
+  var TEXT_BAR_WIDTH = canvas.height-600
   var SQ_WIDTH = Math.floor(WIDTH/N)
   var GAME_DATA = $('#game-data').data("game")
   var USERID = $('#game-data').data("userid")

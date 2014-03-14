@@ -31,8 +31,17 @@ function loadMouseEvents() {
         return
       }
 
-      request_move(shipid,sq.x,sq.y, move)
-    }else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
+      var validPoints = game.currentZone.GetPoints()
+      var validMove = false
+      for(var i = 0; i < validPoints.length; i++)
+      {
+          if(validPoints[i].x == sq.x && validPoints[i].y == sq.y) validMove = true
+      }
+
+      if(validMove) request_move(shipid,sq.x,sq.y, move)
+
+    }
+    else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
       // on sidebar
       game.sidebar.Click(x,y);
     }

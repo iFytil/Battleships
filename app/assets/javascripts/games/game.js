@@ -77,8 +77,9 @@ Game = function(ctx)
   // environment
   this.env = new Environment(ctx);
   
-  // sidebar
+  // bars 
   this.sidebar = new Sidebar(ctx,this);
+  this.textbar = new Textbar(ctx);
   
   // currently displayed zones
   this.movezone = Z.None;
@@ -99,6 +100,14 @@ Game = function(ctx)
     this.players[pid].nextShip(-1);
   };
   
+  this.UpdateZones = function()
+  {
+    this.translationZone = new TranslationZone(this.players[pid].Selected())
+    this.rotationZone = new RotationZone(this.players[pid].Selected())
+    this.cannonZone = this.players[pid].Selected().cannonzone
+    this.torpedoZone = this.players[pid].Selected().torpedozone
+  };
+
   this.CurrentPlayer =function(){
       return this.players[pid].Selected();
   };
@@ -115,22 +124,29 @@ Game = function(ctx)
     //this.V.Draw(ctx,'grey');
     
     // zones
-    if(this.movezone == Z.None){
-        // do nothing
-    }else if(this.movezone == Z.Translate){
-        DrawTranslationZone(this.players[pid].Selected(), ctx);
-    } else if(this.movezone ==Z.Rotate){
-        DrawRotationZone(this.players[pid].Selected(), ctx);
-    }else if(this.movezone == Z.Cannon){
-        this.players[pid].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
-    }else if(this.movezone == Z.Torpedo){
-        this.players[pid].Selected().torpedozone.Draw(ctx,"rgb(0,0,255)");
-    }else if(this.movezone ==Z.Mine){
-    };
+    if(this.turn == pid){
+      if(this.movezone == Z.None){
+          // do nothing
+      }else if(this.movezone == Z.Translate){
+          this.currentZone = this.translationZone
+          this.currentZone.Draw(ctx);
+      } else if(this.movezone == Z.Rotate){
+          this.currentZone = this.rotationZone
+          this.currentZone.Draw(ctx);
+      }else if(this.movezone == Z.Cannon){
+          this.currentZone = this.cannonZone
+          this.currentZone.Draw(ctx,"rgb(0,0,255)");
+      }else if(this.movezone == Z.Torpedo){
+          this.currentZone = this.torpedoZone
+          this.currentZone.Draw(ctx,"rgb(0,0,255)");
+      }else if(this.movezone ==Z.Mine){
+      };
+    }
     
-    // sidebar
+    // bars
     game.sidebar.RegisterShipChange();
     this.sidebar.Draw();
+    this.textbar.Draw();
     
    
   };
@@ -152,3 +168,5 @@ Game = function(ctx)
   this.reload();
   
 };
+
+
