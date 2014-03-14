@@ -32,24 +32,13 @@ var T = {
 }
 
 Player = function(turn){
-  
-  // true - it is this player's turn
-  var is_turn = false;
-
-  this.turn = turn;
-  
   // initial fleet
-  this.fleet = new Fleet(this.turn);
+  this.fleet = new Fleet(turn);
 
   // current ship
   this.selected = 0; //index
   if (this.fleet.ships[this.selected])
     this.fleet.ships[this.selected].highlighted = true;
-  
-  this.changeTurn = function()
-  {
-    is_turn = !is_turn;
-  }
 
   this.nextShip = function(delta)
   {
@@ -93,7 +82,6 @@ Game = function(ctx)
   this.players.push(new Player(Turn.Second));
   
   this.turn = 0;
-  this.players[this.turn].changeTurn();
   
   this.NextShipUp = function()
   {
@@ -152,12 +140,9 @@ Game = function(ctx)
     this.players.push(new Player(Turn.Second));
 
     this.turn = GAME_DATA.moves.length%2
-    this.players[this.turn].changeTurn();
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
-    
-    
     
   }
 
