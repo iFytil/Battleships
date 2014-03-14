@@ -43,16 +43,21 @@ Range = function (x,y,back, width, length,facing) {
       this.x = sternx-Math.floor(this.w/2);
       this.y = sterny+back;
     }
+
+    this.pointTL = new Point(this.x, this.y)
+    this.pointTR = new Point(this.x+this.w, this.y)
+    this.pointBL = new Point(this.x, this.y+this.h)
+    this.pointBR = new Point(this.x+this.w, this.y+this.h)
   }
 
   this.Set(x,y);
     
   this.Draw = function (ctx, color) {
     ctx.beginPath();
-    ctx.moveTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH);
-    ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH);
-    ctx.lineTo(this.x*SQ_WIDTH+this.w*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
-    ctx.lineTo(this.x*SQ_WIDTH, this.y*SQ_WIDTH+this.h*SQ_WIDTH);
+    ctx.moveTo(this.pointTL.x*SQ_WIDTH, this.pointTL.y*SQ_WIDTH);
+    ctx.lineTo(this.pointTR.x*SQ_WIDTH, this.pointTR.y*SQ_WIDTH);
+    ctx.lineTo(this.pointBR.x*SQ_WIDTH, this.pointBR.y*SQ_WIDTH);
+    ctx.lineTo(this.pointBL.x*SQ_WIDTH, this.pointBL.y*SQ_WIDTH);
     ctx.lineWidth = 2;
     ctx.strokeStyle = color;
     ctx.closePath();

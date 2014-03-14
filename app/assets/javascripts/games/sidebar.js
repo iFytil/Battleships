@@ -188,8 +188,9 @@ Sidebar = function(ctx,game){
   
   this.RegisterShipChange = function(){
     var player = this.game.players[pid]; // currently player
-    var t = player.Selected().name; // currently selected ship's name
-    var base = player.fleet.base
+    var ship = player.Selected();
+    var t = ship.name; // currently selected ship's name
+    var baseRadar = player.fleet.base.radarzone
     
     // all ships have move capabilities
     // all ships have rotation abilities
@@ -200,8 +201,10 @@ Sidebar = function(ctx,game){
     this.buttons[3].active = false;
     this.buttons[4].active = false;
     this.buttons[5].active = false;
-    this.buttons[6].active = false;
+    this.buttons[6].active = false
+    // console.log("is by base: "+( isInBox(ship.points[0],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL) || isInBox(ship.points[ship.length-1],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL) ));
     
+
     if(t == T.R){
       // only radar boats can change their ranges
       this.buttons[5].active = true;
@@ -214,16 +217,20 @@ Sidebar = function(ctx,game){
     }else if(t == T.D){
       // destroyers have torpedos
       this.buttons[3].active = true;
-    }else if(t == T.C){
-      // repairs can only be made if
-    // this.buttons[6].active = isByBase(ship,base);
-    
+    }
+
+    // Repairs are only made if the ship is near the base
+    if(isInBox(ship.points[0],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL) || isInBox(ship.points[ship.length-1],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL)){
+      this.buttons[6].active = true;
     }
   }
   
-  // function isByBase(ship, base){
-      
-  // }
+  // Check if a point is in a box
+  function isInBox(point, pointTL, pointTR, pointBL){  // pointTL = point top left, pointBR = point bottom right...
+      // console.log(point+pointTL+pointTR+pointBL);
+      if(point.x >= pointTL.x && point.x < pointTR.x && point.y < pointBL.y && point.y >= pointTL.y) {return true}
+        else {return false}
+  }
 
   this.Draw = function(){
     
