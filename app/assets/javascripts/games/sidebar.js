@@ -233,7 +233,7 @@ Sidebar = function(ctx,game){
     }else if(t == T.D){
       // destroyers have torpedos
       this.buttons[3].active = true;
-    }else if(){
+    }else if(false){
       // repairs can only be made if
     // this.buttons[6].active = true;
     
