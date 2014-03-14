@@ -25,63 +25,119 @@ class Move < ActiveRecord::Base
       end
 
     when "Rotate"
+      turnPossible = false
+      quadrant = "NE" # irrelevant default value
       turn_index = ship.shiptype.turn_index
+
+      location_x = ship.location_x
+      location_y = ship.location_y
+
       case ship.direction
       when "Up"
         if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-          ship.direction = "Down"
-          ship.location_y -= turn_index * 2
+          direction = "Down"
+          location_y -= turn_index * 2
+          turnPossible = true
         elsif move.pos_x < ship.location_x 
-          ship.direction = "Left"
-          ship.location_x += turn_index
-          ship.location_y -= turn_index
+          direction = "Left"
+          quadrant = "NW"
+          location_x += turn_index
+          location_y -= turn_index
         else
-          ship.direction = "Right"
-          ship.location_x -= turn_index
-          ship.location_y -= turn_index
+          direction = "Right"
+          quadrant = "NE"
+          location_x -= turn_index
+          location_y -= turn_index
         end
 
       when "Down"
         if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-          ship.direction = "Up"
-          ship.location_y += turn_index * 2
+          direction = "Up"
+          location_y += turn_index * 2
+          turnPossible = true
         elsif move.pos_x < ship.location_x 
-          ship.direction = "Left"
-          ship.location_x += turn_index
-          ship.location_y += turn_index
+          direction = "Left"
+          quadrant = "SW"
+          location_x += turn_index
+          location_y += turn_index
         else
-          ship.direction = "Right"
-          ship.location_x -= turn_index
-          ship.location_y += turn_index
+          direction = "Right"
+          quadrant = "SE"
+          location_x -= turn_index
+          location_y += turn_index
         end
 
       when "Left"
         if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-          ship.direction = "Right"
-          ship.location_x -= turn_index * 2
+          direction = "Right"
+          location_x -= turn_index * 2
+          turnPossible = true
         elsif move.pos_y < ship.location_y
-          ship.direction = "Up"
-          ship.location_x -= turn_index
-          ship.location_y += turn_index
+          direction = "Up"
+          quadrant = "NW"
+          location_x -= turn_index
+          location_y += turn_index
         else
-          ship.direction = "Down"
-          ship.location_x -= turn_index
-          ship.location_y -= turn_index
+          direction = "Down"
+          quadrant = "SW"
+          location_x -= turn_index
+          location_y -= turn_index
         end 
 
       when "Right"
         if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-          ship.direction = "Left"
-          ship.location_x += turn_index * 2
+          direction = "Left"
+          location_x += turn_index * 2
+          turnPossible = true
         elsif move.pos_y < ship.location_y
-          ship.direction = "Up"
-          ship.location_x += turn_index
-          ship.location_y += turn_index
+          direction = "Up"
+          quadrant = "NE"
+          location_x += turn_index
+          location_y += turn_index
         else
-          ship.direction = "Down"
-          ship.location_x += turn_index
-          ship.location_y -= turn_index
+          direction = "Down"
+          quadrant = "SE"
+          location_x += turn_index
+          location_y -= turn_index
         end
+      end
+
+      # Collision Detection
+      dx = 0
+      dy = 0
+      case ship.direction
+        when "Up"
+          dy = -1
+        when "Down"
+          dy = 1
+        when "Right"
+          dx = 1
+        when "Left"
+          dx = -1
+      end
+
+      case quadrant
+        when "NE"
+          opposingQuadrant = "SW"
+        when "NW"
+          opposingQuadrant = "SE"
+        when "SW"
+          opposingQuadrant = "NE"
+        when "SE"
+          opposingQuadrant = "NW"
+      end
+
+      if(turnPossible)
+      elsif(turn_index != 0)
+        turnPossible = turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, ship.shiptype.size - turn_index, quadrant) && turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, turn_index + 1, opposingQuadrant)
+      else
+        turnPossible = turnQuadrantClear(ship.location_x, ship.location_y, ship.shiptype.size, quadrant)
+      end
+
+      if(turnPossible)
+        ship.location_x = location_x
+        ship.location_y = location_y
+        ship.direction = direction
       end
 
     when "Radar"
@@ -101,45 +157,53 @@ class Move < ActiveRecord::Base
     isit = x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
   end
 
-  # def whereToRotate(move,ship)
-  #   case ship.direction
-  #   when "Up"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Down"
-  #     elsif move.pos_x < ship.location_x 
-  #       "Left"
-  #     else
-  #       "Right"
-  #     end
+  def turnQuadrantClear(x,y,length,quadrant)
+    case quadrant
+      when "NE"
+        dx = -1
+        dy = -1
+      when "NW"
+        dx = 1
+        dy = -1
+      when "SE"
+        dx = -1
+        dy = 1
+      when "SW"
+        dx = 1
+        dy = 1
+      end
 
-  #   when "Down"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Up"
-  #     elsif move.pos_x < ship.location_x 
-  #       "Left"
-  #     else
-  #       "Right"
-  #     end
+    startX = x - (length-1) * dx
+    startY = y
+    puts "startX: #{startX}"
+    puts "startY: #{startY}"
 
-  #   when "Left"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Right"
-  #     elsif move.pos_y < ship.location_y
-  #       "Up"
-  #     else
-  #       "Down"
-  #     end 
+    isClear = true
+    yOffset = 0
+    firstIteration = true
+    xLengthCutter = 0
+    for i in yOffset..(length-1)
+      currentY = startY + i * dy
+      puts "currentY: #{currentY}"
+      currentX = startX
+      xOffset = 0
+      for j in xOffset..(length-1-xLengthCutter)
+        currentX = startX + j * dx
+        puts "currentX: #{currentX}"
+        if(isCoral(currentX,currentY)) 
+          isClear = false 
+        end
+      end
+      if !firstIteration
+        startX += dx
+        xLengthCutter += 1
+      end
+      firstIteration = false
+    end
 
-  #   when "Right"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Left"
-  #     elsif move.pos_y < ship.location_y
-  #       "Up"
-  #     else
-  #       "Down"
-  #     end
-  #   end
-  # end
+    puts "isClear: #{isClear}"
+    return isClear
+  end
 
   def addToShip(delta)
     ship.shiptype.size.times { |i|
