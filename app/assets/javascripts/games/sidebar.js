@@ -119,9 +119,17 @@ Sidebar = function(ctx,game){
       }
     }
 
+    // toggle radar
     if(f==5 && this.buttons[5].active) {
       var shipid = game.players[pid].Selected().id
       var move = Abilities[5]
+      request_move(shipid,0,0, move)
+    }
+
+    //repair
+    if(f==6 && this.buttons[6].active) {
+      var shipid = game.players[pid].Selected().id
+      var move = Abilities[6]
       request_move(shipid,0,0, move)
     }
 

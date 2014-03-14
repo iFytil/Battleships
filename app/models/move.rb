@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar" ]
+  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar","Repair" ]
 
   belongs_to :ship
   belongs_to :game
@@ -90,6 +90,20 @@ class Move < ActiveRecord::Base
       else
         ship.shiptype_id = Shiptype.find_by(:name => "Radar Boat").id
       end
+
+    when "Repair"
+      tmp = ship.health.reverse
+      count=0
+      tmp.split("").each do |i|
+          if i=='0' || i=='1'
+            tmp[count] = ship.shiptype.armor.to_s
+            ship.health = tmp.reverse
+            ship.save
+            break
+          end
+          count+=1
+      end
+
     end
 
     ship.save
