@@ -7,6 +7,7 @@ class CreateMoves < ActiveRecord::Migration
       t.integer :pos_x
       t.integer :pos_y
       t.string :kind
+      t.string :message
 
       t.timestamps
     end

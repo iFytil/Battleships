@@ -119,6 +119,20 @@ Sidebar = function(ctx,game){
       }
     }
 
+    // toggle radar
+    if(f==5 && this.buttons[5].active) {
+      var shipid = game.players[pid].Selected().id
+      var move = Abilities[5]
+      request_move(shipid,0,0, move)
+    }
+
+    //repair
+    if(f==6 && this.buttons[6].active) {
+      var shipid = game.players[pid].Selected().id
+      var move = Abilities[6]
+      request_move(shipid,0,0, move)
+    }
+
   };
   
   this.ClearButtons = function(){  
@@ -152,7 +166,12 @@ Sidebar = function(ctx,game){
     // all ships have move capabilities
     // all ships have rotation abilities
     // all ships have cannon abilities
-    this.buttons[0].active = true;
+
+    if(ship.speed >0)
+      this.buttons[0].active = true;
+    else
+      this.buttons[0].active = false;
+
     this.buttons[1].active = true;
     this.buttons[2].active = true;
     this.buttons[3].active = false;

@@ -12,6 +12,7 @@ class CreateShiptypes < ActiveRecord::Migration
       t.integer :cannon_back
       t.integer :cannon_w
       t.integer :cannon_l
+      t.integer :cannon_damage
       t.string :name
     end
   end

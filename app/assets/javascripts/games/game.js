@@ -157,6 +157,7 @@ Game = function(ctx)
     // reset zone
     this.movezone = Z.None;
     this.sidebar.ClearButtons();
+    this.sidebar.selected = -1;
 
     // 2 players
     this.players=new Array();
@@ -167,7 +168,6 @@ Game = function(ctx)
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
-
   }
 
   this.reload();

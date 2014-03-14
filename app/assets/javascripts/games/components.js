@@ -37,6 +37,14 @@ Ship = function (ship, radar, cannon, torpedo) {
   // spacing 
   var s = 4;
 
+  // adjust speed based on damage
+  var dcount =0;
+  for(var i=0;i<this.health.length;i++){
+      if(this.health.charAt(i)=='0')
+        dcount++;
+  }
+  this.speed=Math.floor(this.speed*((this.length-dcount)/this.length));
+
   this.Set = function() {
     var dx = 0;
     var dy = 0;
@@ -63,7 +71,7 @@ Ship = function (ship, radar, cannon, torpedo) {
   this.highlighted = false;
 
   this.DrawStern = function(){
-    ctx.fillStyle = "black"
+    ctx.fillStyle = "blue"
     ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
   }
 

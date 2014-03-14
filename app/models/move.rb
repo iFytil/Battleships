@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar" ]
+  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar","Repair" ]
 
   belongs_to :ship
   belongs_to :game
@@ -8,12 +8,22 @@ class Move < ActiveRecord::Base
   after_create do |move|
 
     move.game_id = ship.game_id
-    move.save
 
     case move.kind
     when "Cannon"
+      result = getShipCollision(move.pos_x, move.pos_y)
+      txt = "Cannon fired at (#{move.pos_x},#{move.pos_y}). "
+
+      if result==:hit
+        txt += "Ship hit!"
+      elsif result==:miss
+        txt += "Shot hit the water!"
+      end
+
+      move.message = txt
 
     when "Move"
+      move.message = "No shots were fired"
       if ship.location_x == move.pos_x
         dy = move.pos_y - ship.location_y
         dy.abs.times {|i| addToShip({x: 0, y: dy/dy.abs})}
@@ -23,7 +33,6 @@ class Move < ActiveRecord::Base
         dx = move.pos_x - ship.location_x
         dx.abs.times {|i| addToShip({x: dx/dx.abs, y: 0})}
       end
-
     when "Rotate"
       turnPossible = false
       quadrant = "NE" # irrelevant default value
@@ -146,15 +155,34 @@ class Move < ActiveRecord::Base
       else
         ship.shiptype_id = Shiptype.find_by(:name => "Radar Boat").id
       end
+
+    when "Repair"
+      tmp = ship.health.reverse
+      count=0
+      tmp.split("").each do |i|
+          if i=='0' || i=='1'
+            tmp[count] = ship.shiptype.armor.to_s
+            ship.health = tmp.reverse
+            ship.save
+            break
+          end
+          count+=1
+      end
+
     end
 
+    move.save
     ship.save
   end
 
   private
 
+  def isUnsafe(x,y)
+    isCoral(x,y) || isShip(x,y)
+  end
+
   def isCoral(x,y)
-    isit = x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
+    x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
   end
 
   def turnQuadrantClear(x,y,length,quadrant)
@@ -205,10 +233,53 @@ class Move < ActiveRecord::Base
     return isClear
   end
 
+  def isShip(x,y)
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
+        shipSq = directionToDelta(s.direction,i)
+        if ship.id!=s.id && (s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y)
+          return true;
+        end
+      }
+    }
+    return false;
+  end
+
+  def getShipCollision(x,y)
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
+        shipSq = directionToDelta(s.direction,i)
+        if s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y
+          hitShip(s, i, ship.shiptype.cannon_damage)
+          return :hit
+        end
+      }
+    }
+    return :miss
+  end
+
+  def hitShip(hit_ship, i, dmg)
+    # Caching sucks
+    h = hit_ship.health
+    str = "";
+    str += h;
+    after_hit = h[i].to_i - dmg;
+    if after_hit < 0
+      after_hit = 0
+    end
+    str[i] = after_hit.to_s
+    hit_ship.health = str
+    hit_ship.save
+  end
+
   def addToShip(delta)
     ship.shiptype.size.times { |i|
       shipSq = directionToDelta(ship.direction,i)
-      if isCoral(ship.location_x + delta[:x] + shipSq[:x], ship.location_y + delta[:y] + shipSq[:y])
+      x = ship.location_x + delta[:x] + shipSq[:x]
+      y = ship.location_y + delta[:y] + shipSq[:y]
+      if isUnsafe(x,y)
+        self.message = "Collision at (#{x},#{y})";
+        self.save
         return
       end
     }
