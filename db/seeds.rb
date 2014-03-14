@@ -11,3 +11,4 @@ Shiptype.create(:radar_back => 1, :radar_w => 3, :radar_l => 8,:cannon_back => -
 Shiptype.create(:radar_back => 1, :radar_w => 3, :radar_l => 6,:cannon_back => 0, :cannon_w => 5, :cannon_l => 5,:size => 3, :speed => 9,:turn_speed => 2,  :turn_index => 1, :armor => 1, :name => "Torpedo Boat")
 Shiptype.create(:radar_back => -2, :radar_w => 5, :radar_l => 6,:cannon_back => -1, :cannon_w => 5, :cannon_l => 4,:size => 2, :speed => 6,:turn_speed => 1,  :turn_index => 0, :armor => 2, :name => "Mine Layer")
 Shiptype.create(:radar_back => 1, :radar_w => 3, :radar_l => 6,:cannon_back => -1, :cannon_w => 3, :cannon_l => 5,:size => 3, :speed => 3,:turn_speed => 2,  :turn_index => 1, :armor => 1, :name => "Radar Boat")
+Shiptype.create(:radar_back => 1, :radar_w => 3, :radar_l => 12,:cannon_back => -1, :cannon_w => 3, :cannon_l => 5,:size => 3, :speed => 0,:turn_speed => 2,  :turn_index => 1, :armor => 1, :name => "Radar Boat Extended")

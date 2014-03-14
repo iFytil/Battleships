@@ -101,17 +101,20 @@ Sidebar = function(ctx,game){
   // handle function
   this.Handle = function(f){
 
-    this.ClearButtons();
+   // 
     for (var i = 0; i < Object.keys(Abilities).length; i++) {
       if(f==i && this.buttons[i].active) {
         if(this.selected!=i){
           this.game.movezone = i;
           this.game.UpdateZones();
           this.selected = i;
+         this.ClearButtons();
           this.buttons[i].selected = true;
         }else{
           this.game.movezone = -1;
           this.selected = -1;
+          this.buttons[i].selected = false;
+          this.ClearButtons();
         }
       }
     }
@@ -122,7 +125,7 @@ Sidebar = function(ctx,game){
     for(var i = 0;i<this.buttons.length;i++){
       this.buttons[i].selected = false;
     }
-    this.selected = -1;
+    //this.selected = -1;
   }
 
   this.Hover = function(x,y){
@@ -157,7 +160,7 @@ Sidebar = function(ctx,game){
     this.buttons[5].active = false;
     this.buttons[6].active = false
 
-    if(t == T.R){
+    if(t == T.R || t == T.E){
       // only radar boats can change their ranges
       this.buttons[5].active = true;
     }else if(t == T.M){
@@ -214,7 +217,7 @@ Sidebar = function(ctx,game){
     // buttons
     if(this.game.turn == pid){
       for (i = 0; i < this.buttons.length; i++) {
-        this.buttons[i].Draw(ctx,"orange");
+        this.buttons[i].Draw(ctx);
       }
     }
 

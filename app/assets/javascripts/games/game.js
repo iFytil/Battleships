@@ -20,7 +20,7 @@ var Z = {
   Torpedo: 3,
   Mine: 4,
   Radar: 5,
-  Heal: 6
+  Repair: 6
 }
 
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
@@ -30,7 +30,8 @@ var T = {
   M:"Mine Layer",
   T:"Torpedo Boat",
   D:"Destroyer",
-  C:"Cruiser"
+  C:"Cruiser",
+  E:"Radar Boat Extended"
 }
 
 Player = function(turn){
@@ -153,6 +154,9 @@ Game = function(ctx)
 
   this.reload = function()
   {
+    // reset zone
+    this.movezone = Z.None;
+
     // 2 players
     this.players=new Array();
     this.players.push(new Player(Turn.First));
