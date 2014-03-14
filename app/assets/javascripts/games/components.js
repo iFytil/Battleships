@@ -81,13 +81,13 @@ Ship = function (ship, radar, cannon, torpedo) {
   this.cannonzone = cannon;
   this.health     = ship.health;
   this.armor      = ship.shiptype.armor;
+
   this.id         = ship.id;
   this.name       = ship.shiptype.name;
-	
-  this.points = new Array();
 
   this.torpedozone= torpedo;  
 
+  this.points = new Array();
 
   // spacing 
   var s = 4;
@@ -110,7 +110,7 @@ Ship = function (ship, radar, cannon, torpedo) {
       break;
     }
     for (var i = 0; i < this.length; i++) {
-      this.points.push(new Point(this.x+i*dx, this.y+i*dy))
+      this.points[i] = new Point(this.x+i*dx, this.y+i*dy)
     }
   }
   this.Set();
@@ -131,68 +131,22 @@ Ship = function (ship, radar, cannon, torpedo) {
       ctx.fill();
       ctx.closePath();
 
-      // Paint damaged squares black
-      if(damage && false)
+      // Paint damaged squares
+      if(damage)
       {
         for(var i = 0; i < this.length; i++){
             if(parseInt(this.health.charAt(i)) != this.armor)
             {
+              ctx.beginPath()
               var grayLevel = parseInt(this.health.charAt(i))/this.armor;
 
               var x = Math.floor(grayLevel*255);
               ctx.fillStyle = "rgb("+x+","+x+","+x+")";
 
-              if(i == this.length-1)
-              {
-                  ctx.beginPath();
-                  ctx.moveTo(this.points[2].x, this.points[2].y);
-                  ctx.lineTo(this.points[3].x, this.points[3].y);
-                  ctx.lineTo(this.points[4].x, this.points[4].y);
-                  ctx.closePath();
-                  ctx.fill();
-              } 
-              else{
-                  if (this.facing == D.Right) 
-                  {
-                    ctx.beginPath();
-                    ctx.moveTo(this.points[0].x + i*SQ_WIDTH, this.points[0].y);
-                    ctx.lineTo(this.points[1].x + i*SQ_WIDTH, this.points[1].y);
-                    ctx.lineTo(this.points[1].x + (i+1)*SQ_WIDTH-s, this.points[1].y);
-                    ctx.lineTo(this.points[0].x + (i+1)*SQ_WIDTH-s, this.points[0].y);
-                    ctx.closePath();
-                    ctx.fill();
-                  } 
-                  else if (this.facing == D.Left) 
-                  {
-                    ctx.beginPath();
-                    ctx.moveTo(this.points[0].x - i*SQ_WIDTH, this.points[0].y);
-                    ctx.lineTo(this.points[1].x - i*SQ_WIDTH, this.points[1].y);
-                    ctx.lineTo(this.points[1].x - (i+1)*SQ_WIDTH+s, this.points[1].y);
-                    ctx.lineTo(this.points[0].x - (i+1)*SQ_WIDTH+s, this.points[0].y);
-                    ctx.closePath();
-                    ctx.fill();
-                  } 
-                  else if (this.facing == D.Up) 
-                  {
-                    ctx.beginPath();
-                    ctx.moveTo(this.points[0].x, this.points[0].y - i*SQ_WIDTH);
-                    ctx.lineTo(this.points[1].x, this.points[1].y - i*SQ_WIDTH);
-                    ctx.lineTo(this.points[1].x, this.points[1].y - (i+1)*SQ_WIDTH+s);
-                    ctx.lineTo(this.points[0].x, this.points[0].y - (i+1)*SQ_WIDTH+s);
-                    ctx.closePath();
-                    ctx.fill();
-                  } 
-                  else if (this.facing == D.Down) 
-                  {
-                    ctx.beginPath();
-                    ctx.moveTo(this.points[0].x, this.points[0].y + i*SQ_WIDTH);
-                    ctx.lineTo(this.points[1].x, this.points[1].y + i*SQ_WIDTH);
-                    ctx.lineTo(this.points[1].x, this.points[1].y + (i+1)*SQ_WIDTH-s);
-                    ctx.lineTo(this.points[0].x, this.points[0].y + (i+1)*SQ_WIDTH-s);
-                    ctx.closePath();
-                    ctx.fill();
-                  }
-              }
+              ctx.rect(this.points[i].x*SQ_WIDTH, this.points[i].y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+              ctx.stroke();
+              ctx.fill();
+              ctx.closePath();
             }
         }
       }
@@ -201,7 +155,7 @@ Ship = function (ship, radar, cannon, torpedo) {
 
   // Duplicate!
   this.Duplicate = function(){
-    return new Ship(ship, radar, cannon);
+    return new Ship(ship, radar, cannon, torpedo);
   }
 
 
