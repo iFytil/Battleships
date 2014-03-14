@@ -108,74 +108,21 @@ Sidebar = function(ctx,game){
 
   // handle function
   this.Handle = function(f){
-   this.ClearButtons();
-    
-   if(f==0 && this.buttons[0].active){
-     
-      if(this.selected!=0){
-        this.game.TranslateOptions();
-        this.selected = 0;
-        this.buttons[0].selected = true;
+  this.ClearButtons();
+
+  for (var i = 0; i < Object.keys(Z).length; i++) {
+    if(f==i && this.buttons[i].active) {
+      if(this.selected!=i){
+        this.game.movezone = i;
+        this.selected = i;
+        this.buttons[i].selected = true;
       }else{
-        this.game.NoOptions();
+        this.game.movezone = -1;
         this.selected = -1;
       }
-        
-    }else if(f==1 && this.buttons[1].active){
-      if(this.selected!=1){
-        this.game.RotateOptions();
-        this.selected = 1;
-        this.buttons[1].selected = true;
-      }else{
-        this.game.NoOptions();
-        this.selected = -1;
-      }
-    }else if(f==2 && this.buttons[2].active){
-      if(this.selected!=2){
-        this.game.CannonOptions();
-        this.selected = 2;
-        this.buttons[2].selected = true;
-      }else{
-        this.game.NoOptions();
-        this.selected = -1;
-      }
-    }else if(f==3 && this.buttons[3].active){
-      if(this.selected!=3){
-        this.game.TorpedoOptions();
-        this.selected = 3;
-        this.buttons[3].selected = true;
-      }else{
-        this.game.NoOptions();
-        this.selected = -1;
-      }
-    }else if(f==4 && this.buttons[4].active){
-      if(this.selected!=4){
-        this.game.MineOptions();
-        this.selected = 4;
-        this.buttons[4].selected = true;
-      }else{
-        this.game.NoOptions();
-        this.selected = -1;
-      }
-    }else if(f==5 && this.buttons[5].active){
-      if(this.selected!=5){
-        this.game.DisplayRadarOptions();
-        this.selected = 5;
-        this.buttons[5].selected = true;
-      }else{
-        this.game.NoOptions();
-        this.selected = -1;
-      }
-    }else if(f==6 && this.buttons[6].active){
-      if(this.selected!=6){
-        this.game.DisplayHealingOptions();
-        this.selected = 6;
-        this.buttons[6].selected = true;
-      }else{
-        this.game.NoOptions();
-        this.selected = -1;
-      }
-     }
+    }
+  }
+
     /* if(this.selcted>0){
       this.buttons[this.selcted].selected = true;
     }*/
