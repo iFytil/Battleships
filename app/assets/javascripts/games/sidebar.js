@@ -175,7 +175,7 @@ Sidebar = function(ctx,game){
     // title
     ctx.fillStyle = '#66A3D2';
     ctx.textAlign = 'center';
-    ctx.font = 'bold 10pt Calibri';
+    ctx.font = 'bold 9pt Calibri';
     ctx.fillText('Available', WIDTH+BAR_WIDTH/2, 20);
     ctx.fillText('Moves', WIDTH+BAR_WIDTH/2, 40);
     
