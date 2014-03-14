@@ -247,6 +247,8 @@ Sidebar = function(ctx,game){
     ctx.fillText("Square: " + sq.toString(), WIDTH+BAR_WIDTH/2, 80);
 
     ctx.fillText("Ship: " + game.players[pid].Selected().name, WIDTH+BAR_WIDTH/2, 100);
+
+    ctx.fillText("Move: " + game.movezone, WIDTH+BAR_WIDTH/2, 120);
     
     // buttons
     for (i = 0; i < this.buttons.length; i++) {

@@ -16,9 +16,28 @@ class Move < ActiveRecord::Base
       ship.location_x = move.pos_x
       ship.location_y = move.pos_y
     when "Rotate"
+      ship.direction = whereToRotate(move,ship)
     end
 
     ship.save
+  end
+
+  private
+
+  def whereToRotate(move,ship)
+    if ship.location_x == move.pos_x
+      if ship.location_y > move.pos_y
+        "Up"
+      else
+        "Down"
+      end
+    else
+      if ship.location_x > move.pos_x
+        "Left"
+      else
+        "Right"
+      end
+    end
   end
 
 end
