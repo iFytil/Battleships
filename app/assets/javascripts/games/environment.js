@@ -6,8 +6,8 @@ Environment = function (ctx) {
     draw: function() {
       for (var i = 0; i < this.c.length; i++) {
         if (this.c[i] == 1) {
-          var x = 10 + i%10   // start_x + i%size_x
-          var y = 3 + i%24    // start_y + i%size_y
+          var x = 10 + i%10
+          var y = 3 + Math.floor(i/10)
           ctx.beginPath();
           ctx.rect(x * SQ_WIDTH, y * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
           ctx.fillStyle = '#ff7f50';

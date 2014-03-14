@@ -14,16 +14,30 @@ class Move < ActiveRecord::Base
     when "Cannon"
 
     when "Move"
-      ship.location_x = move.pos_x
-      ship.location_y = move.pos_y
+      if ship.location_x == move.pos_x
+        dy = move.pos_y - ship.location_y
+        dy.abs.times {|i| addToShip({x: 0, y: dy/dy.abs})}
+      end
+
+      if ship.location_y == move.pos_y
+        dx = move.pos_x - ship.location_x
+        dx.abs.times {|i| addToShip({x: dx/dx.abs, y: 0})}
+      end
+
     when "Rotate"
+      d1 = shipToDelta(ship,ship.shiptype.turn_index)
       ship.direction = whereToRotate(move,ship)
+      d2 = shipToDelta(ship,ship.shiptype.turn_index)
     end
 
     ship.save
   end
 
   private
+
+  def isCoral(x,y)
+    x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
+  end
 
   def whereToRotate(move,ship)
     if ship.location_x == move.pos_x
@@ -38,6 +52,13 @@ class Move < ActiveRecord::Base
       else
         "Right"
       end
+    end
+  end
+
+  def addToShip(delta)
+    if !isCoral(ship.location_x + delta[:x], ship.location_y + delta[:y])
+      ship.location_x += delta[:x]
+      ship.location_y += delta[:y]
     end
   end
 
