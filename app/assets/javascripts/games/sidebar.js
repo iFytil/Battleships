@@ -101,24 +101,32 @@ Sidebar = function(ctx,game){
   // handle function
   this.Handle = function(f){
 
+   // 
     for (var i = 0; i < Object.keys(Abilities).length; i++) {
       if(f==i && this.buttons[i].active) {
         if(this.selected!=i){
           this.game.movezone = i;
           this.game.UpdateZones();
           this.selected = i;
+         this.ClearButtons();
           this.buttons[i].selected = true;
         }else{
           this.game.movezone = -1;
           this.selected = -1;
           this.buttons[i].selected = false;
+          this.ClearButtons();
         }
       }
     }
 
   };
   
-
+  this.ClearButtons = function(){  
+    for(var i = 0;i<this.buttons.length;i++){
+      this.buttons[i].selected = false;
+    }
+    //this.selected = -1;
+  }
 
   this.Hover = function(x,y){
     // if true, break
