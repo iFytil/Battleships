@@ -157,6 +157,7 @@ Game = function(ctx)
     // reset zone
     this.movezone = Z.None;
     this.sidebar.ClearButtons();
+    this.sidebar.selected = -1;
 
     // 2 players
     this.players=new Array();
