@@ -124,22 +124,24 @@ Game = function(ctx)
     //this.V.Draw(ctx,'grey');
     
     // zones
-    if(this.movezone == Z.None){
-        // do nothing
-    }else if(this.movezone == Z.Translate){
-        this.currentZone = this.translationZone
-        this.currentZone.Draw(ctx);
-    } else if(this.movezone == Z.Rotate){
-        this.currentZone = this.rotationZone
-        this.currentZone.Draw(ctx);
-    }else if(this.movezone == Z.Cannon){
-        this.currentZone = this.cannonZone
-        this.currentZone.Draw(ctx,"rgb(0,0,255)");
-    }else if(this.movezone == Z.Torpedo){
-        this.currentZone = this.torpedoZone
-        this.currentZone.Draw(ctx,"rgb(0,0,255)");
-    }else if(this.movezone ==Z.Mine){
-    };
+    if(this.turn == pid){
+      if(this.movezone == Z.None){
+          // do nothing
+      }else if(this.movezone == Z.Translate){
+          this.currentZone = this.translationZone
+          this.currentZone.Draw(ctx);
+      } else if(this.movezone == Z.Rotate){
+          this.currentZone = this.rotationZone
+          this.currentZone.Draw(ctx);
+      }else if(this.movezone == Z.Cannon){
+          this.currentZone = this.cannonZone
+          this.currentZone.Draw(ctx,"rgb(0,0,255)");
+      }else if(this.movezone == Z.Torpedo){
+          this.currentZone = this.torpedoZone
+          this.currentZone.Draw(ctx,"rgb(0,0,255)");
+      }else if(this.movezone ==Z.Mine){
+      };
+    }
     
     // bars
     game.sidebar.RegisterShipChange();
