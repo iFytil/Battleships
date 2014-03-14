@@ -203,8 +203,6 @@ class Move < ActiveRecord::Base
 
     startX = x - (length-1) * dx
     startY = y
-    puts "startX: #{startX}"
-    puts "startY: #{startY}"
 
     isClear = true
     yOffset = 0
@@ -212,24 +210,30 @@ class Move < ActiveRecord::Base
     xLengthCutter = 0
     for i in yOffset..(length-1)
       currentY = startY + i * dy
-      puts "currentY: #{currentY}"
       currentX = startX
       xOffset = 0
       for j in xOffset..(length-1-xLengthCutter)
         currentX = startX + j * dx
-        puts "currentX: #{currentX}"
-        if(isCoral(currentX,currentY)) 
+        if(isUnsafe(currentX,currentY)) 
+          self.message = "Collision at (#{currentX},#{currentY})";    # NOTE: this will not output the collision closest to the boat necessarily
+          self.save
           isClear = false 
+          break
         end
       end
+
+      if !isClear
+        break
+      end
+
       if !firstIteration
         startX += dx
         xLengthCutter += 1
       end
+
       firstIteration = false
     end
 
-    puts "isClear: #{isClear}"
     return isClear
   end
 
