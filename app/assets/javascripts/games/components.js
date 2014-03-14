@@ -37,6 +37,14 @@ Ship = function (ship, radar, cannon, torpedo) {
   // spacing 
   var s = 4;
 
+  // adjust speed based on damage
+  var dcount =0;
+  for(var i=0;i<this.health.length;i++){
+      if(this.health.charAt(i)=='0')
+        dcount++;
+  }
+  this.speed=Math.floor(this.speed*((this.length-dcount)/this.length));
+
   this.Set = function() {
     var dx = 0;
     var dy = 0;
