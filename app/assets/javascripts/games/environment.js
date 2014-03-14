@@ -107,4 +107,11 @@ Environment = function (ctx) {
   this.Hover = function(ex,ey) {
     Grid.over(ex,ey)
   }
+
+  this.getSquare = function() {
+    if (Grid.dirty.length>0) {
+      return new Point((Grid.dirty[0].x-0.5)/SQ_WIDTH, (Grid.dirty[0].y-0.5)/SQ_WIDTH)
+    }
+    return null;
+  }
 };

@@ -3,6 +3,7 @@ Battleship::Application.routes.draw do
   get 'game/:id' => 'games#show', :as => :game
   get 'user/:id' => 'users#show', :as => :user
   get '/games/:id/start' => 'games#start', :as => :game_start
+  post '/games/:id/start' => 'games#shiporder', :as => :game_order
   get '/games/:id/coral' => 'games#coral', :as => :game_coral
 
   # Access the lobby

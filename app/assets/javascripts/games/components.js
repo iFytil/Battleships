@@ -1,6 +1,10 @@
 Point = function (x, y) {
   this.x = x;
   this.y = y;
+
+  this.toString = function() {
+    return "("+this.x+","+this.y+")"
+  }
 };
 
 // relative to stern coordinates
@@ -77,6 +81,10 @@ Ship = function (ship, radar, cannon, torpedo) {
   this.cannonzone = cannon;
   this.health     = ship.health;
   this.armor      = ship.shiptype.armor;
+
+  this.id         = ship.id;
+  this.name       = ship.shiptype.name;
+
   this.torpedozone= torpedo;  
 
   this.points = new Array();
