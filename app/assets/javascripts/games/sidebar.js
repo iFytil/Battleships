@@ -18,7 +18,7 @@ Button = function(x, y, w, h,bar){
   //is pressed
   this.Press = function(){ 
     bar.Handle(this.func);
-    };
+  };
   
   this.Click = function(x,y){
 
@@ -100,8 +100,8 @@ Sidebar = function(ctx,game){
 
   // handle function
   this.Handle = function(f){
-  this.ClearButtons();
 
+    this.ClearButtons();
     for (var i = 0; i < Object.keys(Abilities).length; i++) {
       if(f==i && this.buttons[i].active) {
         if(this.selected!=i){
@@ -116,12 +116,12 @@ Sidebar = function(ctx,game){
     }
 
   };
-    this.ClearButtons = function(){
-      
- for(var i = 0;i<this.buttons.length;i++){
+  
+  this.ClearButtons = function(){  
+    for(var i = 0;i<this.buttons.length;i++){
       this.buttons[i].selected = false;
     }
-    
+    this.selected = -1;
   }
 
   this.Hover = function(x,y){
@@ -145,8 +145,6 @@ Sidebar = function(ctx,game){
     var t = ship.name; // currently selected ship's name
     var baseRadar = player.fleet.base.radarzone
     
-    
-    
     // all ships have move capabilities
     // all ships have rotation abilities
     // all ships have cannon abilities
@@ -157,8 +155,6 @@ Sidebar = function(ctx,game){
     this.buttons[4].active = false;
     this.buttons[5].active = false;
     this.buttons[6].active = false
-    // console.log("is by base: "+( isInBox(ship.points[0],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL) || isInBox(ship.points[ship.length-1],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL) ));
-    
 
     if(t == T.R){
       // only radar boats can change their ranges

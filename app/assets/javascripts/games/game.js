@@ -48,6 +48,11 @@ Player = function(turn){
     this.fleet.ships[this.selected].highlighted = false;
     this.selected = (this.selected + delta + len)%len
     this.fleet.ships[this.selected].highlighted = true;
+
+    
+    game.sidebar.RegisterShipChange();
+    game.sidebar.ClearButtons();
+    game.movezone = Z.None;
   }
 
   this.Ranges = function()
@@ -88,16 +93,10 @@ Game = function(ctx)
   this.NextShipUp = function()
   {
     this.players[pid].nextShip(1);
-    this.sidebar.RegisterShipChange();
-    this.sidebar.ClearButtons();
-    this.movezone = Z.None;
   };
   this.NextShipDown = function()
   {
     this.players[pid].nextShip(-1);
-    this.sidebar.RegisterShipChange();
-    this.sidebar.ClearButtons();
-    this.movezone = Z.None;
   };
   
   this.CurrentPlayer =function(){
