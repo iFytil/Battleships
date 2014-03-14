@@ -13,8 +13,8 @@ class Move < ActiveRecord::Base
     case move.kind
     when "Cannon"
     when "Move"
-      ship.location_x += move.pos_x
-      ship.location_y += move.pos_y
+      ship.location_x = move.pos_x
+      ship.location_y = move.pos_y
     when "Rotate"
     end
 
