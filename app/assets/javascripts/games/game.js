@@ -49,7 +49,7 @@ Player = function(turn){
     this.selected = (this.selected + delta + len)%len
     this.fleet.ships[this.selected].highlighted = true;
 
-    
+
     game.sidebar.RegisterShipChange();
     game.sidebar.ClearButtons();
     game.movezone = Z.None;
