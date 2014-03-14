@@ -187,7 +187,9 @@ Sidebar = function(ctx,game){
   }
   
   this.RegisterShipChange = function(){
-    var t = this.game.CurrentPlayer().name;
+    var player = this.game.players[pid]; // currently player
+    var t = player.Selected().name; // currently selected ship's name
+    var base = player.fleet.base
     
     // all ships have move capabilities
     // all ships have rotation abilities
@@ -213,13 +215,16 @@ Sidebar = function(ctx,game){
       // destroyers have torpedos
       this.buttons[3].active = true;
     }else if(t == T.C){
-      // rapairs can only be made if
-      //this.buttons[6].active = true;
-      
+      // repairs can only be made if
+    // this.buttons[6].active = isByBase(ship,base);
+    
     }
   }
   
-  
+  // function isByBase(ship, base){
+      
+  // }
+
   this.Draw = function(){
     
     ctx.save();
@@ -252,4 +257,6 @@ Sidebar = function(ctx,game){
     
     
   };
+
+
 };
