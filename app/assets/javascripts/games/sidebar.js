@@ -18,7 +18,7 @@ Button = function(x, y, w, h,bar){
   //is pressed
   this.Press = function(){ 
     bar.Handle(this.func);
-    };
+  };
   
   this.Click = function(x,y){
 
@@ -91,48 +91,37 @@ Sidebar = function(ctx,game){
     this.buttons.push(new Button(x,y,bW,bH,this));
     y+=bH+spacing;
   }
-  this.buttons[0].name = "Move";
-  this.buttons[1].name = "Rotate";
-  this.buttons[2].name = "Cannons";
-  this.buttons[3].name = "Torpedos";
-  this.buttons[4].name = "Mines";
-  this.buttons[5].name = "Radar";
-  this.buttons[6].name = "Repair";
-  this.buttons[0].func  = 0;
-  this.buttons[1].func  = 1;
-  this.buttons[2].func  = 2;
-  this.buttons[3].func  = 3;
-  this.buttons[4].func  = 4;
-  this.buttons[5].func  = 5;
-  this.buttons[6].func  = 6;
+
+  for (var i = 0; i < Object.keys(Abilities).length; i++) {
+    this.buttons[i].name = Abilities[i];
+    this.buttons[i].func = i;
+  }
+
 
   // handle function
   this.Handle = function(f){
-  this.ClearButtons();
 
-  for (var i = 0; i < Object.keys(Z).length; i++) {
-    if(f==i && this.buttons[i].active) {
-      if(this.selected!=i){
-        this.game.movezone = i;
-        this.selected = i;
-        this.buttons[i].selected = true;
-      }else{
-        this.game.movezone = -1;
-        this.selected = -1;
+    this.ClearButtons();
+    for (var i = 0; i < Object.keys(Abilities).length; i++) {
+      if(f==i && this.buttons[i].active) {
+        if(this.selected!=i){
+          this.game.movezone = i;
+          this.selected = i;
+          this.buttons[i].selected = true;
+        }else{
+          this.game.movezone = -1;
+          this.selected = -1;
+        }
       }
     }
-  }
 
-    /* if(this.selcted>0){
-      this.buttons[this.selcted].selected = true;
-    }*/
   };
-    this.ClearButtons = function(){
-      
- for(var i = 0;i<this.buttons.length;i++){
+  
+  this.ClearButtons = function(){  
+    for(var i = 0;i<this.buttons.length;i++){
       this.buttons[i].selected = false;
     }
-    
+    this.selected = -1;
   }
 
   this.Hover = function(x,y){
@@ -152,10 +141,9 @@ Sidebar = function(ctx,game){
   
   this.RegisterShipChange = function(){
     var player = this.game.players[pid]; // currently player
-    var t = player.Selected().name; // currently selected ship's name
-    var base = player.fleet.base
-    
-    
+    var ship = player.Selected();
+    var t = ship.name; // currently selected ship's name
+    var baseRadar = player.fleet.base.radarzone
     
     // all ships have move capabilities
     // all ships have rotation abilities
@@ -166,8 +154,8 @@ Sidebar = function(ctx,game){
     this.buttons[3].active = false;
     this.buttons[4].active = false;
     this.buttons[5].active = false;
-    this.buttons[6].active = false;
-    
+    this.buttons[6].active = false
+
     if(t == T.R){
       // only radar boats can change their ranges
       this.buttons[5].active = true;
@@ -180,16 +168,20 @@ Sidebar = function(ctx,game){
     }else if(t == T.D){
       // destroyers have torpedos
       this.buttons[3].active = true;
-    }else if(false){
-      // repairs can only be made if
-    // this.buttons[6].active = true;
-    
+    }
+
+    // Repairs are only made if the ship is near the base
+    if(isInBox(ship.points[0],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL) || isInBox(ship.points[ship.length-1],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL)){
+      this.buttons[6].active = true;
     }
   }
   
-  // function isByBase(ship, base){
-      
-  // }
+  // Check if a point is in a box
+  function isInBox(point, pointTL, pointTR, pointBL){  // pointTL = point top left, pointBR = point bottom right...
+      // console.log(point+pointTL+pointTR+pointBL);
+      if(point.x >= pointTL.x && point.x < pointTR.x && point.y < pointBL.y && point.y >= pointTL.y) {return true}
+        else {return false}
+  }
 
   this.Draw = function(){
     
@@ -214,7 +206,9 @@ Sidebar = function(ctx,game){
 
     ctx.fillText("Ship: " + game.players[pid].Selected().name, WIDTH+BAR_WIDTH/2, 100);
 
-    ctx.fillText("Move: " + game.movezone, WIDTH+BAR_WIDTH/2, 120);
+    var ability = game.movezone == -1 ? "None" : Abilities[game.movezone]
+
+    ctx.fillText("Move: " + ability, WIDTH+BAR_WIDTH/2, 120);
     
     // buttons
     for (i = 0; i < this.buttons.length; i++) {

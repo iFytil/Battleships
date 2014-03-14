@@ -25,7 +25,11 @@ function loadMouseEvents() {
     if(x>0 && x<WIDTH && y>0 && y<WIDTH){
       var sq = game.env.getSquare();
       var shipid = game.players[pid].Selected().id
-      var move = "Rotate";
+      var move = Abilities[game.movezone]
+
+      if (!move) {
+        return
+      }
 
       request_move(shipid,sq.x,sq.y, move)
     }else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
