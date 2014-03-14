@@ -70,8 +70,9 @@ Game = function(ctx)
   // environment
   this.env = new Environment(ctx);
   
-  // sidebar
+  // bars 
   this.sidebar = new Sidebar(ctx,this);
+  this.textbar = new Textbar(ctx);
   
   // currently displayed zones
   this.movezone = Z.None;
@@ -127,9 +128,10 @@ Game = function(ctx)
     }else if(this.movezone ==Z.Mine){
     };
     
-    // sidebar
+    // bars
     game.sidebar.RegisterShipChange();
     this.sidebar.Draw();
+    this.textbar.Draw();
     
    
   };
