@@ -43,4 +43,86 @@ class GamesController < ApplicationController
 
     redirect_to game_coral_path
   end
+
+  def coral
+    game = Game.find(params[:id])
+    p1 = current_user.id == game.player_1.id
+    if game.player_1_coral and game.player_2_coral 
+      redirect_to game_path(game.id)
+    elsif game.player_1_coral
+      if p1
+        render :coralwait
+      else
+        @generate = false
+        @coralstring = game.coral
+      end
+    elsif game.player_2_coral
+      if p1
+        @generate = false
+        @coralstring = game.coral
+      else
+        render :coralwait
+      end
+    else
+      if p1
+        @generate = true
+      else
+        render :coralwaitturn
+      end
+    end
+  end
+  def coral_handle
+    game = Game.find(params[:id])
+    if game.player_1_coral.nil?
+      game.player_1_coral = false
+    end
+    if game.player_2_coral.nil?
+      game.player_2_coral = false
+    end
+    game.save!
+    coral = params[:coralstring]
+    p1 = current_user.id == game.player_1.id
+    if game.player_1_coral and game.player_2_coral 
+      redirect_to game_path(game.id)
+    elsif game.player_1_coral
+      if p1
+        redirect_to game_start_path
+      else
+        if coral == game.coral
+          game.player_2_coral = true
+          game.save!
+          redirect_to game_start_path
+        else
+          game.coral = coral
+          game.player_1_coral = false
+          game.save!
+          redirect_to game_start_path
+        end
+      end
+    elsif game.player_2_coral
+      if p1
+        if coral == game.coral
+          game.player_1_coral = true
+          game.save!
+          redirect_to game_start_path
+        else
+          game.coral = coral
+          game.player_2_coral = false
+          game.save!
+          redirect_to game_start_path
+        end
+      else
+        redirect_to game_start_path
+      end
+    else
+      if p1
+        game.coral = coral
+        game.player_1_coral = true
+        game.save!
+        redirect_to game_start_path
+      else
+        redirect_to game_start_path
+      end
+    end
+  end
 end
