@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   include GamesHelper
 
-  validates_presence_of :player_1_id, :player_2_id, :player_1_coral, :player_2_coral, :player_1_ships, :player_2_ships
+  validates_presence_of :player_1_id, :player_2_id
 
   has_many :ships
   has_many :moves

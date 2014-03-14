@@ -9,6 +9,16 @@ class GamesController < ApplicationController
 
   def start
     @id = params[:id]
+    game = Game.find(@id)
+    if game.player_1.id == current_user.id
+      if game.player_1_ships
+        redirect_to game_coral_path
+      end
+    else
+      if game.player_2_ships
+        redirect_to game_coral_path
+      end
+    end
   end
 
   def shiporder
@@ -21,9 +31,16 @@ class GamesController < ApplicationController
     shiplist.split(",").each {|ship| shiporder << ship}
     shiporder.each_with_index do |ship,index|
       Ship.create!(:shiptype => Shiptype.find_by_name(ship), :location_x => x, :location_y => index+10, :game => game, :turn => turn, :direction => direction)
-      puts current_user.id
-      puts game.player_1.id
     end
+
+    if game.player_1.id == current_user.id
+      game.player_1_ships = true
+      game.save!
+    else
+      game.player_2_ships = true
+      game.save!
+    end
+
     redirect_to game_coral_path
   end
 end
