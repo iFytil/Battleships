@@ -8,11 +8,20 @@ class Move < ActiveRecord::Base
   after_create do |move|
 
     move.game_id = ship.game_id
-    move.save
 
     case move.kind
     when "Cannon"
-      getShipCollision(move.pos_x, move.pos_y)
+      result = getShipCollision(move.pos_x, move.pos_y)
+      txt = "Cannon fired at (#{move.pos_x},#{move.pos_y}). "
+
+      if result==:hit
+        txt += "Ship hit!"
+      elsif result==:miss
+        txt += "Shot hit the water!"
+      end
+
+      move.message = txt
+
     when "Move"
       if ship.location_x == move.pos_x
         dy = move.pos_y - ship.location_y
@@ -23,7 +32,7 @@ class Move < ActiveRecord::Base
         dx = move.pos_x - ship.location_x
         dx.abs.times {|i| addToShip({x: dx/dx.abs, y: 0})}
       end
-
+      move.message = "No shots were fired"
     when "Rotate"
       turn_index = ship.shiptype.turn_index
       case ship.direction
@@ -106,6 +115,7 @@ class Move < ActiveRecord::Base
 
     end
 
+    move.save
     ship.save
   end
 
@@ -134,13 +144,14 @@ class Move < ActiveRecord::Base
   def getShipCollision(x,y)
     game.ships.each { |s|
       s.shiptype.size.times {|i|
-
         shipSq = directionToDelta(s.direction,i)
         if s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y
-          return hitShip(s, i, ship.shiptype.cannon_damage)
+          hitShip(s, i, ship.shiptype.cannon_damage)
+          return :hit
         end
       }
     }
+    return :miss
   end
 
   def hitShip(hit_ship, i, dmg)
