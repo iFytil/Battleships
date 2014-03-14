@@ -131,19 +131,15 @@ Ship = function (ship, radar, cannon, torpedo) {
 
       ctx.beginPath()
       ctx.fillStyle = color;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 5;
       ctx.strokeStyle = (this.highlighted && this.data.turn==pid) ? 'black' : color
-      // for (each in this.points) {
-      //   var pt = this.points[each];
-      //   ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-      // }
-      ctx.moveTo(this.x*SQ_WIDTH+SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8);
-      ctx.lineTo(this.x*SQ_WIDTH+SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8+3*SQ_WIDTH/4);
-      ctx.lineTo(this.x*SQ_WIDTH+this.length*SQ_WIDTH-SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8+3*SQ_WIDTH/4);
-      ctx.lineTo(this.x*SQ_WIDTH+this.length*SQ_WIDTH-SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8);
-      ctx.closePath();
-      ctx.fill();
+      for (each in this.points) {
+        var pt = this.points[each];
+        ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+      }
       ctx.stroke();
+      ctx.fill();
+      ctx.closePath();
 
       // Paint damaged squares
       if(damage)

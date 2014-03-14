@@ -116,18 +116,20 @@ Game = function(ctx)
     //this.V.Draw(ctx,'grey');
     
     // zones
-    if(this.movezone == Z.None){
-        // do nothing
-    }else if(this.movezone == Z.Translate){
-        DrawTranslationZone(this.players[pid].Selected(), ctx);
-    } else if(this.movezone ==Z.Rotate){
-        DrawRotationZone(this.players[pid].Selected(), ctx);
-    }else if(this.movezone == Z.Cannon){
-        this.players[pid].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
-    }else if(this.movezone == Z.Torpedo){
-        this.players[pid].Selected().torpedozone.Draw(ctx,"rgb(0,0,255)");
-    }else if(this.movezone ==Z.Mine){
-    };
+    if(this.turn == pid){
+      if(this.movezone == Z.None){
+          // do nothing
+      }else if(this.movezone == Z.Translate){
+          DrawTranslationZone(this.players[pid].Selected(), ctx);
+      } else if(this.movezone ==Z.Rotate){
+          DrawRotationZone(this.players[pid].Selected(), ctx);
+      }else if(this.movezone == Z.Cannon){
+          this.players[pid].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
+      }else if(this.movezone == Z.Torpedo){
+          this.players[pid].Selected().torpedozone.Draw(ctx,"rgb(0,0,255)");
+      }else if(this.movezone ==Z.Mine){
+      };
+    }
     
     // bars
     game.sidebar.RegisterShipChange();

@@ -211,8 +211,10 @@ Sidebar = function(ctx,game){
     ctx.fillText("Move: " + ability, WIDTH+BAR_WIDTH/2, 120);
     
     // buttons
-    for (i = 0; i < this.buttons.length; i++) {
-      this.buttons[i].Draw(ctx,"orange");
+    if(this.game.turn == pid){
+      for (i = 0; i < this.buttons.length; i++) {
+        this.buttons[i].Draw(ctx,"orange");
+      }
     }
 
     ctx.restore();
