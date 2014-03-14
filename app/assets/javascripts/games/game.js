@@ -168,7 +168,6 @@ Game = function(ctx)
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
-
   }
 
   this.reload();
