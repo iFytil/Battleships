@@ -1,7 +1,7 @@
 <%= javascript_include_tag "games" %>
 <%= stylesheet_link_tag    "games" %>
 
-<%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves), userid: current_user.id} do %>
+<%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves), userid: current_user.id, ships: @game.ships.to_json(:include => :shiptype)} do %>
 <% end %>
 
 <canvas id="myCanvas" width="700" height="600"></canvas>
@@ -19,10 +19,11 @@
   var GAME_DATA = $('#game-data').data("game")
   var USERID = $('#game-data').data("userid")
   var pid = ((USERID == GAME_DATA.player_1_id) ? Turn.First : Turn.Second)
-  var SHIPS = [];
+  var SHIPS = $('#game-data').data("ships")
 
   // game logistics
   var game = new Game(ctx);
+  
   
   setInterval(function () {
     game.Display();
