@@ -62,11 +62,16 @@ Ship = function (ship, radar, cannon, torpedo) {
 
   this.highlighted = false;
 
+  this.DrawStern = function(){
+    ctx.fillStyle = "black"
+    ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
+  }
+
   this.Draw = function (ctx, color, damage) {
 
       ctx.beginPath()
       ctx.fillStyle = color;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 5;
       ctx.strokeStyle = (this.highlighted && this.data.turn==pid) ? 'black' : color
       for (each in this.points) {
         var pt = this.points[each];
@@ -95,6 +100,8 @@ Ship = function (ship, radar, cannon, torpedo) {
             }
         }
       }
+
+      this.DrawStern();
   }
 
   // Duplicate!

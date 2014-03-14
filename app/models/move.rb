@@ -12,6 +12,7 @@ class Move < ActiveRecord::Base
 
     case move.kind
     when "Cannon"
+
     when "Move"
       ship.location_x = move.pos_x
       ship.location_y = move.pos_y
@@ -38,6 +39,23 @@ class Move < ActiveRecord::Base
         "Right"
       end
     end
+  end
+
+  def shipToDelta(ship,len)
+    dx = 0
+    dy = 0
+    case ship.direction
+    when "Up"
+      dy = -len
+    when "Left"
+      dx = len
+    when "Down"
+      dy = len
+    when "Right"
+      dx = -len
+    end
+
+    {x: dx, y: dy}
   end
 
 end
