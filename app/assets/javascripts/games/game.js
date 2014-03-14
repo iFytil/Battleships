@@ -126,9 +126,9 @@ Game = function(ctx)
     if(this.movezone == Z.None){
         // do nothing
     }else if(this.movezone == Z.Translate){
-        // DrawTranslationZone(this.players[this.turn].Selected(), ctx);
+        DrawTranslationZone(this.players[this.turn].Selected(), ctx);
     } else if(this.movezone ==Z.Rotate){
-        // DrawRotationZone(this.players[this.turn].Selected(), ctx);
+        DrawRotationZone(this.players[this.turn].Selected(), ctx);
     }else if(this.movezone == Z.Cannon){
         this.players[this.turn].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
     }else if(this.movezone == Z.Torpedo){
