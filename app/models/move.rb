@@ -23,6 +23,7 @@ class Move < ActiveRecord::Base
       move.message = txt
 
     when "Move"
+      move.message = "No shots were fired"
       if ship.location_x == move.pos_x
         dy = move.pos_y - ship.location_y
         dy.abs.times {|i| addToShip({x: 0, y: dy/dy.abs})}
@@ -32,7 +33,6 @@ class Move < ActiveRecord::Base
         dx = move.pos_x - ship.location_x
         dx.abs.times {|i| addToShip({x: dx/dx.abs, y: 0})}
       end
-      move.message = "No shots were fired"
     when "Rotate"
       turn_index = ship.shiptype.turn_index
       case ship.direction
@@ -171,7 +171,11 @@ class Move < ActiveRecord::Base
   def addToShip(delta)
     ship.shiptype.size.times { |i|
       shipSq = directionToDelta(ship.direction,i)
-      if isUnsafe(ship.location_x + delta[:x] + shipSq[:x], ship.location_y + delta[:y] + shipSq[:y])
+      x = ship.location_x + delta[:x] + shipSq[:x]
+      y = ship.location_y + delta[:y] + shipSq[:y]
+      if isUnsafe(x,y)
+        self.message = "Collision at (#{x},#{y})";
+        self.save
         return
       end
     }
