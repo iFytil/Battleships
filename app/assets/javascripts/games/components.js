@@ -122,19 +122,28 @@ Ship = function (ship, radar, cannon, torpedo) {
 
   this.highlighted = false;
 
+  this.DrawStern = function(){
+    ctx.fillStyle = "black"
+    ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
+  }
+
   this.Draw = function (ctx, color, damage) {
 
       ctx.beginPath()
       ctx.fillStyle = color;
       ctx.lineWidth = 2;
       ctx.strokeStyle = (this.highlighted && this.data.turn==pid) ? 'black' : color
-      for (each in this.points) {
-        var pt = this.points[each];
-        ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-      }
-      ctx.stroke();
-      ctx.fill();
+      // for (each in this.points) {
+      //   var pt = this.points[each];
+      //   ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+      // }
+      ctx.moveTo(this.x*SQ_WIDTH+SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8);
+      ctx.lineTo(this.x*SQ_WIDTH+SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8+3*SQ_WIDTH/4);
+      ctx.lineTo(this.x*SQ_WIDTH+this.length*SQ_WIDTH-SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8+3*SQ_WIDTH/4);
+      ctx.lineTo(this.x*SQ_WIDTH+this.length*SQ_WIDTH-SQ_WIDTH/8, this.y*SQ_WIDTH+SQ_WIDTH/8);
       ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
 
       // Paint damaged squares
       if(damage)
@@ -155,6 +164,8 @@ Ship = function (ship, radar, cannon, torpedo) {
             }
         }
       }
+
+      this.DrawStern();
   }
 
   // Duplicate!
