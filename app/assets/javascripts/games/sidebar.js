@@ -8,46 +8,52 @@ Button = function(x, y, w, h,bar){
   var activeColour = '#66A3D2';
   var inactiveColour = '#24262A';
   var hoverColour = '#ff7f50';
-  this.colour = activeColour;
+  var selectedColour = 'white';
   
   this.active = false;
+  this.selected = false;
+  this.hover = false;
   
   // this is the function that will be called when this button 
   //is pressed
-  this.Press = function(){   
+  this.Press = function(){ 
     bar.Handle(this.func);
     };
   
   this.Click = function(x,y){
-    if(this.active){
+
     if(x>this.x && x<this.x+w && y>this.y && y<this.y+h){
       this.Press();
       return true;
     }else{
       return false;
     }
-  }
+ 
   }
   this.Hover = function(x,y){
-    if(this.active){
+    
     if(x>this.x && x<this.x+w && y>this.y && y<this.y+h){
-      this.colour = hoverColour;
+      this.hover = true;
       return true;
     }else{
-      this.colour = activeColour;
+      this.hover = false;
       return false;
     }
-  }
+  
   }
   
   this.Draw = function(ctx){
-    
-    if(this.active)
-      this.colour = activeColour;
-    else
-        this.colour = inactiveColour;
       
-    ctx.fillStyle = this.colour;
+    if(this.active){
+      if(this.selected)
+        ctx.fillStyle = selectedColour;
+      else if(this.hover)
+        ctx.fillStyle = hoverColour;
+      else
+        ctx.fillStyle = activeColour;
+    }else
+      ctx.fillStyle = inactiveColour;
+  
     ctx.fillRect(this.x, this.y, w,h, 30);
     
     ctx.fillStyle = 'black';
@@ -67,6 +73,7 @@ Sidebar = function(ctx,game){
   this.ctx = ctx;
   this.game = game;
   
+  // list of buttons
   this.buttons = new Array();
   
   var numButtons = 7;
@@ -98,20 +105,68 @@ Sidebar = function(ctx,game){
 
   // handle function
   this.Handle = function(f){
-    if(f==0)
-      this.game.TranslateOptions();
-    if(f==1)
-      this.game.RotateOptions();
-    if(f==2)
-      this.game.CannonOptions();
-    if(f==3)
-      this.game.TorpedoOptions();
-    if(f==4)
-      this.game.MineOptions();
-    if(f==5)
-      this.game.DisplayRadarOptions();
-    if(f==6)
-      this.game.DisplayHealingOptions();
+    //this.game.NoOptions();
+
+    
+   if(f==0 && this.buttons[0].active){
+     
+      if(!this.buttons[0].selected){
+        this.game.TranslateOptions();
+        this.buttons[0].selected  = true;
+      }else{
+        this.game.NoOptions();
+        this.buttons[0].selected  = false;
+      }
+        
+    }else if(f==1 && this.buttons[1].active){
+      if(!this.buttons[1].selected){
+        this.game.RotateOptions();
+        this.buttons[1].selected  = true;
+      }else{
+        this.game.NoOptions();
+        this.buttons[1].selected  = false;
+      }
+    }else if(f==2 && this.buttons[2].active){
+      if(!this.buttons[2].selected){
+        this.game.CannonOptions();
+        this.buttons[2].selected  = true;
+      }else{
+        this.game.NoOptions();
+        this.buttons[2].selected  = false;
+      }
+    }else if(f==3 && this.buttons[3].active){
+      if(!this.buttons[3].selected){
+        this.game.TorpedoOptions();
+        this.buttons[3].selected  = true;
+      }else{
+        this.game.NoOptions();
+        this.buttons[3].selected  = false;
+      }
+    }else if(f==4 && this.buttons[4].active){
+      if(!this.buttons[4].selected){
+        this.game.MineOptions();
+        this.buttons[4].selected  = true;
+      }else{
+        this.game.NoOptions();
+        this.buttons[4].selected  = false;
+      }
+    }else if(f==5 && this.buttons[5].active){
+      if(!this.buttons[5].selected){
+        this.game.DisplayRadarOptions();
+        this.buttons[5].selected  = true;
+      }else{
+        this.game.NoOptions();
+        this.buttons[5].selected  = false;
+      }
+    }else if(f==6 && this.buttons[6].active){
+      if(!this.buttons[6].selected){
+        this.game.DisplayHealingOptions();
+        this.buttons[6].selected  = true;
+      }else{
+        this.game.NoOptions();
+        this.buttons[6].selected  = false;
+      }
+     }
   };
      
  
