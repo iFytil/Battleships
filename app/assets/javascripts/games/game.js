@@ -153,6 +153,9 @@ Game = function(ctx)
 
   this.reload = function()
   {
+    // reset zone
+    this.movezone = Z.None;
+
     // 2 players
     this.players=new Array();
     this.players.push(new Player(Turn.First));
