@@ -118,12 +118,12 @@ class Move < ActiveRecord::Base
   end
 
   def getShipCollision(x,y)
-    game.ships.each { |ship|
-      ship.shiptype.size.times {|i|
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
 
-        shipSq = directionToDelta(ship.direction,i)
-        if ship.location_x + shipSq[:x] == x && ship.location_y + shipSq[:y] == y
-          return hitShip(ship, i, 1)
+        shipSq = directionToDelta(s.direction,i)
+        if s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y
+          return hitShip(s, i, ship.shiptype.cannon_damage)
         end
       }
     }
@@ -134,11 +134,13 @@ class Move < ActiveRecord::Base
     h = hit_ship.health
     str = "";
     str += h;
-    if h[i].to_i >= dmg
-      str[i] = (h[i].to_i - dmg).to_s
-      hit_ship.health = str
+    after_hit = h[i].to_i - dmg;
+    if after_hit < 0
+      after_hit = 0
     end
-    puts hit_ship.save
+    str[i] = after_hit.to_s
+    hit_ship.health = str
+    hit_ship.save
   end
 
   def addToShip(delta)
