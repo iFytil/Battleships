@@ -1,14 +1,28 @@
 <%= stylesheet_link_tag "games" %>
 
 <script>
-var corola = [];
 function hasClass(element, cls) {
   return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
 
+function setCharAt(str,index,chr) {
+  if(index > str.length-1) return str;
+  return str.substr(0,index) + chr + str.substr(index+1);
+}
+
+function renderCoral()
+{
+  var coralblock = document.getElementById("coralblock");
+  for(var i = 0; i < 240; i++)
+  {
+    var c = coralstring.charAt(i) == "0" ? "water" : "coral";
+    coralblock.innerHTML += "<div class='" +  c +"'></div>";
+  }
+}
 function generateCoral()
 {
-  corola = [];
+  var str = ""
+    corola = [];
   var coralblock = document.getElementById("coralblock");
   var coral = 24;
   coralblock.innerHTML = "";
@@ -28,8 +42,27 @@ function generateCoral()
       coral--;
     }
   }
+
+  for(var k = 0; k < 240; k++)
+  {
+    str += "0";
+  }
+
+  for(var j = 0; j < corola.length; j++)
+  {
+    str = setCharAt(str,corola[j],"1");
+  }
+  console.log(str);
+  document.getElementById("coralstring").value = str;
 }
-setTimeout(generateCoral,100);
+<% if @generate %>
+  var corola = [];
+  setTimeout(generateCoral,100);
+<% else %>
+  var coralstring = "<%= @coralstring %>";
+  setTimeout(renderCoral,100);
+<% end %>
+
 </script>
 
 <h2>Coral Generation</h2>
@@ -39,7 +72,14 @@ setTimeout(generateCoral,100);
   <div id="coralblock"></div>
 </div>
 
-<div class='text-right'>
+<div class='text-left'>
   <button class='btn btn-sm btn-danger' onclick="generateCoral();" id="shipstartnext">Regenerate Coral</button>
+  <%= form_tag(game_coral_handle_path,{:method => :post, :class => "pull-right"}) do %>
+    <% if @generate %>
+    <input id="coralstring" type="hidden" value="" name="coralstring">
+<% else %>
+    <input id="coralstring" type="hidden" value="<%= @coralstring %>" name="coralstring">
+<% end %>
   <button class='btn btn-sm btn-success' id="shipstartnext">Next Step</button>
+<% end %>
 </div>

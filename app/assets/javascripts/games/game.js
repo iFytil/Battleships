@@ -148,7 +148,9 @@ Game = function(ctx)
 
   this.reload();
   
-  // forward, backward, up, down
+  this.NoOptions = function(){
+    this.movezone = Z.None;
+    };
   this.TranslateOptions = function(){
     this.movezone = Z.Translate;
     };
