@@ -166,8 +166,8 @@ Base = function (x, y) {
   var x0 = x * SQ_WIDTH;
   var y0 = y * SQ_WIDTH;
   
-  // visibiltiy
-  this.radarzone = new Range(x,y,-1, 3, 12,D.Down);
+  // visibility
+  this.radarzone = new Range(x, y, -1, 3, 12, D.Down);
 
   this.Draw = function (ctx, color) {
     ctx.fillStyle = color;
