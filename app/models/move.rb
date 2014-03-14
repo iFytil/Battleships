@@ -34,6 +34,7 @@ class Move < ActiveRecord::Base
         dx.abs.times {|i| addToShip({x: dx/dx.abs, y: 0})}
       end
     when "Rotate"
+      move.message = "No shots were fired"
       turnPossible = false
       quadrant = "NE" # irrelevant default value
       turn_index = ship.shiptype.turn_index
