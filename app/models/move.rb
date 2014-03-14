@@ -12,7 +12,7 @@ class Move < ActiveRecord::Base
 
     case move.kind
     when "Cannon"
-
+      getShipCollision(move.pos_x, move.pos_y)
     when "Move"
       if ship.location_x == move.pos_x
         dy = move.pos_y - ship.location_y
@@ -97,54 +97,54 @@ class Move < ActiveRecord::Base
 
   private
 
-  def isCoral(x,y)
-    isit = x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
+  def isUnsafe(x,y)
+    isCoral(x,y) || isShip(x,y)
   end
 
-  # def whereToRotate(move,ship)
-  #   case ship.direction
-  #   when "Up"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Down"
-  #     elsif move.pos_x < ship.location_x 
-  #       "Left"
-  #     else
-  #       "Right"
-  #     end
+  def isCoral(x,y)
+    x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
+  end
 
-  #   when "Down"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Up"
-  #     elsif move.pos_x < ship.location_x 
-  #       "Left"
-  #     else
-  #       "Right"
-  #     end
+  def isShip(x,y)
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
+        shipSq = directionToDelta(s.direction,i)
+        if ship.id!=s.id && (s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y)
+          return true;
+        end
+      }
+    }
+    return false;
+  end
 
-  #   when "Left"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Right"
-  #     elsif move.pos_y < ship.location_y
-  #       "Up"
-  #     else
-  #       "Down"
-  #     end 
+  def getShipCollision(x,y)
+    game.ships.each { |ship|
+      ship.shiptype.size.times {|i|
 
-  #   when "Right"
-  #     if ship.location_x == move.pos_x && ship.location_y == move.pos_y
-  #       "Left"
-  #     elsif move.pos_y < ship.location_y
-  #       "Up"
-  #     else
-  #       "Down"
-  #     end
-  #   end
-  # end
+        shipSq = directionToDelta(ship.direction,i)
+        if ship.location_x + shipSq[:x] == x && ship.location_y + shipSq[:y] == y
+          return hitShip(ship, i, 1)
+        end
+      }
+    }
+  end
+
+  def hitShip(hit_ship, i, dmg)
+    # Caching sucks
+    h = hit_ship.health
+    str = "";
+    str += h;
+    if h[i].to_i >= dmg
+      str[i] = (h[i].to_i - dmg).to_s
+      hit_ship.health = str
+    end
+    puts hit_ship.save
+  end
 
   def addToShip(delta)
     ship.shiptype.size.times { |i|
       shipSq = directionToDelta(ship.direction,i)
-      if isCoral(ship.location_x + delta[:x] + shipSq[:x], ship.location_y + delta[:y] + shipSq[:y])
+      if isUnsafe(ship.location_x + delta[:x] + shipSq[:x], ship.location_y + delta[:y] + shipSq[:y])
         return
       end
     }
