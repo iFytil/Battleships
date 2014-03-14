@@ -73,6 +73,9 @@ Sidebar = function(ctx,game){
   this.ctx = ctx;
   this.game = game;
   
+  // index of selected button
+  this.selected = -1;
+  
   // list of buttons
   this.buttons = new Array();
   
@@ -105,71 +108,85 @@ Sidebar = function(ctx,game){
 
   // handle function
   this.Handle = function(f){
-    //this.game.NoOptions();
-
+   this.ClearButtons();
     
    if(f==0 && this.buttons[0].active){
      
-      if(!this.buttons[0].selected){
+      if(this.selected!=0){
         this.game.TranslateOptions();
-        this.buttons[0].selected  = true;
+        this.selected = 0;
+        this.buttons[0].selected = true;
       }else{
         this.game.NoOptions();
-        this.buttons[0].selected  = false;
+        this.selected = -1;
       }
         
     }else if(f==1 && this.buttons[1].active){
-      if(!this.buttons[1].selected){
+      if(this.selected!=1){
         this.game.RotateOptions();
-        this.buttons[1].selected  = true;
+        this.selected = 1;
+        this.buttons[1].selected = true;
       }else{
         this.game.NoOptions();
-        this.buttons[1].selected  = false;
+        this.selected = -1;
       }
     }else if(f==2 && this.buttons[2].active){
-      if(!this.buttons[2].selected){
+      if(this.selected!=2){
         this.game.CannonOptions();
-        this.buttons[2].selected  = true;
+        this.selected = 2;
+        this.buttons[2].selected = true;
       }else{
         this.game.NoOptions();
-        this.buttons[2].selected  = false;
+        this.selected = -1;
       }
     }else if(f==3 && this.buttons[3].active){
-      if(!this.buttons[3].selected){
+      if(this.selected!=3){
         this.game.TorpedoOptions();
-        this.buttons[3].selected  = true;
+        this.selected = 3;
+        this.buttons[3].selected = true;
       }else{
         this.game.NoOptions();
-        this.buttons[3].selected  = false;
+        this.selected = -1;
       }
     }else if(f==4 && this.buttons[4].active){
-      if(!this.buttons[4].selected){
+      if(this.selected!=4){
         this.game.MineOptions();
-        this.buttons[4].selected  = true;
+        this.selected = 4;
+        this.buttons[4].selected = true;
       }else{
         this.game.NoOptions();
-        this.buttons[4].selected  = false;
+        this.selected = -1;
       }
     }else if(f==5 && this.buttons[5].active){
-      if(!this.buttons[5].selected){
+      if(this.selected!=5){
         this.game.DisplayRadarOptions();
-        this.buttons[5].selected  = true;
+        this.selected = 5;
+        this.buttons[5].selected = true;
       }else{
         this.game.NoOptions();
-        this.buttons[5].selected  = false;
+        this.selected = -1;
       }
     }else if(f==6 && this.buttons[6].active){
-      if(!this.buttons[6].selected){
+      if(this.selected!=6){
         this.game.DisplayHealingOptions();
-        this.buttons[6].selected  = true;
+        this.selected = 6;
+        this.buttons[6].selected = true;
       }else{
         this.game.NoOptions();
-        this.buttons[6].selected  = false;
+        this.selected = -1;
       }
      }
+    /* if(this.selcted>0){
+      this.buttons[this.selcted].selected = true;
+    }*/
   };
-     
- 
+    this.ClearButtons = function(){
+      
+ for(var i = 0;i<this.buttons.length;i++){
+      this.buttons[i].selected = false;
+    }
+    
+  }
 
   this.Hover = function(x,y){
     // if true, break
@@ -190,6 +207,8 @@ Sidebar = function(ctx,game){
     var player = this.game.players[pid]; // currently player
     var t = player.Selected().name; // currently selected ship's name
     var base = player.fleet.base
+    
+    
     
     // all ships have move capabilities
     // all ships have rotation abilities
@@ -214,9 +233,9 @@ Sidebar = function(ctx,game){
     }else if(t == T.D){
       // destroyers have torpedos
       this.buttons[3].active = true;
-    }else if(t == T.C){
+    }else if(){
       // repairs can only be made if
-    // this.buttons[6].active = isByBase(ship,base);
+    // this.buttons[6].active = true;
     
     }
   }
