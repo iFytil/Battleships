@@ -25,7 +25,7 @@ class Move < ActiveRecord::Base
       end
 
     when "Rotate"
-      d1 = shipToDelta(ship,ship.shiptype.turn_index)
+      d1 = shipToDelta(ship.shiptype.turn_index)
       ship.direction = whereToRotate(move,ship)
       d2 = shipToDelta(ship,ship.shiptype.turn_index)
     
@@ -44,7 +44,7 @@ class Move < ActiveRecord::Base
   private
 
   def isCoral(x,y)
-    x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
+    isit = x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
   end
 
   def whereToRotate(move,ship)
@@ -64,24 +64,46 @@ class Move < ActiveRecord::Base
   end
 
   def addToShip(delta)
-    if !isCoral(ship.location_x + delta[:x], ship.location_y + delta[:y])
-      ship.location_x += delta[:x]
-      ship.location_y += delta[:y]
-    end
+    ship.shiptype.size.times { |i|
+      shipSq = directionToDelta(ship.direction,i)
+      if isCoral(ship.location_x + delta[:x] + shipSq[:x], ship.location_y + delta[:y] + shipSq[:y])
+        return
+      end
+    }
+    ship.location_x += delta[:x]
+    ship.location_y += delta[:y]
   end
 
-  def shipToDelta(ship,len)
+  def deltaToDirection(delta)
+    dir = ""
+    if delta[:x] == -1
+      dir = "Left"
+    elsif delta[:x] == 1
+      dir = "Right"
+    elsif delta[:y] == 1
+      dir = "Down"
+    elsif delta[:y] == -1
+      dir = "Up"
+    end
+    dir
+  end
+
+  def shipToDelta(len)
+    directionToDelta(ship.direction,len)
+  end
+
+  def directionToDelta(dir,len)
     dx = 0
     dy = 0
-    case ship.direction
+    case dir
     when "Up"
       dy = -len
     when "Left"
-      dx = len
+      dx = -len
     when "Down"
       dy = len
     when "Right"
-      dx = -len
+      dx = len
     end
 
     {x: dx, y: dy}
