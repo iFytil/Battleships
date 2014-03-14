@@ -97,7 +97,7 @@ Game = function(ctx)
   };
   
   this.CurrentPlayer =function(){
-      return this.players[this.turn].Selected();
+      return this.players[pid].Selected();
   };
   
   this.Display = function()
@@ -119,9 +119,9 @@ Game = function(ctx)
     } else if(this.movezone ==Z.Rotate){
         // DrawRotationZone(this.players[this.turn].Selected(), ctx);
     }else if(this.movezone == Z.Cannon){
-        this.players[this.turn].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
+        this.players[pid].Selected().cannonzone.Draw(ctx,"rgb(0,0,255)");
     }else if(this.movezone == Z.Torpedo){
-        this.players[this.turn].Selected().torpedozone.Draw(ctx,"rgb(0,0,255)");
+        this.players[pid].Selected().torpedozone.Draw(ctx,"rgb(0,0,255)");
     }else if(this.movezone ==Z.Mine){
     };
     
@@ -143,7 +143,7 @@ Game = function(ctx)
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
-    
+
   }
 
   this.reload();
