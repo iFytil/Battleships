@@ -99,8 +99,11 @@ Environment = function (ctx) {
   Grid.init()
   Grid.draw()
 
-  this.draw = function () {
+  this.drawGrid = function () {
     Grid.draw();
+  }
+
+  this.drawCoral = function () {
     Coral.draw();
   }
 

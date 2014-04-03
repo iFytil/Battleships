@@ -3,14 +3,14 @@ Visibility = function(ranges) {
   this.ranges = ranges;
     
   // start with complete invisibility
-  var c = new Array();
+  this.field = new Array();
 
   this.Set=function()
   {
     //start off blank
     for (var i = 0; i < N*N; i++) 
     {
-      c[i] = 1; //blocked
+      this.field[i] = 1; //blocked
     }
     
     // remove visible squares
@@ -22,7 +22,7 @@ Visibility = function(ranges) {
         {
           var x = this.ranges[k].x+i;
           var y = this.ranges[k].y+j;
-          c[y+N*x] = 0;
+          this.field[y+N*x] = 0;
         }
       }
     }
@@ -36,7 +36,7 @@ Visibility = function(ranges) {
       {
         for (var j = 0; j < N; j++) 
         {
-          if (c[j + i * N] == 1) 
+          if (this.field[j + i * N] == 1) 
           {
             ctx.beginPath();
             ctx.rect(i * SQ_WIDTH, j * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
