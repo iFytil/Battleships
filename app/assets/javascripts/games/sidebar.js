@@ -201,9 +201,7 @@ Sidebar = function(ctx,game){
   
   // Check if a point is in a box
   function isInBox(point, pointTL, pointTR, pointBL){  // pointTL = point top left, pointBR = point bottom right...
-      // console.log(point+pointTL+pointTR+pointBL);
-      if(point.x >= pointTL.x && point.x < pointTR.x && point.y < pointBL.y && point.y >= pointTL.y) {return true}
-        else {return false}
+    return point.x >= pointTL.x && point.x < pointTR.x && point.y < pointBL.y && point.y >= pointTL.y
   }
 
   this.Draw = function(){
@@ -241,7 +239,6 @@ Sidebar = function(ctx,game){
     }
 
     ctx.restore();
-    
     
   };
 
