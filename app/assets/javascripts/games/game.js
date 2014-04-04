@@ -116,15 +116,22 @@ Game = function(ctx)
   
   this.Display = function()
   {
-    this.env.draw();
+    this.env.drawGrid();
 
     // ships
     this.players[0].fleet.Draw(ctx,'#B80B0B');
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(ctx,'grey');
+      this.V.Draw(ctx,'grey');
     
+      // coral map
+      this.env.drawCoral();
+
+      // bases
+      this.players[0].fleet.DrawBase(ctx,'#B80B0B');
+      this.players[1].fleet.DrawBase(ctx,'#63A80A');
+
     // zones
     if(this.turn == pid){
       if(this.movezone == Z.None){
