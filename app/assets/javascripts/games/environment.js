@@ -74,24 +74,34 @@ Environment = function (ctx) {
     square: function (x,y){
       this.x = x;
       this.y = y;
+      this.gx = (x-0.5)/SQ_WIDTH;
+      this.gy = (y-0.5)/SQ_WIDTH;
       this.h = SQ_WIDTH;
       this.w = SQ_WIDTH;
 
       this.draw = function(){
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "#254055";
-        ctx.strokeRect(this.x, this.y, this.w, this.w);
-        ctx.fillStyle = "#66A3D2";
-        ctx.fillRect(this.x, this.y, this.w, this.w);
+        if(this.isVisible()) {
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = "#254055";
+          ctx.strokeRect(this.x, this.y, this.w, this.w);
+          ctx.fillStyle = "#66A3D2";
+          ctx.fillRect(this.x, this.y, this.w, this.w);
+        }
       }
 
       this.over = function() {
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.x, this.y, this.w, this.w);
+        if(this.isVisible()) {
+          ctx.fillStyle = "red";
+          ctx.fillRect(this.x, this.y, this.w, this.w);
+        }
       }
 
       this.eleAtPoint = function(ex,ey){
         return ex < this.x + this.w && ex > this.x && ey > this.y && ey < this.y + this.h
+      }
+
+      this.isVisible = function() {
+        return game && !game.V.field[this.gy + 30*this.gx];
       }
     }
   };
