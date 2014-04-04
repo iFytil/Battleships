@@ -104,6 +104,7 @@ Game = function(ctx)
   this.UpdateZones = function()
   {
     this.translationZone = new TranslationZone(this.players[pid].Selected())
+    this.mineZone = new MineZone(this.players[pid].Selected())
     this.rotationZone = new RotationZone(this.players[pid].Selected())
     this.cannonZone = this.players[pid].Selected().cannonzone
     this.torpedoZone = this.players[pid].Selected().torpedozone
@@ -141,6 +142,8 @@ Game = function(ctx)
           this.currentZone = this.torpedoZone
           this.currentZone.Draw(ctx,"rgb(0,0,255)");
       }else if(this.movezone ==Z.Mine){
+          this.currentZone = this.mineZone
+          this.currentZone.Draw(ctx);
       };
     }
     
