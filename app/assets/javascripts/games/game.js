@@ -25,13 +25,14 @@ var Z = {
 
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
 
-var T = {
-  R:"Radar Boat",
-  M:"Mine Layer",
-  T:"Torpedo Boat",
-  D:"Destroyer",
-  C:"Cruiser",
-  E:"Radar Boat Extended"
+var Type = {
+  RadarBoat:         "Radar Boat",
+  MineLayer:         "Mine Layer",
+  TorpedoBoat:       "Torpedo Boat",
+  Destroyer:         "Destroyer",
+  Cruiser:           "Cruiser",
+  ExtendedRadarBoat: "Radar Boat Extended",
+  KamikazeBoat:      "Kamikaze Boat"
 }
 
 Player = function(turn){
@@ -116,15 +117,22 @@ Game = function(ctx)
   
   this.Display = function()
   {
-    this.env.draw();
+    this.env.drawGrid();
 
     // ships
     this.players[0].fleet.Draw(ctx,'#B80B0B');
     this.players[1].fleet.Draw(ctx,'#63A80A');
     
     // "cloud of invisibitily"
-    //this.V.Draw(ctx,'grey');
+      this.V.Draw(ctx,'grey');
     
+      // coral map
+      this.env.drawCoral();
+
+      // bases
+      this.players[0].fleet.DrawBase(ctx,'#B80B0B');
+      this.players[1].fleet.DrawBase(ctx,'#63A80A');
+
     // zones
     if(this.turn == pid){
       if(this.movezone == Z.None){

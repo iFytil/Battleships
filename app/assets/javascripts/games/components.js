@@ -164,8 +164,10 @@ Fleet = function (turn) {
       for (var i = 0; i < this.ships.length; i++) {
           this.ships[i].Draw(ctx, color, true);
       }
+  };
+  this.DrawBase = function (ctx, color) {
       this.base.Draw(ctx, color);
-      this.base.radarzone.Draw(ctx, color);
+      //this.base.radarzone.Draw(ctx, color);
   };
 
 };

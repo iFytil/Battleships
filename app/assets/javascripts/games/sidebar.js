@@ -24,22 +24,11 @@ Button = function(x, y, w, h,bar){
 
     if(x>this.x && x<this.x+w && y>this.y && y<this.y+h){
       this.Press();
-      return true;
-    }else{
-      return false;
     }
  
   }
   this.Hover = function(x,y){
-    
-    if(x>this.x && x<this.x+w && y>this.y && y<this.y+h){
-      this.hover = true;
-      return true;
-    }else{
-      this.hover = false;
-      return false;
-    }
-  
+    this.hover = x>this.x && x<this.x+w && y>this.y && y<this.y+h;
   }
   
   this.Draw = function(ctx){
@@ -163,15 +152,11 @@ Sidebar = function(ctx,game){
     var t = ship.name; // currently selected ship's name
     var baseRadar = player.fleet.base.radarzone
     
-    // all ships have move capabilities
-    // all ships have rotation abilities
-    // all ships have cannon abilities
+    // default : all ships have move capabilities, if they speed is nonzero
+    // default : all ships have rotation abilities
+    // default : all ships have cannon abilities
 
-    if(ship.speed >0)
-      this.buttons[0].active = true;
-    else
-      this.buttons[0].active = false;
-
+    this.buttons[0].active = ship.speed > 0
     this.buttons[1].active = true;
     this.buttons[2].active = true;
     this.buttons[3].active = false;
@@ -179,18 +164,29 @@ Sidebar = function(ctx,game){
     this.buttons[5].active = false;
     this.buttons[6].active = false
 
-    if(t == T.R || t == T.E){
-      // only radar boats can change their ranges
-      this.buttons[5].active = true;
-    }else if(t == T.M){
-      // only mine layers can drip/pick up mines
-      this.buttons[4].active = true;
-    }else if(t == T.T){
-      // torpedo boats have torpedos
-      this.buttons[3].active = true;
-    }else if(t == T.D){
-      // destroyers have torpedos
-      this.buttons[3].active = true;
+    switch(t) {
+
+      // Extend Radar
+      case Type.RadarBoat:
+      case Type.ExtendedRadarBoat:
+        this.buttons[5].active = true;
+        break;
+
+      // Mine abilities
+      case Type.MineLayer:
+        break;
+
+      // Torpedo
+      case Type.Destroyer:
+      case Type.TorpedoBoat:
+        this.buttons[3].active = true;
+        break;
+
+      // Explode
+      case Type.KamikazeBoat:
+        this.buttons[1].active = false;
+        this.buttons[2].active = false;
+        break;
     }
 
     // Repairs are only made if the ship is near the base
@@ -201,9 +197,7 @@ Sidebar = function(ctx,game){
   
   // Check if a point is in a box
   function isInBox(point, pointTL, pointTR, pointBL){  // pointTL = point top left, pointBR = point bottom right...
-      // console.log(point+pointTL+pointTR+pointBL);
-      if(point.x >= pointTL.x && point.x < pointTR.x && point.y < pointBL.y && point.y >= pointTL.y) {return true}
-        else {return false}
+    return point.x >= pointTL.x && point.x < pointTR.x && point.y < pointBL.y && point.y >= pointTL.y
   }
 
   this.Draw = function(){
@@ -241,7 +235,6 @@ Sidebar = function(ctx,game){
     }
 
     ctx.restore();
-    
     
   };
 

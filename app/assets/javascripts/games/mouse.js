@@ -44,6 +44,9 @@ function loadMouseEvents() {
     else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
       // on sidebar
       game.sidebar.Click(x,y);
+
+      // actions that happen right after button push
+      
     }
     
   }
@@ -54,7 +57,7 @@ function loadMouseEvents() {
     // check if in grid or on sidebar
     if(x>0 && x<WIDTH && y>0 && y<WIDTH)
     {
-      game.env.Hover(e.clientX  ,e.clientY)
+      game.env.Hover(e.clientX, e.clientY);
     }
     else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH)
     {
