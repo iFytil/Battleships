@@ -25,13 +25,14 @@ var Z = {
 
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
 
-var T = {
-  R:"Radar Boat",
-  M:"Mine Layer",
-  T:"Torpedo Boat",
-  D:"Destroyer",
-  C:"Cruiser",
-  E:"Radar Boat Extended"
+var Type = {
+  RadarBoat:         "Radar Boat",
+  MineLayer:         "Mine Layer",
+  TorpedoBoat:       "Torpedo Boat",
+  Destroyer:         "Destroyer",
+  Cruiser:           "Cruiser",
+  ExtendedRadarBoat: "Radar Boat Extended",
+  KamikazeBoat:      "Kamikaze Boat"
 }
 
 Player = function(turn){
