@@ -174,6 +174,7 @@ Sidebar = function(ctx,game){
 
       // Mine abilities
       case Type.MineLayer:
+        this.buttons[4].active = true;
         break;
 
       // Torpedo
