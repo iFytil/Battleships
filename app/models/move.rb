@@ -67,12 +67,30 @@ class Move < ActiveRecord::Base
       move.message = "No shots were fired"
       if ship.location_x == move.pos_x
         dy = move.pos_y - ship.location_y
-        dy.abs.times {|i| addToShip({x: 0, y: dy/dy.abs})}
+        dy.abs.times {|i| 
+          addToShip({x: 0, y: dy/dy.abs})
+
+          if ship.shiptype.name != "Mine Layer"
+            if movedToMine()
+              move.message = "Mine detonation ended action!"
+              break
+            end
+          end
+        }
       end
 
       if ship.location_y == move.pos_y
         dx = move.pos_x - ship.location_x
-        dx.abs.times {|i| addToShip({x: dx/dx.abs, y: 0})}
+        dx.abs.times {|i| 
+          addToShip({x: dx/dx.abs, y: 0})
+
+          if ship.shiptype.name != "Mine Layer"
+            if movedToMine()
+              move.message = "Mine detonation ended action!"
+              break
+            end
+          end
+        }
       end
     when "Rotate"
       move.message = "No shots were fired"
@@ -229,6 +247,64 @@ class Move < ActiveRecord::Base
   def isMine(x,y)
     mineIndex = y * 30 + x
     game.mines[mineIndex]=='1'
+  end
+
+  def mineInProx(x,y)
+    if isMine(x+1,y)
+      return {result: true, x: x+1, y: y}
+    elsif isMine(x-1,y) 
+      return {result: true, x: x-1, y: y}
+    elsif isMine(x,y+1) 
+      return {result: true, x: x, y: y+1}
+    elsif isMine(x,y-1)
+      return {result: true, x: x, y: y-1}
+    else
+      return {result: false, x: 0, y: 0}
+    end
+  end
+
+  def movedToMine()
+    delta = directionToDelta(ship.direction,1)
+
+    # test = {result: true, x: 0, y: 0}
+
+    mineHit = false
+    blockX = ship.location_x
+    blockY = ship.location_y
+    for i in 0..ship.shiptype.size-1
+      for j in 0..5
+        check = mineInProx(blockX, blockY)
+        # check = test
+        if check[:result]==true
+          detonateMine(check[:x],check[:y],i)
+          mineHit = true
+        else
+          break
+        end
+      end
+      blockX += delta[:x]
+      blockY += delta[:y]
+    end
+    return mineHit
+  end
+
+  def rotatedToMine()
+
+  end
+
+  def detonateMine(x, y, ship_index)
+    h = ship.health
+    str = "";
+    str += h;
+    after_hit = 0;
+
+    str[ship_index] = after_hit.to_s
+    ship.health = str
+    ship.save
+
+    splashDamage(ship,ship_index)
+
+    hitMine(x, y)
   end
 
   # Checks if this is a valid place to put a mine
