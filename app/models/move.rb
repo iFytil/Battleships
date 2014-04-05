@@ -50,7 +50,7 @@ class Move < ActiveRecord::Base
         ship.ammo += 1
         
         ship.save
-      else
+      elsif validPlacement(move.pos_x, move.pos_y) && ship.ammo > 0
         # place mine
         m = game.mines
         str = "";
@@ -231,6 +231,23 @@ class Move < ActiveRecord::Base
     game.mines[mineIndex]=='1'
   end
 
+  # Checks if this is a valid place to put a mine
+  def validPlacement(x,y)
+    if isCoral(x,y) || isShip(x,y)
+      return false
+    elsif isCoral(x+1,y) || isShip(x+1,y)
+      return false
+    elsif isCoral(x-1,y) || isShip(x-1,y)
+      return false
+    elsif isCoral(x,y+1) || isShip(x,y+1)
+      return false
+    elsif isCoral(x,y-1) || isShip(x,y-1)
+      return false
+    else
+      return true
+    end
+  end
+
   def getMineCollision(x,y)
     if isMine(x,y)
       hitMine(x,y)
@@ -368,7 +385,6 @@ class Move < ActiveRecord::Base
   end
 
   def torpedoShip(hit_ship, i)
-    # Caching sucks
     h = hit_ship.health
     str = "";
     str += h;
