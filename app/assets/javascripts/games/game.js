@@ -122,6 +122,10 @@ Game = function(ctx)
     // ships
     this.players[0].fleet.Draw(ctx,'#B80B0B');
     this.players[1].fleet.Draw(ctx,'#63A80A');
+
+    // mines
+    this.players[0].fleet.DrawMines(ctx,"black");
+    this.players[1].fleet.DrawMines(ctx,"black");
     
     // "cloud of invisibitily"
       this.V.Draw(ctx,'grey');

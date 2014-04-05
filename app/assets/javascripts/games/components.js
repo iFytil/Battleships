@@ -169,5 +169,31 @@ Fleet = function (turn) {
       this.base.Draw(ctx, color);
       //this.base.radarzone.Draw(ctx, color);
   };
+  this.DrawMines = function (ctx, color) {
+      var mines = GAME_DATA.mines;
+      for (var i = 0; i < this.ships.length; i++) 
+      {
+          if(this.ships[i].name == "Mine Layer" && this.ships[i].data.turn==pid)
+          {
+            var points = this.ships[i].radarzone.GetPoints();
+            for ( var j = 0; j < points.length; j++ )
+            {
+                var pt = points[j];
+                if( mines[pt.x + pt.y * 30] == 1)
+                {
+                  ctx.beginPath()
+                  ctx.fillStyle = color;
+                  ctx.lineWidth = 5;
+                  ctx.strokeStyle = 'black';
+                  ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+                  ctx.stroke();
+                  ctx.fill();
+                  ctx.closePath();
+                }
+            }
+          }
+      }
+
+  };
 
 };

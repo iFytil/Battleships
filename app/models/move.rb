@@ -21,7 +21,20 @@ class Move < ActiveRecord::Base
       end
 
       move.message = txt
+    when "Mine"
+      move.message = "No shots were fired"
 
+      mineHere = isMine(move.pos_x, move.pos_y)
+      mineIndex = move.pos_y * 30 + move.pos_x
+      if mineHere
+        # pickup mine
+        game.mines[mineIndex] = 0
+        ship.ammo += 1
+      else
+        # place mine
+        game.mines[mineIndex] = 1
+        ship.ammo -= 1
+      end  
     when "Move"
       move.message = "No shots were fired"
       if ship.location_x == move.pos_x
@@ -169,7 +182,6 @@ class Move < ActiveRecord::Base
           end
           count+=1
       end
-
     end
 
     move.save
@@ -184,6 +196,11 @@ class Move < ActiveRecord::Base
 
   def isCoral(x,y)
     x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
+  end
+
+  def isMine(x,y)
+    mineIndex = y * 30 + x
+    game.mines[mineIndex]=='1'
   end
 
   def turnQuadrantClear(x,y,length,quadrant)

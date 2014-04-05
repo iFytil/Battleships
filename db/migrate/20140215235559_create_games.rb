@@ -4,6 +4,7 @@ class CreateGames < ActiveRecord::Migration
       t.belongs_to :player_1, index: true
       t.belongs_to :player_2, index: true
       t.text     :coral
+      t.text	 :mines
       t.timestamps
     end
   end
