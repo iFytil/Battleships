@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar","Repair" ]
+  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar","Repair","Mine" ]
 
   belongs_to :ship
   belongs_to :game
@@ -23,17 +23,32 @@ class Move < ActiveRecord::Base
       move.message = txt
     when "Mine"
       move.message = "No shots were fired"
-
       mineHere = isMine(move.pos_x, move.pos_y)
       mineIndex = move.pos_y * 30 + move.pos_x
       if mineHere
         # pickup mine
-        game.mines[mineIndex] = 0
+        m = game.mines
+        str = "";
+        str += m;
+        str[mineIndex] = '0'
+        game.mines = str
+
         ship.ammo += 1
+        
+        game.save
+        ship.save
       else
         # place mine
-        game.mines[mineIndex] = 1
+        m = game.mines
+        str = "";
+        str += m;
+        str[mineIndex] = '1'
+        game.mines = str
+
         ship.ammo -= 1
+
+        game.save
+        ship.save 
       end  
     when "Move"
       move.message = "No shots were fired"
