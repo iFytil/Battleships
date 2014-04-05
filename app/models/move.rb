@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar","Repair","Mine" ]
+  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar","Repair","Mine","Torpedo" ]
 
   belongs_to :ship
   belongs_to :game
@@ -12,12 +12,30 @@ class Move < ActiveRecord::Base
     case move.kind
     when "Cannon"
       result = getShipCollision(move.pos_x, move.pos_y)
+      mineResult = getMineCollision(move.pos_x, move.pos_y)
       txt = "Cannon fired at (#{move.pos_x},#{move.pos_y}). "
 
       if result==:hit
         txt += "Ship hit!"
+      elsif mineResult==:hit
+        txt += "Mine hit!"
       elsif result==:miss
-        txt += "Shot hit the water!"
+        txt += "Nothing hit!"
+      end
+
+      move.message = txt
+    when "Torpedo"
+      result = getTorpedoCollision()
+      txt = "Torpedo fired."
+      
+      if result[:hit]==:ship
+        txt += " Ship hit at (#{result[:x]},#{result[:y]})"
+      elsif result[:hit]==:mine
+        txt += " Mine hit at (#{result[:x]},#{result[:y]})"
+      elsif result[:hit]==:coral
+        txt += " Coral hit at (#{result[:x]},#{result[:y]})"
+      elsif result[:hit]==:miss
+        txt += " Nothing hit!"
       end
 
       move.message = txt
@@ -27,15 +45,10 @@ class Move < ActiveRecord::Base
       mineIndex = move.pos_y * 30 + move.pos_x
       if mineHere
         # pickup mine
-        m = game.mines
-        str = "";
-        str += m;
-        str[mineIndex] = '0'
-        game.mines = str
+        hitMine(move.pos_x, move.pos_y)
 
         ship.ammo += 1
         
-        game.save
         ship.save
       else
         # place mine
@@ -206,7 +219,7 @@ class Move < ActiveRecord::Base
   private
 
   def isUnsafe(x,y)
-    isCoral(x,y) || isShip(x,y)
+    isCoral(x,y) || isShip(x,y) || isMine(x,y)
   end
 
   def isCoral(x,y)
@@ -216,6 +229,12 @@ class Move < ActiveRecord::Base
   def isMine(x,y)
     mineIndex = y * 30 + x
     game.mines[mineIndex]=='1'
+  end
+
+  def getMineCollision(x,y)
+    if isMine(x,y)
+      hitMine(x,y)
+    end
   end
 
   def turnQuadrantClear(x,y,length,quadrant)
@@ -295,6 +314,33 @@ class Move < ActiveRecord::Base
     return :miss
   end
 
+  def getTorpedoCollision()
+    delta = directionToDelta(ship.direction,1)
+
+    startX = ship.location_x
+    startY = ship.location_y
+
+    startX += delta[:x] * ship.shiptype.size
+    startY += delta[:y] * ship.shiptype.size
+  
+    for i in 0..9
+      checkX = startX + delta[:x] * i
+      checkY = startY + delta[:y] * i
+      if isUnsafe(checkX,checkY)
+        if isMine(checkX,checkY)
+          hitMine(checkX,checkY)
+          return {hit: :mine, x: checkX, y: checkY}
+        elsif isShip(checkX,checkY)
+          getShipCollision(checkX,checkY)
+          return {hit: :ship, x: checkX, y: checkY}
+        else
+          return {hit: :coral, x: checkX, y: checkY}
+        end
+      end
+    end
+    return {hit: :miss, x: 0, y: 0}
+  end
+
   def hitShip(hit_ship, i, dmg)
     # Caching sucks
     h = hit_ship.health
@@ -307,6 +353,18 @@ class Move < ActiveRecord::Base
     str[i] = after_hit.to_s
     hit_ship.health = str
     hit_ship.save
+  end
+
+  def hitMine(x,y)
+    mineIndex = y * 30 + x
+
+    m = game.mines
+    str = "";
+    str += m;
+    str[mineIndex] = '0'
+    game.mines = str
+
+    game.save
   end
 
   def addToShip(delta)

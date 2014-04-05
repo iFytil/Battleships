@@ -38,6 +38,7 @@ function loadMouseEvents() {
           if(validPoints[i].x == sq.x && validPoints[i].y == sq.y) validMove = true
       }
 
+      console.debug("move: "+move+", valid?: "+validMove)
       if(validMove) request_move(shipid,sq.x,sq.y, move)
 
     }
