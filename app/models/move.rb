@@ -314,6 +314,19 @@ class Move < ActiveRecord::Base
     return :miss
   end
 
+  def getShipTorpColl(x,y)
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
+        shipSq = directionToDelta(s.direction,i)
+        if s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y
+          torpedoShip(s, i)
+          return :hit
+        end
+      }
+    }
+    return :miss
+  end
+
   def getTorpedoCollision()
     delta = directionToDelta(ship.direction,1)
 
@@ -330,8 +343,7 @@ class Move < ActiveRecord::Base
         if isMine(checkX,checkY)
           hitMine(checkX,checkY)
           return {hit: :mine, x: checkX, y: checkY}
-        elsif isShip(checkX,checkY)
-          getShipCollision(checkX,checkY)
+        elsif getShipTorpColl(checkX,checkY)==:hit     
           return {hit: :ship, x: checkX, y: checkY}
         else
           return {hit: :coral, x: checkX, y: checkY}
@@ -351,6 +363,57 @@ class Move < ActiveRecord::Base
       after_hit = 0
     end
     str[i] = after_hit.to_s
+    hit_ship.health = str
+    hit_ship.save
+  end
+
+  def torpedoShip(hit_ship, i)
+    # Caching sucks
+    h = hit_ship.health
+    str = "";
+    str += h;
+    after_hit = 0;
+
+    str[i] = after_hit.to_s
+    hit_ship.health = str
+    hit_ship.save
+
+    shot_dir = ship.direction
+    splash = false
+    if shot_dir == "Up" || shot_dir == "Down"
+      if hit_ship.direction == "Left" || hit_ship.direction == "Right"
+        splash = true
+      end
+    else
+      if hit_ship.direction == "Up" || hit_ship.direction == "Down"
+        splash = true
+      end
+    end
+
+    if splash
+      splashDamage(hit_ship,i)
+    end
+  end
+
+  def splashDamage(hit_ship, i)
+    # destroy 1 extra block towards bow of ship (or towards stern if no intact square towards bow exists)
+    h = hit_ship.health
+    str = "";
+    str += h;
+    after_hit = 0;
+
+    if str.length == 1
+      return
+    elsif str.length-1 == i
+      str[i-1] = after_hit.to_s
+    elsif i==0
+      str[i+1] = after_hit.to_s
+    elsif str[i+1] == '0'
+      str[i-1] = after_hit.to_s
+    else
+      str[i+1] = after_hit.to_s
+    end
+
     hit_ship.health = str
     hit_ship.save
   end
