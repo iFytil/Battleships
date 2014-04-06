@@ -95,7 +95,7 @@ class Move < ActiveRecord::Base
     when "Rotate"
       move.message = "No shots were fired"
       turnPossible = false
-      quadrant = "NE" # irrelevant default value
+      quadrant = "NE"
       turn_index = ship.shiptype.turn_index
 
       location_x = ship.location_x
@@ -198,9 +198,20 @@ class Move < ActiveRecord::Base
 
       if(turnPossible)
       elsif(turn_index != 0)
-        turnPossible = turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, ship.shiptype.size - turn_index, quadrant) && turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, turn_index + 1, opposingQuadrant)
+        quad1 = turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, ship.shiptype.size - turn_index, quadrant)
+        quad2 = turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, turn_index + 1, opposingQuadrant)
+        turnPossible = quad1.size == 0 && quad2.size == 0
+
+        if quad1.size != 0 || quad1.size != 0
+          closestCollision(quad1 + quad2)
+        end
       else
-        turnPossible = turnQuadrantClear(ship.location_x, ship.location_y, ship.shiptype.size, quadrant)
+        quad = turnQuadrantClear(ship.location_x, ship.location_y, ship.shiptype.size, quadrant)
+        turnPossible = quad.size == 0
+
+        if quad.size != 0
+          closestCollision(quad)
+        end
       end
 
       if(turnPossible)
@@ -288,10 +299,6 @@ class Move < ActiveRecord::Base
     return mineHit
   end
 
-  def rotatedToMine()
-
-  end
-
   def detonateMine(x, y, ship_index)
     h = ship.health
     str = "";
@@ -330,6 +337,78 @@ class Move < ActiveRecord::Base
     end
   end
 
+  def closestCollision(collisions)
+    smallestDist = 20
+    if ship.direction == "Up" || ship.direction == "Down"
+      for c in collisions
+        puts "COLLISION: (#{c[:x]},#{c[:y]})"
+        if (c[:x] - ship.location_x).abs < smallestDist
+          closest = c
+          smallestDist = (c[:x] - ship.location_x).abs
+        end
+      end
+    else
+      for c in collisions
+        d = (c[:y] - ship.location_y).abs
+        puts "COLLISION: (#{c[:x]},#{c[:y]})"
+        puts "DISTANCE is: #{d}"
+        if (c[:y] - ship.location_y).abs < smallestDist
+          closest = c
+          smallestDist = (c[:y] - ship.location_y).abs
+        end
+      end
+    end
+
+    if isMine(closest[:x], closest[:y]) && ship.shiptype != "Mine Layer"
+      rotationMine(closest[:x], closest[:y])
+      self.message = "Rotation stopped, mine detonated at: (#{closest[:x]},#{closest[:y]})"
+      self.save
+    else
+      self.message = "Rotation stopped, collision at: (#{closest[:x]},#{closest[:y]})"
+      self.save
+    end
+  end
+
+  def rotationMine(x,y)
+    sX = ship.location_x
+    sY = ship.location_y
+    l = ship.shiptype.size-1
+
+    if ship.direction == "Up"
+      if y > sY
+        detonateMine(x,y,0)
+      elsif y < sY - l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,sY - y)
+      end
+    elsif ship.direction == "Down"
+      if y < sY
+        detonateMine(x,y,0)
+      elsif y > sY + l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,y - sY)
+      end
+    elsif ship.direction == "Left"
+      if x > sX
+        detonateMine(x,y,0)
+      elsif x < sX - l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,sX - x)
+      end
+    elsif ship.direction == "Right"
+      if x < sX
+        detonateMine(x,y,0)
+      elsif x > sX - l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,x - sX)
+      end
+    end
+  end
+
   def turnQuadrantClear(x,y,length,quadrant)
     case quadrant
       when "NE"
@@ -349,6 +428,7 @@ class Move < ActiveRecord::Base
     startX = x - (length-1) * dx
     startY = y
 
+    collisions = Array.new
     isClear = true
     yOffset = 0
     firstIteration = true
@@ -359,16 +439,20 @@ class Move < ActiveRecord::Base
       xOffset = 0
       for j in xOffset..(length-1-xLengthCutter)
         currentX = startX + j * dx
-        if(isUnsafe(currentX,currentY)) 
-          self.message = "Collision at (#{currentX},#{currentY})";    # NOTE: this will not output the collision closest to the boat necessarily
-          self.save
-          isClear = false 
-          break
-        end
-      end
 
-      if !isClear
-        break
+        mineCheck = mineInProx(currentX,currentY)
+        if isUnsafe(currentX,currentY)
+          point = {x: currentX, y: currentY}
+          if !collisions.include? point
+            collisions.push(point)
+          end
+        end
+        if mineCheck[:result]
+          point = {x: mineCheck[:x], y: mineCheck[:y]}
+          if !collisions.include? point
+            collisions.push(point)
+          end
+        end
       end
 
       if !firstIteration
@@ -379,7 +463,7 @@ class Move < ActiveRecord::Base
       firstIteration = false
     end
 
-    return isClear
+    return collisions
   end
 
   def isShip(x,y)
