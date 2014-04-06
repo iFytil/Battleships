@@ -33,9 +33,9 @@ var S = {
   K: 5
 }
 //colour
-var C = {
-  G: 1,
-  B: 0
+var Color = {
+  Green: 1,
+  Blue: 0
 }
 
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
@@ -152,23 +152,16 @@ Game = function(ctx)
     this.players[0].fleet.DrawMines(ctx,"black");
     this.players[1].fleet.DrawMines(ctx,"black");
 
-    // ships
-    if(pid == 0){
-      this.players[1].fleet.Draw(ctx,C.B,this.shipdisplay);
-      this.V.Draw(ctx,'grey');
-      this.players[0].fleet.Draw(ctx,C.G,this.shipdisplay);
-    }else {
-      this.players[0].fleet.Draw(ctx,C.B,this.shipdisplay);
-      this.V.Draw(ctx,'grey');
-      this.players[1].fleet.Draw(ctx,C.G,this.shipdisplay);
-    }
-    
-      // coral map
-      this.env.drawCoral();
+    this.players[1].fleet.Draw(ctx,Color.Blue,this.shipdisplay);
+    this.V.Draw(ctx,'grey');
+    this.players[0].fleet.Draw(ctx,Color.Green,this.shipdisplay);
+  
+    // coral map
+    this.env.drawCoral();
 
-      // bases
-      this.players[0].fleet.DrawBase(ctx,'blue');
-      this.players[1].fleet.DrawBase(ctx,'#4DDE00');
+    // bases
+    this.players[0].fleet.DrawBase(ctx,'blue');
+    this.players[1].fleet.DrawBase(ctx,'#4DDE00');
 
     // zones
     if(this.turn == pid){

@@ -13,13 +13,10 @@ ShipDisplay = function(){
 	this.ship = new Image();
 
 	this.Set = function(colour,ship) {
-		if (colour == C.G){
+		if (colour == Color.Green){
 			this.ship = this.green[ship];
-		}else if (colour == C.B){
-
+		}else if (colour == Color.Blue){
 			this.ship = this.blue[ship];
-		}else if (colour == C.O){
-			this.ship = this.opponent[ship];
 		}
 	}
 
