@@ -40,7 +40,7 @@ var C = {
 
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
 
-<<<<<<< HEAD
+// T and Type are the smae thing .....
 var T = {
   R:"Radar Boat",
   M:"Mine Layer",
@@ -49,8 +49,8 @@ var T = {
   C:"Cruiser",
   E:"Radar Boat Extended",
   K:"Kamikaze Boat"
+}
 
-=======
 var Type = {
   RadarBoat:         "Radar Boat",
   MineLayer:         "Mine Layer",
@@ -59,7 +59,6 @@ var Type = {
   Cruiser:           "Cruiser",
   ExtendedRadarBoat: "Radar Boat Extended",
   KamikazeBoat:      "Kamikaze Boat"
->>>>>>> 189bcd0fe5c09b8c9eaeade35fea8501837a8b90
 }
 
 Player = function(turn){
