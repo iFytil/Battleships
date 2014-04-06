@@ -334,7 +334,9 @@ class Move < ActiveRecord::Base
   def getMineCollision(x,y)
     if isMine(x,y)
       hitMine(x,y)
+      return :hit
     end
+    return :miss
   end
 
   def closestCollision(collisions)
@@ -359,7 +361,7 @@ class Move < ActiveRecord::Base
       end
     end
 
-    if isMine(closest[:x], closest[:y]) && ship.shiptype != "Mine Layer"
+    if isMine(closest[:x], closest[:y]) && ship.shiptype.name != "Mine Layer"
       rotationMine(closest[:x], closest[:y])
       self.message = "Rotation stopped, mine detonated at: (#{closest[:x]},#{closest[:y]})"
       self.save
