@@ -12,7 +12,7 @@ var Turn = {
 }
 
 // displayed movezones
-var Z = {
+var Zone = {
   None: -1,
   Translate: 0,
   Rotate: 1,
@@ -54,7 +54,7 @@ Player = function(turn){
 
     game.sidebar.RegisterShipChange();
     game.sidebar.ClearButtons();
-    game.movezone = Z.None;
+    game.movezone = Zone.None;
   }
 
   this.Ranges = function()
@@ -84,7 +84,7 @@ Game = function(ctx)
   this.textbar = new Textbar(ctx);
   
   // currently displayed zones
-  this.movezone = Z.None;
+  this.movezone = Zone.None;
   
   // 2 players
   this.players=new Array();
@@ -135,21 +135,21 @@ Game = function(ctx)
 
     // zones
     if(this.turn == pid){
-      if(this.movezone == Z.None){
+      if(this.movezone == Zone.None){
           // do nothing
-      }else if(this.movezone == Z.Translate){
+      }else if(this.movezone == Zone.Translate){
           this.currentZone = this.translationZone
           this.currentZone.Draw(ctx);
-      } else if(this.movezone == Z.Rotate){
+      } else if(this.movezone == Zone.Rotate){
           this.currentZone = this.rotationZone
           this.currentZone.Draw(ctx);
-      }else if(this.movezone == Z.Cannon){
+      }else if(this.movezone == Zone.Cannon){
           this.currentZone = this.cannonZone
           this.currentZone.Draw(ctx,"rgb(0,0,255)");
-      }else if(this.movezone == Z.Torpedo){
+      }else if(this.movezone == Zone.Torpedo){
           this.currentZone = this.torpedoZone
           this.currentZone.Draw(ctx,"rgb(0,0,255)");
-      }else if(this.movezone ==Z.Mine){
+      }else if(this.movezone ==Zone.Mine){
           this.currentZone = this.mineZone
           this.currentZone.Draw(ctx);
       };
@@ -166,7 +166,7 @@ Game = function(ctx)
   this.reload = function()
   {
     // reset zone
-    this.movezone = Z.None;
+    this.movezone = Zone.None;
     this.sidebar.ClearButtons();
     this.sidebar.selected = -1;
 

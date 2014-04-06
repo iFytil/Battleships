@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate","Radar","Repair" ]
+  validates_inclusion_of :kind, :in => ["Move", "Cannon", "Rotate", "Radar", "Repair"]
 
   belongs_to :ship
   belongs_to :game
