@@ -5,6 +5,9 @@
 <% end %>
 
 <canvas id="myCanvas" width="700" height="630"></canvas>
+
+
+
 <script>
 
   var dispatcher = new WebSocketRails(window.location.host + "/websocket", true)
@@ -25,6 +28,7 @@
   // game logistics
   var game = new Game(ctx);
   
+
   
   setInterval(function () {
     game.Display();
