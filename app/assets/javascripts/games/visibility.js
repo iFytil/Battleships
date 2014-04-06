@@ -10,7 +10,7 @@ Visibility = function(ranges) {
     //start off blank
     for (var i = 0; i < N*N; i++) 
     {
-      this.field[i] = 1; //blocked
+      this.field[i] = 0; //blocked 
     }
     
     // remove visible squares

@@ -38,6 +38,7 @@ function loadMouseEvents() {
           if(validPoints[i].x == sq.x && validPoints[i].y == sq.y) validMove = true
       }
 
+      console.debug("move: "+move+", valid?: "+validMove)
       if(validMove) request_move(shipid,sq.x,sq.y, move)
 
     }
@@ -57,10 +58,7 @@ function loadMouseEvents() {
     // check if in grid or on sidebar
     if(x>0 && x<WIDTH && y>0 && y<WIDTH)
     {
-      var gx = Math.floor((x)/SQ_WIDTH);
-      var gy = Math.floor((y)/SQ_WIDTH);
-      if(!game.V.field[gy+30*gx])
-        game.env.Hover(e.clientX, e.clientY);
+      game.env.Hover(e.clientX, e.clientY);
     }
     else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH)
     {

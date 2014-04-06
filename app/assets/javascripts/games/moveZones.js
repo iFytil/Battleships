@@ -196,7 +196,7 @@ TranslationZone = function(ship){
 
 	this.array.push(new Point(lPoint.x, lPoint.y))
 
-	// Get points for right turn zone
+	// Get points for right move zone
 	rShip.x += rXOffset;
 	rShip.y += rYOffset;
 	rShip.Set();
@@ -235,6 +235,114 @@ TranslationZone = function(ship){
 		for(var i = 0; i < this.array.length; i++){ctx.rect(this.array[i].x*SQ_WIDTH + SQ_WIDTH/4, this.array[i].y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
 		ctx.stroke()
 		ctx.fill()
+		ctx.closePath()
+	}
+
+	this.GetPoints = function()
+  	{
+  		return this.array;
+  	}
+}
+
+MineZone = function(ship)
+{
+	if(ship.facing == D.Right) {
+		var lXOffset = 0; 
+		var lYOffset = -1;
+
+		var rXOffset = 0;
+		var rYOffset = 1;
+
+		var bXOffset = -1;
+		var bYOffset = 0;
+
+		var fXOffset = 1;
+		var fYOffset = 0;
+	}
+	else if(ship.facing == D.Up) {
+		var lXOffset = -1;
+		var lYOffset = 0;
+
+		var rXOffset = 1; 
+		var rYOffset = 0;
+
+		var bXOffset = 0;
+		var bYOffset = 1;
+
+		var fXOffset = 0;
+		var fYOffset = -1;
+	}
+	else if(ship.facing == D.Left) {
+		var lXOffset = 0; 
+		var lYOffset = 1;
+
+		var rXOffset = 0; 
+		var rYOffset = -1;
+
+		var bXOffset = 1;
+		var bYOffset = 0;
+
+		var fXOffset = -1;
+		var fYOffset = 0;
+	}
+	else if(ship.facing == D.Down) {
+		var lXOffset = -1; 
+		var lYOffset = 0;
+
+		var rXOffset = 1; 
+		var rYOffset = 0;
+
+		var bXOffset = 0;
+		var bYOffset = -1;
+
+		var fXOffset = 0;
+		var fYOffset = 1;
+	}
+
+	var lShip = ship.Duplicate();
+	var rShip = ship.Duplicate();
+	var bShip = ship.Duplicate();
+	var fShip = ship.Duplicate();
+
+	this.array = new Array();
+
+	// Get points for left mine zone
+	lShip.x += lXOffset;
+	lShip.y += lYOffset;
+	lShip.Set();
+
+	this.array.push(new Point(lShip.points[0].x, lShip.points[0].y))
+	this.array.push(new Point(lShip.points[1].x, lShip.points[1].y))
+
+	// Get points for right mine zone
+	rShip.x += rXOffset;
+	rShip.y += rYOffset;
+	rShip.Set();
+
+	this.array.push(new Point(rShip.points[0].x, rShip.points[0].y))
+	this.array.push(new Point(rShip.points[1].x, rShip.points[1].y))
+
+	// Get points for forward mine zone
+	fShip.x += fXOffset;
+	fShip.y += fYOffset;
+	fShip.Set();
+
+	this.array.push(new Point(fShip.points[1].x, fShip.points[1].y))
+
+	// Get points for backward mine zone
+	bShip.x += bXOffset;
+	bShip.y += bYOffset;
+	bShip.Set();
+
+	this.array.push(new Point(bShip.points[0].x, bShip.points[0].y))
+
+	// Draw points for move zone
+	this.Draw = function(ctx)
+	{
+		ctx.beginPath()
+		ctx.strokeStyle = "rgb(0,0,255)"
+		for(var i = 0; i < this.array.length; i++){ctx.rect(this.array[i].x*SQ_WIDTH, this.array[i].y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);}
+		ctx.stroke()
 		ctx.closePath()
 	}
 

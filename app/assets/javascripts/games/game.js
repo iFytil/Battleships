@@ -40,6 +40,7 @@ var C = {
 
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
 
+<<<<<<< HEAD
 var T = {
   R:"Radar Boat",
   M:"Mine Layer",
@@ -49,6 +50,16 @@ var T = {
   E:"Radar Boat Extended",
   K:"Kamikaze Boat"
 
+=======
+var Type = {
+  RadarBoat:         "Radar Boat",
+  MineLayer:         "Mine Layer",
+  TorpedoBoat:       "Torpedo Boat",
+  Destroyer:         "Destroyer",
+  Cruiser:           "Cruiser",
+  ExtendedRadarBoat: "Radar Boat Extended",
+  KamikazeBoat:      "Kamikaze Boat"
+>>>>>>> 189bcd0fe5c09b8c9eaeade35fea8501837a8b90
 }
 
 Player = function(turn){
@@ -124,6 +135,7 @@ Game = function(ctx)
   this.UpdateZones = function()
   {
     this.translationZone = new TranslationZone(this.players[pid].Selected())
+    this.mineZone = new MineZone(this.players[pid].Selected())
     this.rotationZone = new RotationZone(this.players[pid].Selected())
     this.cannonZone = this.players[pid].Selected().cannonzone
     this.torpedoZone = this.players[pid].Selected().torpedozone
@@ -137,6 +149,10 @@ Game = function(ctx)
   {
     this.env.drawGrid();
 
+    // mines
+    this.players[0].fleet.DrawMines(ctx,"black");
+    this.players[1].fleet.DrawMines(ctx,"black");
+
     // ships
     if(pid == 0){
       this.players[1].fleet.Draw(ctx,C.B,this.shipdisplay);
@@ -147,10 +163,6 @@ Game = function(ctx)
       this.V.Draw(ctx,'grey');
       this.players[1].fleet.Draw(ctx,C.G,this.shipdisplay);
     }
-
-       
-    // "cloud of invisibitily"
-      //this.V.Draw(ctx,'grey');
     
       // coral map
       this.env.drawCoral();
@@ -176,6 +188,8 @@ Game = function(ctx)
           this.currentZone = this.torpedoZone
           this.currentZone.Draw(ctx,"white");
       }else if(this.movezone ==Z.Mine){
+          this.currentZone = this.mineZone
+          this.currentZone.Draw(ctx);
       };
     }
     
