@@ -23,7 +23,33 @@ var Zone = {
   Repair: 6
 }
 
+//Ship
+var S = {
+  C: 0,
+  D: 1,
+  T: 2,
+  R: 3,
+  M: 4,
+  K: 5
+}
+//colour
+var C = {
+  G: 1,
+  B: 0
+}
+
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
+
+// T and Type are the smae thing .....
+var T = {
+  R:"Radar Boat",
+  M:"Mine Layer",
+  T:"Torpedo Boat",
+  D:"Destroyer",
+  C:"Cruiser",
+  E:"Radar Boat Extended",
+  K:"Kamikaze Boat"
+}
 
 var Type = {
   RadarBoat:         "Radar Boat",
@@ -79,6 +105,9 @@ Game = function(ctx)
   // environment
   this.env = new Environment(ctx);
   
+  // ship images
+  this.shipdisplay = new ShipDisplay();
+
   // bars 
   this.sidebar = new Sidebar(ctx,this);
   this.textbar = new Textbar(ctx);
@@ -119,19 +148,27 @@ Game = function(ctx)
   {
     this.env.drawGrid();
 
+    // mines
+    this.players[0].fleet.DrawMines(ctx,"black");
+    this.players[1].fleet.DrawMines(ctx,"black");
+
     // ships
-    this.players[0].fleet.Draw(ctx,'#B80B0B');
-    this.players[1].fleet.Draw(ctx,'#63A80A');
-    
-    // "cloud of invisibitily"
+    if(pid == 0){
+      this.players[1].fleet.Draw(ctx,C.B,this.shipdisplay);
       this.V.Draw(ctx,'grey');
+      this.players[0].fleet.Draw(ctx,C.G,this.shipdisplay);
+    }else {
+      this.players[0].fleet.Draw(ctx,C.B,this.shipdisplay);
+      this.V.Draw(ctx,'grey');
+      this.players[1].fleet.Draw(ctx,C.G,this.shipdisplay);
+    }
     
       // coral map
       this.env.drawCoral();
 
       // bases
-      this.players[0].fleet.DrawBase(ctx,'#B80B0B');
-      this.players[1].fleet.DrawBase(ctx,'#63A80A');
+      this.players[0].fleet.DrawBase(ctx,'blue');
+      this.players[1].fleet.DrawBase(ctx,'#4DDE00');
 
     // zones
     if(this.turn == pid){
@@ -145,10 +182,10 @@ Game = function(ctx)
           this.currentZone.Draw(ctx);
       }else if(this.movezone == Zone.Cannon){
           this.currentZone = this.cannonZone
-          this.currentZone.Draw(ctx,"rgb(0,0,255)");
+          this.currentZone.Draw(ctx,"white");//rgb(0,0,255)
       }else if(this.movezone == Zone.Torpedo){
           this.currentZone = this.torpedoZone
-          this.currentZone.Draw(ctx,"rgb(0,0,255)");
+          this.currentZone.Draw(ctx,"white");
       }else if(this.movezone ==Zone.Mine){
           this.currentZone = this.mineZone
           this.currentZone.Draw(ctx);

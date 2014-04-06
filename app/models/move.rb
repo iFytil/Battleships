@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => ["Move", "Cannon", "Rotate", "Radar", "Repair"]
+  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate", "Radar", "Repair", "Mine", "Torpedo" ]
 
   belongs_to :ship
   belongs_to :game
@@ -12,31 +12,90 @@ class Move < ActiveRecord::Base
     case move.kind
     when "Cannon"
       result = getShipCollision(move.pos_x, move.pos_y)
+      mineResult = getMineCollision(move.pos_x, move.pos_y)
       txt = "Cannon fired at (#{move.pos_x},#{move.pos_y}). "
 
       if result==:hit
         txt += "Ship hit!"
+      elsif mineResult==:hit
+        txt += "Mine hit!"
       elsif result==:miss
-        txt += "Shot hit the water!"
+        txt += "Nothing hit!"
       end
 
       move.message = txt
+    when "Torpedo"
+      result = getTorpedoCollision()
+      txt = "Torpedo fired."
+      
+      if result[:hit]==:ship
+        txt += " Ship hit at (#{result[:x]},#{result[:y]})"
+      elsif result[:hit]==:mine
+        txt += " Mine hit at (#{result[:x]},#{result[:y]})"
+      elsif result[:hit]==:coral
+        txt += " Coral hit at (#{result[:x]},#{result[:y]})"
+      elsif result[:hit]==:miss
+        txt += " Nothing hit!"
+      end
 
+      move.message = txt
+    when "Mine"
+      move.message = "No shots were fired"
+      mineHere = isMine(move.pos_x, move.pos_y)
+      mineIndex = move.pos_y * 30 + move.pos_x
+      if mineHere
+        # pickup mine
+        hitMine(move.pos_x, move.pos_y)
+
+        ship.ammo += 1
+        
+        ship.save
+      elsif validPlacement(move.pos_x, move.pos_y) && ship.ammo > 0
+        # place mine
+        m = game.mines
+        str = "";
+        str += m;
+        str[mineIndex] = '1'
+        game.mines = str
+
+        ship.ammo -= 1
+
+        game.save
+        ship.save 
+      end  
     when "Move"
       move.message = "No shots were fired"
       if ship.location_x == move.pos_x
         dy = move.pos_y - ship.location_y
-        dy.abs.times {|i| addToShip({x: 0, y: dy/dy.abs})}
+        dy.abs.times {|i| 
+          addToShip({x: 0, y: dy/dy.abs})
+
+          if ship.shiptype.name != "Mine Layer"
+            if movedToMine()
+              move.message = "Mine detonation ended action!"
+              break
+            end
+          end
+        }
       end
 
       if ship.location_y == move.pos_y
         dx = move.pos_x - ship.location_x
-        dx.abs.times {|i| addToShip({x: dx/dx.abs, y: 0})}
+        dx.abs.times {|i| 
+          addToShip({x: dx/dx.abs, y: 0})
+
+          if ship.shiptype.name != "Mine Layer"
+            if movedToMine()
+              move.message = "Mine detonation ended action!"
+              break
+            end
+          end
+        }
       end
     when "Rotate"
       move.message = "No shots were fired"
       turnPossible = false
-      quadrant = "NE" # irrelevant default value
+      quadrant = "NE"
       turn_index = ship.shiptype.turn_index
 
       location_x = ship.location_x
@@ -139,9 +198,20 @@ class Move < ActiveRecord::Base
 
       if(turnPossible)
       elsif(turn_index != 0)
-        turnPossible = turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, ship.shiptype.size - turn_index, quadrant) && turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, turn_index + 1, opposingQuadrant)
+        quad1 = turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, ship.shiptype.size - turn_index, quadrant)
+        quad2 = turnQuadrantClear(ship.location_x + turn_index * dx, ship.location_y + turn_index * dy, turn_index + 1, opposingQuadrant)
+        turnPossible = quad1.size == 0 && quad2.size == 0
+
+        if quad1.size != 0 || quad1.size != 0
+          closestCollision(quad1 + quad2)
+        end
       else
-        turnPossible = turnQuadrantClear(ship.location_x, ship.location_y, ship.shiptype.size, quadrant)
+        quad = turnQuadrantClear(ship.location_x, ship.location_y, ship.shiptype.size, quadrant)
+        turnPossible = quad.size == 0
+
+        if quad.size != 0
+          closestCollision(quad)
+        end
       end
 
       if(turnPossible)
@@ -169,7 +239,6 @@ class Move < ActiveRecord::Base
           end
           count+=1
       end
-
     end
 
     move.save
@@ -179,11 +248,167 @@ class Move < ActiveRecord::Base
   private
 
   def isUnsafe(x,y)
-    isCoral(x,y) || isShip(x,y)
+    isCoral(x,y) || isShip(x,y) || isMine(x,y)
   end
 
   def isCoral(x,y)
     x >= 10 && x < 20 && y >= 3 && y < 27 && game.coral[(y - 3)*10 + (x - 10)]=='1'
+  end
+
+  def isMine(x,y)
+    mineIndex = y * 30 + x
+    game.mines[mineIndex]=='1'
+  end
+
+  def mineInProx(x,y)
+    if isMine(x+1,y)
+      return {result: true, x: x+1, y: y}
+    elsif isMine(x-1,y) 
+      return {result: true, x: x-1, y: y}
+    elsif isMine(x,y+1) 
+      return {result: true, x: x, y: y+1}
+    elsif isMine(x,y-1)
+      return {result: true, x: x, y: y-1}
+    else
+      return {result: false, x: 0, y: 0}
+    end
+  end
+
+  def movedToMine()
+    delta = directionToDelta(ship.direction,1)
+
+    # test = {result: true, x: 0, y: 0}
+
+    mineHit = false
+    blockX = ship.location_x
+    blockY = ship.location_y
+    for i in 0..ship.shiptype.size-1
+      for j in 0..5
+        check = mineInProx(blockX, blockY)
+        # check = test
+        if check[:result]==true
+          detonateMine(check[:x],check[:y],i)
+          mineHit = true
+        else
+          break
+        end
+      end
+      blockX += delta[:x]
+      blockY += delta[:y]
+    end
+    return mineHit
+  end
+
+  def detonateMine(x, y, ship_index)
+    h = ship.health
+    str = "";
+    str += h;
+    after_hit = 0;
+
+    str[ship_index] = after_hit.to_s
+    ship.health = str
+    ship.save
+
+    splashDamage(ship,ship_index)
+
+    hitMine(x, y)
+  end
+
+  # Checks if this is a valid place to put a mine
+  def validPlacement(x,y)
+    if isCoral(x,y) || isShip(x,y)
+      return false
+    elsif isCoral(x+1,y) || isShip(x+1,y)
+      return false
+    elsif isCoral(x-1,y) || isShip(x-1,y)
+      return false
+    elsif isCoral(x,y+1) || isShip(x,y+1)
+      return false
+    elsif isCoral(x,y-1) || isShip(x,y-1)
+      return false
+    else
+      return true
+    end
+  end
+
+  def getMineCollision(x,y)
+    if isMine(x,y)
+      hitMine(x,y)
+      return :hit
+    end
+    return :miss
+  end
+
+  def closestCollision(collisions)
+    smallestDist = 20
+    if ship.direction == "Up" || ship.direction == "Down"
+      for c in collisions
+        puts "COLLISION: (#{c[:x]},#{c[:y]})"
+        if (c[:x] - ship.location_x).abs < smallestDist
+          closest = c
+          smallestDist = (c[:x] - ship.location_x).abs
+        end
+      end
+    else
+      for c in collisions
+        d = (c[:y] - ship.location_y).abs
+        puts "COLLISION: (#{c[:x]},#{c[:y]})"
+        puts "DISTANCE is: #{d}"
+        if (c[:y] - ship.location_y).abs < smallestDist
+          closest = c
+          smallestDist = (c[:y] - ship.location_y).abs
+        end
+      end
+    end
+
+    if isMine(closest[:x], closest[:y]) && ship.shiptype.name != "Mine Layer"
+      rotationMine(closest[:x], closest[:y])
+      self.message = "Rotation stopped, mine detonated at: (#{closest[:x]},#{closest[:y]})"
+      self.save
+    else
+      self.message = "Rotation stopped, collision at: (#{closest[:x]},#{closest[:y]})"
+      self.save
+    end
+  end
+
+  def rotationMine(x,y)
+    sX = ship.location_x
+    sY = ship.location_y
+    l = ship.shiptype.size-1
+
+    if ship.direction == "Up"
+      if y > sY
+        detonateMine(x,y,0)
+      elsif y < sY - l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,sY - y)
+      end
+    elsif ship.direction == "Down"
+      if y < sY
+        detonateMine(x,y,0)
+      elsif y > sY + l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,y - sY)
+      end
+    elsif ship.direction == "Left"
+      if x > sX
+        detonateMine(x,y,0)
+      elsif x < sX - l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,sX - x)
+      end
+    elsif ship.direction == "Right"
+      if x < sX
+        detonateMine(x,y,0)
+      elsif x > sX - l
+        detonateMine(x,y,l)
+      else
+        detonateMine(x,y,x - sX)
+      end
+    end
   end
 
   def turnQuadrantClear(x,y,length,quadrant)
@@ -205,6 +430,7 @@ class Move < ActiveRecord::Base
     startX = x - (length-1) * dx
     startY = y
 
+    collisions = Array.new
     isClear = true
     yOffset = 0
     firstIteration = true
@@ -215,16 +441,20 @@ class Move < ActiveRecord::Base
       xOffset = 0
       for j in xOffset..(length-1-xLengthCutter)
         currentX = startX + j * dx
-        if(isUnsafe(currentX,currentY)) 
-          self.message = "Collision at (#{currentX},#{currentY})";    # NOTE: this will not output the collision closest to the boat necessarily
-          self.save
-          isClear = false 
-          break
-        end
-      end
 
-      if !isClear
-        break
+        mineCheck = mineInProx(currentX,currentY)
+        if isUnsafe(currentX,currentY)
+          point = {x: currentX, y: currentY}
+          if !collisions.include? point
+            collisions.push(point)
+          end
+        end
+        if mineCheck[:result]
+          point = {x: mineCheck[:x], y: mineCheck[:y]}
+          if !collisions.include? point
+            collisions.push(point)
+          end
+        end
       end
 
       if !firstIteration
@@ -235,7 +465,7 @@ class Move < ActiveRecord::Base
       firstIteration = false
     end
 
-    return isClear
+    return collisions
   end
 
   def isShip(x,y)
@@ -263,6 +493,45 @@ class Move < ActiveRecord::Base
     return :miss
   end
 
+  def getShipTorpColl(x,y)
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
+        shipSq = directionToDelta(s.direction,i)
+        if s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y
+          torpedoShip(s, i)
+          return :hit
+        end
+      }
+    }
+    return :miss
+  end
+
+  def getTorpedoCollision()
+    delta = directionToDelta(ship.direction,1)
+
+    startX = ship.location_x
+    startY = ship.location_y
+
+    startX += delta[:x] * ship.shiptype.size
+    startY += delta[:y] * ship.shiptype.size
+  
+    for i in 0..9
+      checkX = startX + delta[:x] * i
+      checkY = startY + delta[:y] * i
+      if isUnsafe(checkX,checkY)
+        if isMine(checkX,checkY)
+          hitMine(checkX,checkY)
+          return {hit: :mine, x: checkX, y: checkY}
+        elsif getShipTorpColl(checkX,checkY)==:hit     
+          return {hit: :ship, x: checkX, y: checkY}
+        else
+          return {hit: :coral, x: checkX, y: checkY}
+        end
+      end
+    end
+    return {hit: :miss, x: 0, y: 0}
+  end
+
   def hitShip(hit_ship, i, dmg)
     # Caching sucks
     h = hit_ship.health
@@ -275,6 +544,68 @@ class Move < ActiveRecord::Base
     str[i] = after_hit.to_s
     hit_ship.health = str
     hit_ship.save
+  end
+
+  def torpedoShip(hit_ship, i)
+    h = hit_ship.health
+    str = "";
+    str += h;
+    after_hit = 0;
+
+    str[i] = after_hit.to_s
+    hit_ship.health = str
+    hit_ship.save
+
+    shot_dir = ship.direction
+    splash = false
+    if shot_dir == "Up" || shot_dir == "Down"
+      if hit_ship.direction == "Left" || hit_ship.direction == "Right"
+        splash = true
+      end
+    else
+      if hit_ship.direction == "Up" || hit_ship.direction == "Down"
+        splash = true
+      end
+    end
+
+    if splash
+      splashDamage(hit_ship,i)
+    end
+  end
+
+  def splashDamage(hit_ship, i)
+    # destroy 1 extra block towards bow of ship (or towards stern if no intact square towards bow exists)
+    h = hit_ship.health
+    str = "";
+    str += h;
+    after_hit = 0;
+
+    if str.length == 1
+      return
+    elsif str.length-1 == i
+      str[i-1] = after_hit.to_s
+    elsif i==0
+      str[i+1] = after_hit.to_s
+    elsif str[i+1] == '0'
+      str[i-1] = after_hit.to_s
+    else
+      str[i+1] = after_hit.to_s
+    end
+
+    hit_ship.health = str
+    hit_ship.save
+  end
+
+  def hitMine(x,y)
+    mineIndex = y * 30 + x
+
+    m = game.mines
+    str = "";
+    str += m;
+    str[mineIndex] = '0'
+    game.mines = str
+
+    game.save
   end
 
   def addToShip(delta)

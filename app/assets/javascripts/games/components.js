@@ -71,23 +71,24 @@ Ship = function (ship, radar, cannon, torpedo) {
   this.highlighted = false;
 
   this.DrawStern = function(){
-    ctx.fillStyle = "blue"
+    ctx.fillStyle = "yellow"
     ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
   }
 
-  this.Draw = function (ctx, color, damage) {
+  this.Draw = function (ctx, color, damage, sd) {
 
-      ctx.beginPath()
-      ctx.fillStyle = color;
-      ctx.lineWidth = 5;
-      ctx.strokeStyle = (this.highlighted && this.data.turn==pid) ? 'black' : color
-      for (each in this.points) {
-        var pt = this.points[each];
-        ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-      }
-      ctx.stroke();
-      ctx.fill();
-      ctx.closePath();
+      if(this.name == T.C)
+        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.C,color);
+      else if(this.name == T.D)
+        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.D,color);
+      else if(this.name == T.T)
+        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.T,color);
+      else if(this.name == T.R || this.name == T.E)
+        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.R,color);
+      else if(this.name == T.M)
+        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.M,color);
+      else if(this.name == T.K)
+        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.K,color);
 
       // Paint damaged squares
       if(damage)
@@ -108,8 +109,8 @@ Ship = function (ship, radar, cannon, torpedo) {
             }
         }
       }
-
-      this.DrawStern();
+      if(this.highlighted)
+        this.DrawStern();
   }
 
   // Duplicate!
@@ -159,15 +160,41 @@ Fleet = function (turn) {
     this.base = new Base(29, 10);
   }
 
-  this.Draw = function (ctx, color) {
+  this.Draw = function (ctx, color, sd) {
 
       for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(ctx, color, true);
+          this.ships[i].Draw(ctx, color, true, sd);
       }
   };
   this.DrawBase = function (ctx, color) {
       this.base.Draw(ctx, color);
       //this.base.radarzone.Draw(ctx, color);
+  };
+  this.DrawMines = function (ctx, color) {
+      var mines = GAME_DATA.mines;
+      for (var i = 0; i < this.ships.length; i++) 
+      {
+          if(this.ships[i].name == "Mine Layer" && this.ships[i].data.turn==pid)
+          {
+            var points = this.ships[i].radarzone.GetPoints();
+            for ( var j = 0; j < points.length; j++ )
+            {
+                var pt = points[j];
+                if( mines[pt.x + pt.y * 30] == 1)
+                {
+                  ctx.beginPath()
+                  ctx.fillStyle = color;
+                  ctx.lineWidth = 5;
+                  ctx.strokeStyle = 'black';
+                  ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
+                  ctx.stroke();
+                  ctx.fill();
+                  ctx.closePath();
+                }
+            }
+          }
+      }
+
   };
 
 };

@@ -112,7 +112,7 @@ RotationZone = function (ship){
 		ctx.beginPath()
 	    for(var i = 0; i < this.array.length; i++){ctx.rect(this.array[i].x*SQ_WIDTH + SQ_WIDTH/4, this.array[i].y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
 		ctx.strokeStyle = "rgb(255,255,255)"
-		ctx.fillStyle = "rgb(0,0,255)"
+		ctx.fillStyle = "white"
 		ctx.stroke()
 		ctx.fill()
 		ctx.closePath()
@@ -231,7 +231,7 @@ TranslationZone = function(ship){
 	{
 		ctx.beginPath()
 		ctx.strokeStyle = "rgb(255,255,255)"
-		ctx.fillStyle = "rgb(0,0,255)"
+		ctx.fillStyle = "white"//"rgb(0,0,255)"
 		for(var i = 0; i < this.array.length; i++){ctx.rect(this.array[i].x*SQ_WIDTH + SQ_WIDTH/4, this.array[i].y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
 		ctx.stroke()
 		ctx.fill()
