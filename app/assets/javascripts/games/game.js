@@ -152,9 +152,10 @@ Game = function(ctx)
     this.players[0].fleet.DrawMines(ctx,"black");
     this.players[1].fleet.DrawMines(ctx,"black");
 
+    // ships
+    this.players[0].fleet.Draw(ctx,Color.Green,this.shipdisplay);
     this.players[1].fleet.Draw(ctx,Color.Blue,this.shipdisplay);
     this.V.Draw(ctx,'grey');
-    this.players[0].fleet.Draw(ctx,Color.Green,this.shipdisplay);
   
     // coral map
     this.env.drawCoral();
