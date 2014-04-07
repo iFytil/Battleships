@@ -1,5 +1,5 @@
 // Ship directions
-var D = {
+var Dir = {
   Up: 0,
   Left: 1,
   Down: 2,

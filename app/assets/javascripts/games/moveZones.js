@@ -1,61 +1,61 @@
 RotationZone = function (ship){
 
-	if(ship.facing == D.Right) {
-		var lFace = D.Up; 
+	if(ship.facing == Dir.Right) {
+		var lFace = Dir.Up; 
 		var lXOffset = ship.turnIndex; 
 		var lYOffset = ship.turnIndex
 
-		var rFace = D.Down; 
+		var rFace = Dir.Down; 
 		var rXOffset = ship.turnIndex; 
 		var rYOffset = -ship.turnIndex
 	}
-	else if(ship.facing == D.Up) {
-		var lFace = D.Left; 
+	else if(ship.facing == Dir.Up) {
+		var lFace = Dir.Left; 
 		var lXOffset = ship.turnIndex; 
 		var lYOffset = -ship.turnIndex;
 
-		var rFace = D.Right; 
+		var rFace = Dir.Right; 
 		var rXOffset = -ship.turnIndex; 
 		var rYOffset = -ship.turnIndex;
 	}
-	else if(ship.facing == D.Left) {
-		var lFace = D.Down; 
+	else if(ship.facing == Dir.Left) {
+		var lFace = Dir.Down; 
 		var lXOffset = -ship.turnIndex; 
 		var lYOffset = -ship.turnIndex;
 
-		var rFace = D.Up; 
+		var rFace = Dir.Up; 
 		var rXOffset = -ship.turnIndex; 
 		var rYOffset = ship.turnIndex
 	}
-	else if(ship.facing == D.Down) {
-		var lFace = D.Right; 
+	else if(ship.facing == Dir.Down) {
+		var lFace = Dir.Right; 
 		var lXOffset = -ship.turnIndex; 
 		var lYOffset = ship.turnIndex;
 
-		var rFace = D.Left;
+		var rFace = Dir.Left;
 		var rXOffset = ship.turnIndex; 
 		var rYOffset = ship.turnIndex;
 	}
 
 	if( ship.turnSpeed == 2 )
 	{
-		if(ship.facing == D.Right) {
-			var bFace = D.Left;
+		if(ship.facing == Dir.Right) {
+			var bFace = Dir.Left;
 			var bXOffset = ship.turnIndex * 2;
 			var bYOffset = 0;
 		}
-		else if(ship.facing == D.Up) {
-			var bFace = D.Down;
+		else if(ship.facing == Dir.Up) {
+			var bFace = Dir.Down;
 			var bXOffset = 0;
 			var bYOffset = -ship.turnIndex * 2;
 		}
-		else if(ship.facing == D.Left) {
-			var bFace = D.Right
+		else if(ship.facing == Dir.Left) {
+			var bFace = Dir.Right
 			var bXOffset = -ship.turnIndex * 2;
 			var bYOffset = 0;
 		}
-		else if(ship.facing == D.Down) {
-			var bFace = D.Up
+		else if(ship.facing == Dir.Down) {
+			var bFace = Dir.Up
 			var bXOffset = 0;
 			var bYOffset = ship.turnIndex * 2;
 		}
@@ -125,7 +125,7 @@ RotationZone = function (ship){
 }
 
 TranslationZone = function(ship){
-	if(ship.facing == D.Right) {
+	if(ship.facing == Dir.Right) {
 		var lXOffset = 0; 
 		var lYOffset = -1;
 
@@ -138,7 +138,7 @@ TranslationZone = function(ship){
 		var fXOffset = 1;
 		var fYOffset = 0;
 	}
-	else if(ship.facing == D.Up) {
+	else if(ship.facing == Dir.Up) {
 		var lXOffset = -1;
 		var lYOffset = 0;
 
@@ -151,7 +151,7 @@ TranslationZone = function(ship){
 		var fXOffset = 0;
 		var fYOffset = -1;
 	}
-	else if(ship.facing == D.Left) {
+	else if(ship.facing == Dir.Left) {
 		var lXOffset = 0; 
 		var lYOffset = 1;
 
@@ -164,7 +164,7 @@ TranslationZone = function(ship){
 		var fXOffset = -1;
 		var fYOffset = 0;
 	}
-	else if(ship.facing == D.Down) {
+	else if(ship.facing == Dir.Down) {
 		var lXOffset = -1; 
 		var lYOffset = 0;
 
@@ -246,7 +246,7 @@ TranslationZone = function(ship){
 
 MineZone = function(ship)
 {
-	if(ship.facing == D.Right) {
+	if(ship.facing == Dir.Right) {
 		var lXOffset = 0; 
 		var lYOffset = -1;
 
@@ -259,7 +259,7 @@ MineZone = function(ship)
 		var fXOffset = 1;
 		var fYOffset = 0;
 	}
-	else if(ship.facing == D.Up) {
+	else if(ship.facing == Dir.Up) {
 		var lXOffset = -1;
 		var lYOffset = 0;
 
@@ -272,7 +272,7 @@ MineZone = function(ship)
 		var fXOffset = 0;
 		var fYOffset = -1;
 	}
-	else if(ship.facing == D.Left) {
+	else if(ship.facing == Dir.Left) {
 		var lXOffset = 0; 
 		var lYOffset = 1;
 
@@ -285,7 +285,7 @@ MineZone = function(ship)
 		var fXOffset = -1;
 		var fYOffset = 0;
 	}
-	else if(ship.facing == D.Down) {
+	else if(ship.facing == Dir.Down) {
 		var lXOffset = -1; 
 		var lYOffset = 0;
 
@@ -364,24 +364,24 @@ Range = function (x,y,back, width, length,facing) {
   this.facing = facing;
 
   this.Set =function(sternx,sterny){
-    if (this.facing == D.Right) 
+    if (this.facing == Dir.Right) 
     {
       this.x = sternx+back;
       this.y = sterny-Math.floor(this.h/2);
     } 
-    else if (this.facing == D.Left) 
+    else if (this.facing == Dir.Left) 
     {
       this.x = sternx+1-back-this.w;
       this.y = sterny-Math.floor(this.h/2);
     } 
-    else if (this.facing == D.Up) 
+    else if (this.facing == Dir.Up) 
     {
       this.h = length;
       this.w = width;
       this.x = sternx-Math.floor(this.w/2);
       this.y = sterny+1-back-this.h;
     } 
-    else if (this.facing == D.Down) 
+    else if (this.facing == Dir.Down) 
     {
       this.h = length;
       this.w = width;

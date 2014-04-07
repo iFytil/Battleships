@@ -9,8 +9,6 @@ Point = function (x, y) {
 
 Ship = function (ship, radar, cannon, torpedo) {
 
-  // 'facing' indicates ship direction: D.Left D.Right D.Up D.Down
-
   var t = SQ_WIDTH / 2;
 
   this.data = ship
@@ -21,7 +19,7 @@ Ship = function (ship, radar, cannon, torpedo) {
   this.turnSpeed  = ship.shiptype.turn_speed;
   this.turnIndex  = ship.shiptype.turn_index;
   this.speed      = ship.shiptype.speed;
-  this.facing     = D[ship.direction];
+  this.facing     = Dir[ship.direction];
   this.radarzone  = radar;
   this.cannonzone = cannon;
   this.health     = ship.health;
@@ -49,16 +47,16 @@ Ship = function (ship, radar, cannon, torpedo) {
     var dx = 0;
     var dy = 0;
     switch (this.facing) {
-    case D.Up:
+    case Dir.Up:
       dy = -1;
       break;
-    case D.Down:
+    case Dir.Down:
       dy = 1;
       break;
-    case D.Left:
+    case Dir.Left:
       dx = -1;
       break;
-    case D.Right:
+    case Dir.Right:
       dx = 1;
       break;
     }
@@ -127,7 +125,7 @@ Base = function (x, y) {
   var y0 = y * SQ_WIDTH;
   
   // visibility
-  this.radarzone = new Range(x, y, -1, 3, 12, D.Down);
+  this.radarzone = new Range(x, y, -1, 3, 12, Dir.Down);
 
   this.Draw = function (ctx, color) {
     ctx.fillStyle = color;
@@ -143,9 +141,9 @@ Fleet = function (turn) {
     var ship = SHIPS[each];
     if (ship.turn == turn) {
       var type = ship.shiptype;
-      var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, D[ship.direction])
-      var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, D[ship.direction])
-      var torpedo = new Range(ship.location_x, ship.location_y, type.size, 1, 10, D[ship.direction])
+      var radar = new Range(ship.location_x, ship.location_y, type.radar_back, type.radar_w, type.radar_l, Dir[ship.direction])
+      var cannon = new Range(ship.location_x, ship.location_y, type.cannon_back, type.cannon_w, type.cannon_l, Dir[ship.direction])
+      var torpedo = new Range(ship.location_x, ship.location_y, type.size, 1, 10, Dir[ship.direction])
 
       this.ships.push(new Ship(ship, radar, cannon, torpedo))
     }

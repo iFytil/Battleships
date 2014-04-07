@@ -23,19 +23,19 @@ ShipDisplay = function(){
 	this.Draw = function(x,y,dir,ship,colour) {
 		 this.Set(colour,ship);
 
-		if(dir == D.Up){
+		if(dir == Dir.Up){
 			ctx.save();
 			ctx.translate(x+SQ_WIDTH,y+SQ_WIDTH);
 			ctx.rotate(-90*Math.PI/180);
 			ctx.drawImage(this.ship,0,-this.ship.height);
 			ctx.restore();
-		}else if(dir == D.Down){
+		}else if(dir == Dir.Down){
 			ctx.save();
 			ctx.translate(x,y);
 			ctx.rotate(90*Math.PI/180);
 			ctx.drawImage(this.ship,0,-this.ship.height);
 			ctx.restore();
-		}else if(dir == D.Left){
+		}else if(dir == Dir.Left){
 			ctx.save();
 			ctx.translate(x+SQ_WIDTH,y);
 			ctx.rotate(180*Math.PI/180);
