@@ -3,10 +3,11 @@
 
 <%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves), userid: current_user.id, ships: @game.ships.to_json(:include => :shiptype)} do %>
 <% end %>
-
-<canvas id="myCanvas" width="700" height="630"></canvas>
-
-
+<div style="display:flex;justify-content:center;align-content:flex-start;">
+  <div id="message_stream" style="height:700px;width:300px;display:inline-block;background-color:#dfdfdf;"></div>
+  <canvas id="myCanvas" width="700" height="630" style="display:inline-block;margin-left:0px;margin-right:0px;"></canvas>
+</div>
+<div class='text-center'><a class='btn btn-danger' href='<%= game_forfeit_path %>'>Forfeit</a></div>
 
 <script>
 

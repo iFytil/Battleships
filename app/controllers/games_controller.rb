@@ -125,4 +125,11 @@ class GamesController < ApplicationController
       end
     end
   end
+  def forfeit
+    game = Game.find params[:id]
+    if current_user.id == game.player_1.id or current_user.id == game.player_2.id
+      game.destroy
+    end
+    redirect_to lobby_path
+  end
 end

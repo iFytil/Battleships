@@ -6,6 +6,7 @@ Battleship::Application.routes.draw do
   post '/games/:id/start' => 'games#shiporder', :as => :game_order
   get '/games/:id/coral' => 'games#coral', :as => :game_coral
   post '/games/:id/coral' => 'games#coral_handle', :as => :game_coral_handle
+  get '/games/:id/forfeit' => 'games#forfeit', :as => :game_forfeit
 
   # Access the lobby
   get 'lobby' => 'pages#lobby', :as => :lobby
