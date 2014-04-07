@@ -107,7 +107,7 @@ RotationZone = function (ship){
 	}
 
 	// Draw rotate zone
-	this.Draw = function(ctx)
+	this.Draw = function()
 	{
 		ctx.beginPath()
 	    for(var i = 0; i < this.array.length; i++){ctx.rect(this.array[i].x*SQ_WIDTH + SQ_WIDTH/4, this.array[i].y*SQ_WIDTH + SQ_WIDTH/4, SQ_WIDTH/2, SQ_WIDTH/2);}
@@ -227,7 +227,7 @@ TranslationZone = function(ship){
 	}
 
 	// Draw points for move zone
-	this.Draw = function(ctx)
+	this.Draw = function()
 	{
 		ctx.beginPath()
 		ctx.strokeStyle = "rgb(255,255,255)"
@@ -337,7 +337,7 @@ MineZone = function(ship)
 	this.array.push(new Point(bShip.points[0].x, bShip.points[0].y))
 
 	// Draw points for move zone
-	this.Draw = function(ctx)
+	this.Draw = function()
 	{
 		ctx.beginPath()
 		ctx.strokeStyle = "rgb(0,0,255)"
@@ -397,7 +397,7 @@ Range = function (x,y,back, width, length,facing) {
 
   this.Set(x,y);
     
-  this.Draw = function (ctx, color) {
+  this.Draw = function (color) {
     ctx.beginPath();
     ctx.moveTo(this.pointTL.x*SQ_WIDTH, this.pointTL.y*SQ_WIDTH);
     ctx.lineTo(this.pointTR.x*SQ_WIDTH, this.pointTR.y*SQ_WIDTH);

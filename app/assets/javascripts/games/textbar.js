@@ -1,12 +1,10 @@
-Textbar = function(ctx){
+Textbar = function(){
   
   // top left corner
   this.x = WIDTH;
   this.y = 0;
   
   this.message = "Look here for notifications!";
-  
-  this.ctx = ctx;
 
 	this.Message = function(text){
 		this.message = text;
@@ -14,9 +12,9 @@ Textbar = function(ctx){
   
   this.Draw = function(){
  
-    this.ctx.fillStyle = 'white';
-    this.ctx.fillRect(0, WIDTH, WIDTH+BAR_WIDTH, WIDTH+TEXT_BAR_WIDTH);
-    
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, WIDTH, WIDTH+BAR_WIDTH, WIDTH+TEXT_BAR_WIDTH);
+
     // title
     ctx.fillStyle = '#24262A';
     ctx.textAlign = 'center';

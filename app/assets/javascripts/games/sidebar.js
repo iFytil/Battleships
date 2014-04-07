@@ -31,7 +31,7 @@ Button = function(x, y, w, h,bar){
     this.hover = x>this.x && x<this.x+w && y>this.y && y<this.y+h;
   }
   
-  this.Draw = function(ctx){
+  this.Draw = function(){
       
     if(this.active){
       if(this.selected)
@@ -53,13 +53,12 @@ Button = function(x, y, w, h,bar){
   
 }
 
-Sidebar = function(ctx,game){
+Sidebar = function(game){
   
   // top left corner
   this.x = WIDTH;
   this.y = 0;
   
-  this.ctx = ctx;
   this.game = game;
   
   // index of selected button
@@ -205,8 +204,8 @@ Sidebar = function(ctx,game){
     
     ctx.save();
     
-    this.ctx.fillStyle = '#254055';
-    this.ctx.fillRect(WIDTH, 0, WIDTH+BAR_WIDTH, WIDTH);
+    ctx.fillStyle = '#254055';
+    ctx.fillRect(WIDTH, 0, WIDTH+BAR_WIDTH, WIDTH);
     
     // title
     ctx.fillStyle = '#66A3D2';
@@ -231,7 +230,7 @@ Sidebar = function(ctx,game){
     // buttons
     if(this.game.turn == pid){
       for (i = 0; i < this.buttons.length; i++) {
-        this.buttons[i].Draw(ctx);
+        this.buttons[i].Draw();
       }
     }
 

@@ -30,7 +30,7 @@ Visibility = function(ranges) {
 
   this.Set();
        
-  this.Draw = function(ctx,color)
+  this.Draw = function(color)
   {
     for (var i =0; i < N; i++) 
       {

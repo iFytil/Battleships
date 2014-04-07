@@ -1,4 +1,4 @@
-Environment = function (ctx) {
+Environment = function () {
 
   var Coral = {
     c: GAME_DATA.coral,

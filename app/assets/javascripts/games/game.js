@@ -99,18 +99,18 @@ Player = function(turn){
   
 };
 
-Game = function(ctx)
+Game = function()
 {
 
   // environment
-  this.env = new Environment(ctx);
+  this.env = new Environment();
   
   // ship images
   this.shipdisplay = new ShipDisplay();
 
   // bars 
-  this.sidebar = new Sidebar(ctx,this);
-  this.textbar = new Textbar(ctx);
+  this.sidebar = new Sidebar(this);
+  this.textbar = new Textbar();
   
   // currently displayed zones
   this.movezone = Zone.None;
@@ -149,20 +149,20 @@ Game = function(ctx)
     this.env.drawGrid();
 
     // mines
-    this.players[0].fleet.DrawMines(ctx,"black");
-    this.players[1].fleet.DrawMines(ctx,"black");
+    this.players[0].fleet.DrawMines();
+    this.players[1].fleet.DrawMines();
 
     // ships
-    this.players[0].fleet.Draw(ctx,Color.Green,this.shipdisplay);
-    this.players[1].fleet.Draw(ctx,Color.Blue,this.shipdisplay);
-    this.V.Draw(ctx,'grey');
+    this.players[0].fleet.Draw(Color.Green,this.shipdisplay);
+    this.players[1].fleet.Draw(Color.Blue,this.shipdisplay);
+    this.V.Draw('grey');
   
     // coral map
     this.env.drawCoral();
 
     // bases
-    this.players[0].fleet.DrawBase(ctx,'blue');
-    this.players[1].fleet.DrawBase(ctx,'#4DDE00');
+    this.players[0].fleet.DrawBase('blue');
+    this.players[1].fleet.DrawBase('#4DDE00');
 
     // zones
     if(this.turn == pid){
@@ -170,19 +170,19 @@ Game = function(ctx)
           // do nothing
       }else if(this.movezone == Zone.Translate){
           this.currentZone = this.translationZone
-          this.currentZone.Draw(ctx);
+          this.currentZone.Draw();
       } else if(this.movezone == Zone.Rotate){
           this.currentZone = this.rotationZone
-          this.currentZone.Draw(ctx);
+          this.currentZone.Draw();
       }else if(this.movezone == Zone.Cannon){
           this.currentZone = this.cannonZone
-          this.currentZone.Draw(ctx,"white");//rgb(0,0,255)
+          this.currentZone.Draw("white");//rgb(0,0,255)
       }else if(this.movezone == Zone.Torpedo){
           this.currentZone = this.torpedoZone
-          this.currentZone.Draw(ctx,"white");
+          this.currentZone.Draw("white");
       }else if(this.movezone ==Zone.Mine){
           this.currentZone = this.mineZone
-          this.currentZone.Draw(ctx);
+          this.currentZone.Draw();
       };
     }
     

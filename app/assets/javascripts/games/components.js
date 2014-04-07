@@ -73,7 +73,7 @@ Ship = function (ship, radar, cannon, torpedo) {
     ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
   }
 
-  this.Draw = function (ctx, color, damage, sd) {
+  this.Draw = function (color, damage, sd) {
 
       if(this.name == T.C)
         sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.C,color);
@@ -127,7 +127,7 @@ Base = function (x, y) {
   // visibility
   this.radarzone = new Range(x, y, -1, 3, 12, Dir.Down);
 
-  this.Draw = function (ctx, color) {
+  this.Draw = function (color) {
     ctx.fillStyle = color;
     ctx.fillRect(x0,y0,SQ_WIDTH,10*SQ_WIDTH);
   }
@@ -158,17 +158,17 @@ Fleet = function (turn) {
     this.base = new Base(29, 10);
   }
 
-  this.Draw = function (ctx, color, sd) {
+  this.Draw = function (color, sd) {
 
       for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(ctx, color, true, sd);
+          this.ships[i].Draw(color, true, sd);
       }
   };
-  this.DrawBase = function (ctx, color) {
-      this.base.Draw(ctx, color);
+  this.DrawBase = function (color) {
+      this.base.Draw(color);
       //this.base.radarzone.Draw(ctx, color);
   };
-  this.DrawMines = function (ctx, color) {
+  this.DrawMines = function () {
       var mines = GAME_DATA.mines;
       for (var i = 0; i < this.ships.length; i++) 
       {
@@ -181,8 +181,8 @@ Fleet = function (turn) {
                 if( mines[pt.x + pt.y * 30] == 1)
                 {
                   ctx.beginPath()
-                  ctx.fillStyle = color;
-                  ctx.lineWidth = 5;
+                  ctx.fillStyle = "black";
+                  ctx.lineWidth = 1;
                   ctx.strokeStyle = 'black';
                   ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
                   ctx.stroke();
