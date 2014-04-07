@@ -7,7 +7,11 @@ class Move < ActiveRecord::Base
 
   after_create do |move|
 
+    # Associate game with ship
     move.game_id = ship.game_id
+
+    # Default message
+    move.message = "No shots were fired"
 
     case move.kind
     when "Cannon"
@@ -40,29 +44,25 @@ class Move < ActiveRecord::Base
 
       move.message = txt
     when "Mine"
-      move.message = "No shots were fired"
-      mineHere = isMine(move.pos_x, move.pos_y)
-      mineIndex = move.pos_y * 30 + move.pos_x
-      if mineHere
-        # pickup mine
-        hitMine(move.pos_x, move.pos_y)
 
+      # Getting/Setting mines triggers only default message
+
+      # Pick up an existing mine
+      if isMine(move.pos_x, move.pos_y)
+
+        # Remove mine from map and add to inventory
+        removeMine(move.pos_x, move.pos_y)
         ship.ammo += 1
-        
-        ship.save
-      elsif validPlacement(move.pos_x, move.pos_y) && ship.ammo > 0
-        # place mine
-        m = game.mines
-        str = "";
-        str += m;
-        str[mineIndex] = '1'
-        game.mines = str
 
+      # If the mine wouldn't detonate immediately
+      elsif wontDetonate(move.pos_x, move.pos_y) && ship.ammo > 0
+        
+        # Add one mine from inventory to the map
+        addMine(move.pos_x, move.pos_y)
         ship.ammo -= 1
 
-        game.save
-        ship.save 
       end  
+
     when "Move"
       move.message = "No shots were fired"
       if ship.location_x == move.pos_x
@@ -241,6 +241,7 @@ class Move < ActiveRecord::Base
       end
     end
 
+    game.save
     move.save
     ship.save
   end
@@ -311,11 +312,11 @@ class Move < ActiveRecord::Base
 
     splashDamage(ship,ship_index)
 
-    hitMine(x, y)
+    removeMine(x, y)
   end
 
-  # Checks if this is a valid place to put a mine
-  def validPlacement(x,y)
+  # Checks if this is a valid place to put a mine without detonation
+  def wontDetonate(x,y)
     if isCoral(x,y) || isShip(x,y)
       return false
     elsif isCoral(x+1,y) || isShip(x+1,y)
@@ -333,7 +334,7 @@ class Move < ActiveRecord::Base
 
   def getMineCollision(x,y)
     if isMine(x,y)
-      hitMine(x,y)
+      removeMine(x,y)
       return :hit
     end
     return :miss
@@ -520,7 +521,7 @@ class Move < ActiveRecord::Base
       checkY = startY + delta[:y] * i
       if isUnsafe(checkX,checkY)
         if isMine(checkX,checkY)
-          hitMine(checkX,checkY)
+          removeMine(checkX,checkY)
           return {hit: :mine, x: checkX, y: checkY}
         elsif getShipTorpColl(checkX,checkY)==:hit     
           return {hit: :ship, x: checkX, y: checkY}
@@ -596,16 +597,20 @@ class Move < ActiveRecord::Base
     hit_ship.save
   end
 
-  def hitMine(x,y)
-    mineIndex = y * 30 + x
-
+  def removeMine(x,y)
     m = game.mines
     str = "";
     str += m;
-    str[mineIndex] = '0'
+    str[y * 30 + x] = '0'
     game.mines = str
+  end
 
-    game.save
+  def addMine(x,y)
+    m = game.mines
+    str = "";
+    str += m;
+    str[y * 30 + x] = '1'
+    game.mines = str
   end
 
   def addToShip(delta)
