@@ -161,8 +161,8 @@ Game = function()
     this.env.drawCoral();
 
     // bases
-    this.players[0].fleet.DrawBase('blue');
-    this.players[1].fleet.DrawBase('#4DDE00');
+    this.players[0].fleet.DrawBase('#4DDE00');
+    this.players[1].fleet.DrawBase('blue');
 
     // zones
     if(this.turn == pid){
