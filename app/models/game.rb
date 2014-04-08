@@ -11,7 +11,8 @@ class Game < ActiveRecord::Base
 
   after_create do |game|	
     game.mines = '0' * 900
-
+    game.player_1_base = '1'*10
+    game.player_2_base = '1'*10
     game.save
   end
 
