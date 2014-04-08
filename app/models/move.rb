@@ -244,6 +244,8 @@ class Move < ActiveRecord::Base
     game.save
     move.save
     ship.save
+
+    deleteDeadShips()
   end
 
   private
@@ -663,4 +665,12 @@ class Move < ActiveRecord::Base
     {x: dx, y: dy}
   end
 
+  def deleteDeadShips()
+    game.ships.each { |s|
+      # If the boat only has dead squares, destroy the boat
+      if /^0*$/ =~ s.health
+        s.destroy
+      end
+    }
+  end
 end
