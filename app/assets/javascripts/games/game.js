@@ -62,6 +62,17 @@ Player = function(turn){
     game.sidebar.ClearButtons();
     game.movezone = Zone.None;
   }
+  this.selectShip = function(idx)
+  {
+    this.fleet.ships[this.selected].highlighted = false;
+    this.selected = idx;
+    this.fleet.ships[this.selected].highlighted = true;
+
+
+    game.sidebar.RegisterShipChange();
+    game.sidebar.ClearButtons();
+    game.movezone = Zone.None;
+  }
 
   this.Ranges = function()
   {
@@ -106,6 +117,10 @@ Game = function()
   this.NextShipDown = function()
   {
     this.players[pid].nextShip(-1);
+  };
+  this.SelectShip = function(idx)
+  {
+    this.players[pid].selectShip(idx);
   };
   
   this.UpdateZones = function()

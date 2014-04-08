@@ -20,17 +20,26 @@ function loadMouseEvents() {
   
     var x = e.x-canvas.getBoundingClientRect().left;
     var y = e.y-canvas.getBoundingClientRect().top;
-    
+
     // check if in grid or on sidebar
     if(x>0 && x<WIDTH && y>0 && y<WIDTH){
       var sq = game.env.getSquare();
       var shipid = game.players[pid].Selected().id
       var move = Abilities[game.movezone]
 
+      // ship selection
+      var i=0;
+      game.players[pid].fleet.ships.forEach(function(s) {
+        s.points.forEach(function(p){
+          if(p.x == sq.x && p.y == sq.y) 
+            game.SelectShip(i); 
+        });
+        i++;
+      });
+      // move selection
       if (!move) {
         return
       }
-
       var validPoints = game.currentZone.GetPoints()
       var validMove = false
       for(var i = 0; i < validPoints.length; i++)
@@ -54,7 +63,6 @@ function loadMouseEvents() {
   function hover(e) {
     var x = e.x-canvas.getBoundingClientRect().left;
     var y = e.y-canvas.getBoundingClientRect().top;
-    
     // check if in grid or on sidebar
     if(x>0 && x<WIDTH && y>0 && y<WIDTH)
     {
