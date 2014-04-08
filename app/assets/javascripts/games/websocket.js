@@ -23,7 +23,6 @@ function dispatch() {
     if (newdata.id == GAME_DATA.id) {
       SHIPS = JSON.parse(message.ships);
       GAME_DATA = newdata;
-      game.textbar.Message(message.msg)
       game.reload();
     }
   });
