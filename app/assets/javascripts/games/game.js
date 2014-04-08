@@ -23,12 +23,6 @@ var Zone = {
   Repair: 6
 }
 
-//colour
-var Color = {
-  Green: 1,
-  Blue: 0
-}
-
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
 
 var Type = {
@@ -146,21 +140,17 @@ Game = function()
 
     // ships
     if(pid==1){
-      this.players[0].fleet.Draw(Color.Green);
+      this.players[0].fleet.Draw();
       this.V.Draw('grey');
-      this.players[1].fleet.Draw(Color.Blue);
+      this.players[1].fleet.Draw();
     }else{
-      this.players[1].fleet.Draw(Color.Blue);
+      this.players[1].fleet.Draw();
       this.V.Draw('grey');
-      this.players[0].fleet.Draw(Color.Green);
+      this.players[0].fleet.Draw();
     }
   
     // coral map
     this.env.drawCoral();
-
-    // bases
-    this.players[0].fleet.DrawBase('#4DDE00');
-    this.players[1].fleet.DrawBase('blue');
 
     // zones
     if(this.turn == pid){

@@ -17,10 +17,10 @@ Ship = function (ship, radar, cannon, torpedo) {
   var t = SQ_WIDTH / 2;
 
   this.data = ship
-
+  this.turn       = ship.turn;
   this.length     = ship.shiptype.size;
-  this.x          = ship.location_x
-  this.y          = ship.location_y
+  this.x          = ship.location_x;
+  this.y          = ship.location_y;
   this.turnSpeed  = ship.shiptype.turn_speed;
   this.turnIndex  = ship.shiptype.turn_index;
   this.speed      = ship.shiptype.speed;
@@ -78,10 +78,10 @@ Ship = function (ship, radar, cannon, torpedo) {
     ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
   }
 
-  this.Draw = function (color, damage) {
+  this.Draw = function (damage) {
 
       // Draw ship image
-      shipdisplay.Draw(this, color);
+      shipdisplay.Draw(this);
 
       function showdmg(x,y,life) {
         colordmg = function (pixels) {
@@ -138,15 +138,16 @@ Ship = function (ship, radar, cannon, torpedo) {
 
 };
 
-Base = function (x, y) {
+Base = function (x, y, c) {
 
   var x0 = x * SQ_WIDTH;
   var y0 = y * SQ_WIDTH;
+  var color = c;
   
   // visibility
   this.radarzone = new Range(x, y, -1, 3, 12, Dir.Down);
 
-  this.Draw = function (color) {
+  this.Draw = function () {
     ctx.fillStyle = color;
     ctx.fillRect(x0,y0,SQ_WIDTH,10*SQ_WIDTH);
   }
@@ -155,6 +156,7 @@ Base = function (x, y) {
 
 Fleet = function (turn) {
   this.ships = new Array();
+  this.turn = turn;
 
   var minegraphics = new Image();
   minegraphics.src = "/assets/mine.png";
@@ -171,24 +173,15 @@ Fleet = function (turn) {
     }
   }
 
-  if (turn == Turn.First) 
-  {
-    this.base = new Base(0, 10);
-  } 
-  else if (turn == Turn.Second)
-  {
-    this.base = new Base(29, 10);
-  }
+  this.base = new Base(29*turn, 10, ((turn==Turn.First) ? "green" : "blue"));
 
-  this.Draw = function (color) {
+  this.Draw = function () {
 
       for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(color, true);
+          this.ships[i].Draw(true);
       }
-  };
-  this.DrawBase = function (color) {
-      this.base.Draw(color);
-      //this.base.radarzone.Draw(ctx, color);
+
+      this.base.Draw();
   };
   this.DrawMines = function () {
       var mines = GAME_DATA.mines;
