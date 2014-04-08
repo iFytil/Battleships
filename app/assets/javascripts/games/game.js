@@ -130,9 +130,15 @@ Game = function()
     this.players[1].fleet.DrawMines();
 
     // ships
-    this.players[0].fleet.Draw(Color.Green);
-    this.players[1].fleet.Draw(Color.Blue);
-    this.V.Draw('grey');
+    if(pid==1){
+      this.players[0].fleet.Draw(Color.Green);
+      this.V.Draw('grey');
+      this.players[1].fleet.Draw(Color.Blue);
+    }else{
+      this.players[1].fleet.Draw(Color.Blue);
+      this.V.Draw('grey');
+      this.players[0].fleet.Draw(Color.Green);
+    }
   
     // coral map
     this.env.drawCoral();
