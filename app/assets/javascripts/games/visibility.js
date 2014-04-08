@@ -22,7 +22,9 @@ Visibility = function(ranges) {
         {
           var x = this.ranges[k].x+i;
           var y = this.ranges[k].y+j;
-          this.field[y+N*x] = 0;
+
+          if(y>-1 && x>-1)
+            this.field[y+N*x] = 0;
         }
       }
     }
