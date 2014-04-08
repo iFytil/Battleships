@@ -1,3 +1,8 @@
+var shipdisplay;
+jQuery(function() {
+  shipdisplay = new ShipDisplay();
+});
+
 Point = function (x, y) {
   this.x = x;
   this.y = y;
@@ -73,20 +78,20 @@ Ship = function (ship, radar, cannon, torpedo) {
     ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
   }
 
-  this.Draw = function (color, damage, sd) {
+  this.Draw = function (color, damage) {
 
       if(this.name == T.C)
-        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.C,color);
+        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.C,color);
       else if(this.name == T.D)
-        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.D,color);
+        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.D,color);
       else if(this.name == T.T)
-        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.T,color);
+        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.T,color);
       else if(this.name == T.R || this.name == T.E)
-        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.R,color);
+        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.R,color);
       else if(this.name == T.M)
-        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.M,color);
+        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.M,color);
       else if(this.name == T.K)
-        sd.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.K,color);
+        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.K,color);
 
       // Paint damaged squares
       if(damage)
@@ -158,10 +163,10 @@ Fleet = function (turn) {
     this.base = new Base(29, 10);
   }
 
-  this.Draw = function (color, sd) {
+  this.Draw = function (color) {
 
       for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(color, true, sd);
+          this.ships[i].Draw(color, true);
       }
   };
   this.DrawBase = function (color) {

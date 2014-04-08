@@ -104,9 +104,6 @@ Game = function()
 
   // environment
   this.env = new Environment();
-  
-  // ship images
-  this.shipdisplay = new ShipDisplay();
 
   // bars 
   this.sidebar = new Sidebar(this);
@@ -153,8 +150,8 @@ Game = function()
     this.players[1].fleet.DrawMines();
 
     // ships
-    this.players[0].fleet.Draw(Color.Green,this.shipdisplay);
-    this.players[1].fleet.Draw(Color.Blue,this.shipdisplay);
+    this.players[0].fleet.Draw(Color.Green);
+    this.players[1].fleet.Draw(Color.Blue);
     this.V.Draw('grey');
   
     // coral map
