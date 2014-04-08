@@ -84,16 +84,16 @@ Environment = function () {
       this.draw = function(){
         if(this.isVisible()) {
           ctx.lineWidth = 1;
-          ctx.strokeStyle = "#254055";
+          ctx.strokeStyle = "rgb(37,64,85)";
           ctx.strokeRect(this.x, this.y, this.w, this.w);
-          ctx.fillStyle = "#66A3D2";
+          ctx.fillStyle = "rgb(102,163,210)";
           ctx.fillRect(this.x, this.y, this.w, this.w);
         }
       }
 
       this.over = function() {
         if(this.isVisible()) {
-          ctx.fillStyle = "red";
+          ctx.fillStyle = "rgb(255,248,220)";
           ctx.fillRect(this.x, this.y, this.w, this.w);
         }
       }
