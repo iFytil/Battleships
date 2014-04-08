@@ -251,7 +251,11 @@ class Move < ActiveRecord::Base
   private
 
   def isUnsafe(x,y)
-    isCoral(x,y) || isShip(x,y) || isMine(x,y)
+    isCoral(x,y) || isShip(x,y) || isMine(x,y) || isLimit(x,y)
+  end
+
+  def isLimit(x,y)
+    x < 0 || y < 0 || x >= 30 || y >= 30
   end
 
   def isCoral(x,y)
@@ -261,6 +265,18 @@ class Move < ActiveRecord::Base
   def isMine(x,y)
     mineIndex = y * 30 + x
     game.mines[mineIndex]=='1'
+  end
+
+  def isShip(x,y)
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
+        shipSq = directionToDelta(s.direction,i)
+        if ship.id!=s.id && (s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y)
+          return true;
+        end
+      }
+    }
+    return false;
   end
 
   def mineInProx(x,y)
@@ -471,18 +487,6 @@ class Move < ActiveRecord::Base
     return collisions
   end
 
-  def isShip(x,y)
-    game.ships.each { |s|
-      s.shiptype.size.times {|i|
-        shipSq = directionToDelta(s.direction,i)
-        if ship.id!=s.id && (s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y)
-          return true;
-        end
-      }
-    }
-    return false;
-  end
-
   def getShipCollision(x,y)
     game.ships.each { |s|
       s.shiptype.size.times {|i|
@@ -642,10 +646,6 @@ class Move < ActiveRecord::Base
       dir = "Up"
     end
     dir
-  end
-
-  def shipToDelta(len)
-    directionToDelta(ship.direction,len)
   end
 
   def directionToDelta(dir,len)
