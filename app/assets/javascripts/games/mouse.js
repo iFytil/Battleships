@@ -28,16 +28,19 @@ function loadMouseEvents() {
       var move = Abilities[game.movezone]
 
       // ship selection
+      var select = false;
       var i=0;
       game.players[pid].fleet.ships.forEach(function(s) {
         s.points.forEach(function(p){
-          if(p.x == sq.x && p.y == sq.y) 
+          if(p.x == sq.x && p.y == sq.y){
             game.SelectShip(i); 
+            select = true;
+          }
         });
         i++;
       });
       // move selection
-      if (!move) {
+      if (!move || select) {
         return
       }
       var validPoints = game.currentZone.GetPoints()
