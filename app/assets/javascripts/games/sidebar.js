@@ -149,7 +149,7 @@ Sidebar = function(game){
     var player = this.game.players[pid]; // currently player
     var ship = player.Selected();
     var t = ship.name; // currently selected ship's name
-    var baseRadar = player.fleet.base.radarzone
+    var baseRadar = player.fleet.baseradar
     
     // default : all ships have move capabilities, if they speed is nonzero
     // default : all ships have rotation abilities

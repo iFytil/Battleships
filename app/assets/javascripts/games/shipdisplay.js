@@ -20,22 +20,22 @@ ShipDisplay = function(){
   
   this.ship = new Image();
 
-  this.Set = function(color,current) {
+  this.Set = function(turn,current) {
     var stripped = current.replace(/\s+/g, '');
-    if (color == Color.Green){
+    if (turn == Turn.First){
       this.ship = this.green[this.map[stripped]];
-    }else if (color == Color.Blue){
+    }else if (turn == Turn.Second){
       this.ship = this.blue[this.map[stripped]];
     }
   }
 
-  this.Draw = function(current, color) {
+  this.Draw = function(current) {
 
     var x = current.x*SQ_WIDTH;
     var y = current.y*SQ_WIDTH;
     var dir = current.facing;
 
-    this.Set(color,current.name);
+    this.Set(current.turn,current.name);
 
     if(dir == Dir.Up){
       ctx.save();
