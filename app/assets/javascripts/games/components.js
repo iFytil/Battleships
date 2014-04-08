@@ -80,24 +80,49 @@ Ship = function (ship, radar, cannon, torpedo) {
 
   this.Draw = function (color, damage) {
 
+      // Draw ship image
       shipdisplay.Draw(this, color);
 
-      // Paint damaged squares
+      function showdmg(x,y,life) {
+        colordmg = function (pixels) {
+          var d = pixels.data;
+          for (var i = 0; i < d.length; i += 4) {
+            var r = d[i];
+            var g = d[i + 1];
+            var b = d[i + 2];
+            // This is so hacky I want to cry
+            // Do not affect water color, grid borders or hover color
+            if (b != 210 && b != 147 && b!=220) {
+              if (life=='0') {
+                // Dead square: RED
+                d[i+1]=d[i+2]=0;
+                d[i] = (r+g+b);
+              } else if (life=='1') {
+                // Partial damage: GREY
+                d[i] = d[i + 1] = d[i + 2] = (r+g+b)/3;
+              }
+            }
+          }
+          return pixels;
+        };
+
+        var drawx = x*SQ_WIDTH;
+        var drawy = y*SQ_WIDTH;
+        var sizex = SQ_WIDTH;
+        var sizey = SQ_WIDTH
+
+        var imageData = ctx.getImageData(drawx, drawy, sizex, sizey);
+        colordmg(imageData);
+        ctx.putImageData(imageData, drawx, drawy);
+      }
+
+      // Show damage on ships
       if(damage)
       {
         for(var i = 0; i < this.length; i++){
             if(parseInt(this.health.charAt(i)) != this.armor)
             {
-              ctx.beginPath()
-              var grayLevel = parseInt(this.health.charAt(i))/this.armor;
-
-              var x = Math.floor(grayLevel*255);
-              ctx.fillStyle = "rgb("+x+","+x+","+x+")";
-
-              ctx.rect(this.points[i].x*SQ_WIDTH, this.points[i].y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-              ctx.stroke();
-              ctx.fill();
-              ctx.closePath();
+              showdmg(this.points[i].x, this.points[i].y, this.health.charAt(i))
             }
         }
       }
@@ -130,6 +155,9 @@ Base = function (x, y) {
 
 Fleet = function (turn) {
   this.ships = new Array();
+
+  var minegraphics = new Image();
+  minegraphics.src = "/assets/mine.png";
 
   for (each in SHIPS) {
     var ship = SHIPS[each];
@@ -174,14 +202,7 @@ Fleet = function (turn) {
                 var pt = points[j];
                 if( mines[pt.x + pt.y * 30] == 1)
                 {
-                  ctx.beginPath()
-                  ctx.fillStyle = "black";
-                  ctx.lineWidth = 1;
-                  ctx.strokeStyle = 'black';
-                  ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-                  ctx.stroke();
-                  ctx.fill();
-                  ctx.closePath();
+                  ctx.drawImage(minegraphics, pt.x*SQ_WIDTH, pt.y*SQ_WIDTH);
                 }
             }
           }
