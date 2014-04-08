@@ -29,3 +29,8 @@
 {
   background-color: #f5f5f5;
 }
+
+#message_stream>div:first-child>label
+{
+  font-weight:bold !important;
+}
