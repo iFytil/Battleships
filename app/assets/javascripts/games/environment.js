@@ -1,18 +1,20 @@
 Environment = function () {
 
+  var graphics = new Image();
+  graphics.src = "/assets/coral.png";
+
   var Coral = {
     c: GAME_DATA.coral,
+    graphics: graphics,
 
     draw: function() {
+
       for (var i = 0; i < this.c.length; i++) {
         if (this.c[i] == 1) {
           var x = 10 + i%10
           var y = 3 + Math.floor(i/10)
-          ctx.beginPath();
-          ctx.rect(x * SQ_WIDTH, y * SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-          ctx.fillStyle = '#ff7f50';
-          ctx.fill();
-          ctx.closePath();
+
+          ctx.drawImage(this.graphics ,x * SQ_WIDTH,y * SQ_WIDTH);
         }
       }
     }
