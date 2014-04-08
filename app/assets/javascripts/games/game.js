@@ -40,17 +40,6 @@ var Color = {
 
 var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
 
-// T and Type are the smae thing .....
-var T = {
-  R:"Radar Boat",
-  M:"Mine Layer",
-  T:"Torpedo Boat",
-  D:"Destroyer",
-  C:"Cruiser",
-  E:"Radar Boat Extended",
-  K:"Kamikaze Boat"
-}
-
 var Type = {
   RadarBoat:         "Radar Boat",
   MineLayer:         "Mine Layer",
