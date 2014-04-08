@@ -131,6 +131,9 @@ Base = function (x, y) {
 Fleet = function (turn) {
   this.ships = new Array();
 
+  var minegraphics = new Image();
+  minegraphics.src = "/assets/mine.png";
+
   for (each in SHIPS) {
     var ship = SHIPS[each];
     if (ship.turn == turn) {
@@ -174,14 +177,7 @@ Fleet = function (turn) {
                 var pt = points[j];
                 if( mines[pt.x + pt.y * 30] == 1)
                 {
-                  ctx.beginPath()
-                  ctx.fillStyle = "black";
-                  ctx.lineWidth = 1;
-                  ctx.strokeStyle = 'black';
-                  ctx.rect(pt.x*SQ_WIDTH, pt.y*SQ_WIDTH, SQ_WIDTH, SQ_WIDTH);
-                  ctx.stroke();
-                  ctx.fill();
-                  ctx.closePath();
+                  ctx.drawImage(minegraphics, pt.x*SQ_WIDTH, pt.y*SQ_WIDTH);
                 }
             }
           }
