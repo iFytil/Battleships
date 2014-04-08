@@ -167,7 +167,7 @@ Sidebar = function(game){
 
       // Extend Radar
       case Type.RadarBoat:
-      case Type.ExtendedRadarBoat:
+      case Type.RadarBoatExtended:
         this.buttons[5].active = true;
         break;
 

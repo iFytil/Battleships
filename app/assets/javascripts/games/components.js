@@ -80,18 +80,7 @@ Ship = function (ship, radar, cannon, torpedo) {
 
   this.Draw = function (color, damage) {
 
-      if(this.name == Type.Cruiser)
-        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.C,color);
-      else if(this.name == Type.Destroyer)
-        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.D,color);
-      else if(this.name == Type.TorpedoBoat)
-        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.T,color);
-      else if(this.name == Type.RadarBoat || this.name == Type.ExtendedRadarBoat)
-        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.R,color);
-      else if(this.name == Type.MineLayer)
-        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.M,color);
-      else if(this.name == Type.KamikazeBoat)
-        shipdisplay.Draw(this.x*SQ_WIDTH,this.y*SQ_WIDTH,this.facing,S.K,color);
+      shipdisplay.Draw(this, color);
 
       // Paint damaged squares
       if(damage)

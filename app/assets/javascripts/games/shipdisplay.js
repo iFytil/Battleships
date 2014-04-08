@@ -1,27 +1,41 @@
 ShipDisplay = function(){
 
+  this.map = {
+    Cruiser: 0,
+    Destroyer: 1,
+    TorpedoBoat: 2,
+    RadarBoat: 3,
+    RadarBoatExtended: 3,
+    MineLayer: 4,
+    KamikazeBoat: 5
+  }
+
   // arrays of images
   this.green = Array();
-  for(var i=0;i<6;i++){
-    this.green[i] = new Image();
-  }
   this.blue = Array();
   for(var i=0;i<6;i++){
+    this.green[i] = new Image();
     this.blue[i] = new Image();
   }
   
   this.ship = new Image();
 
-  this.Set = function(colour,ship) {
-    if (colour == Color.Green){
-      this.ship = this.green[ship];
-    }else if (colour == Color.Blue){
-      this.ship = this.blue[ship];
+  this.Set = function(color,current) {
+    var stripped = current.replace(/\s+/g, '');
+    if (color == Color.Green){
+      this.ship = this.green[this.map[stripped]];
+    }else if (color == Color.Blue){
+      this.ship = this.blue[this.map[stripped]];
     }
   }
 
-  this.Draw = function(x,y,dir,ship,colour) {
-     this.Set(colour,ship);
+  this.Draw = function(current, color) {
+
+    var x = current.x*SQ_WIDTH;
+    var y = current.y*SQ_WIDTH;
+    var dir = current.facing;
+
+    this.Set(color,current.name);
 
     if(dir == Dir.Up){
       ctx.save();

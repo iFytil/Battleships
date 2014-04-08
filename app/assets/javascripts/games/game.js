@@ -23,15 +23,6 @@ var Zone = {
   Repair: 6
 }
 
-//Ship
-var S = {
-  C: 0,
-  D: 1,
-  T: 2,
-  R: 3,
-  M: 4,
-  K: 5
-}
 //colour
 var Color = {
   Green: 1,
@@ -46,7 +37,7 @@ var Type = {
   TorpedoBoat:       "Torpedo Boat",
   Destroyer:         "Destroyer",
   Cruiser:           "Cruiser",
-  ExtendedRadarBoat: "Radar Boat Extended",
+  RadarBoatExtended: "Radar Boat Extended",
   KamikazeBoat:      "Kamikaze Boat"
 }
 
