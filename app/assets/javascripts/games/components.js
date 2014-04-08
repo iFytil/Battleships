@@ -138,25 +138,14 @@ Ship = function (ship, radar, cannon, torpedo) {
 
 };
 
-Base = function (x, y, c) {
-
-  var x0 = x * SQ_WIDTH;
-  var y0 = y * SQ_WIDTH;
-  var color = c;
-  
-  // visibility
-  this.radarzone = new Range(x, y, -1, 3, 12, Dir.Down);
-
-  this.Draw = function () {
-    ctx.fillStyle = color;
-    ctx.fillRect(x0,y0,SQ_WIDTH,10*SQ_WIDTH);
-  }
-
-};
-
 Fleet = function (turn) {
   this.ships = new Array();
   this.turn = turn;
+
+  this.base_x = 29*turn;
+  this.base_y = 10;
+  this.color = ((turn==Turn.First) ? "green" : "blue")
+  this.baseradar = new Range(this.base_x, this.base_y, -1, 3, 12, Dir.Down);
 
   var minegraphics = new Image();
   minegraphics.src = "/assets/mine.png";
@@ -173,34 +162,34 @@ Fleet = function (turn) {
     }
   }
 
-  this.base = new Base(29*turn, 10, ((turn==Turn.First) ? "green" : "blue"));
-
   this.Draw = function () {
 
-      for (var i = 0; i < this.ships.length; i++) {
-          this.ships[i].Draw(true);
-      }
+    // Draw ships
+    for (var i = 0; i < this.ships.length; i++) {
+        this.ships[i].Draw(true);
+    }
 
-      this.base.Draw();
-  };
-  this.DrawMines = function () {
-      var mines = GAME_DATA.mines;
-      for (var i = 0; i < this.ships.length; i++) 
-      {
-          if(this.ships[i].name == "Mine Layer" && this.ships[i].data.turn==pid)
+    // Draw base
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.base_x*SQ_WIDTH,this.base_y*SQ_WIDTH,SQ_WIDTH,10*SQ_WIDTH);
+
+    // Draw mines
+    var mines = GAME_DATA.mines;
+    for (var i = 0; i < this.ships.length; i++) 
+    {
+        if(this.ships[i].name == "Mine Layer" && this.ships[i].data.turn==pid)
+        {
+          var points = this.ships[i].radarzone.GetPoints();
+          for ( var j = 0; j < points.length; j++ )
           {
-            var points = this.ships[i].radarzone.GetPoints();
-            for ( var j = 0; j < points.length; j++ )
-            {
-                var pt = points[j];
-                if( mines[pt.x + pt.y * 30] == 1)
-                {
-                  ctx.drawImage(minegraphics, pt.x*SQ_WIDTH, pt.y*SQ_WIDTH);
-                }
-            }
+              var pt = points[j];
+              if( mines[pt.x + pt.y * 30] == 1)
+              {
+                ctx.drawImage(minegraphics, pt.x*SQ_WIDTH, pt.y*SQ_WIDTH);
+              }
           }
-      }
-
+        }
+    }
   };
 
 };

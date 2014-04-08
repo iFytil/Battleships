@@ -74,7 +74,7 @@ Player = function(turn){
     for(var i=0;i<this.fleet.ships.length;i++){
       r.push(this.fleet.ships[i].radarzone);
     }
-    r.push(this.fleet.base.radarzone);
+    r.push(this.fleet.baseradar);
     return r;
   };
   
@@ -133,10 +133,6 @@ Game = function()
   this.Display = function()
   {
     this.env.drawGrid();
-
-    // mines
-    this.players[0].fleet.DrawMines();
-    this.players[1].fleet.DrawMines();
 
     // ships
     if(pid==1){
