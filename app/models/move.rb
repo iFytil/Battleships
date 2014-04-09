@@ -11,7 +11,7 @@ class Move < ActiveRecord::Base
     move.game_id = ship.game_id
 
     # Default message
-    move.message = "No shots were fired"
+    move.message = "Nothing"
 
     case move.kind
     when "Cannon"
@@ -32,6 +32,8 @@ class Move < ActiveRecord::Base
       move.message = txt
     when "Torpedo"
       result = getTorpedoCollision()
+
+      txt = ""
       
       if result[:hit]==:ship
         txt += "Torpedo hit ship at (#{result[:x]},#{result[:y]})"
@@ -40,10 +42,12 @@ class Move < ActiveRecord::Base
       elsif result[:hit]==:coral
         txt += "Torpedo hit coral at (#{result[:x]},#{result[:y]})"
       elsif result[:hit]==:miss
-        # No message
+        # No message without collision
       end
 
-      move.message = txt
+      if txt != ""
+        move.message = txt
+      end
     when "Mine"
 
       # Getting/Setting mines triggers only default message

@@ -28,7 +28,6 @@ function loadMouseEvents() {
       var move = Abilities[game.movezone]
 
       // ship selection
-      var select = false;
       var i=0;
       game.players[pid].fleet.ships.forEach(function(s) {
         s.points.forEach(function(p){
@@ -36,16 +35,18 @@ function loadMouseEvents() {
             game.SelectShip(i); 
             select = true;
             game.movezone = -1;
+            console.log(game.sidebar.selected)
             game.sidebar.buttons[game.sidebar.selected].selected = false;
             game.sidebar.buttons[game.sidebar.selected].hover = false;
             game.sidebar.selected = -1;
             game.sidebar.ClearButtons();
           }
+
         });
         i++;
       });
       // move selection
-      if (!move || select) {
+      if (!move) {
         return
       }
       var validPoints = game.currentZone.GetPoints()

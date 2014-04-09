@@ -3,7 +3,7 @@
 <%= content_tag :div, id: "game-data", data: {game: @game.to_json(:include => :moves), userid: current_user.id, ships: @game.ships.to_json(:include => :shiptype)} do %>
 <% end %>
   <div>
-  <canvas id="myCanvas" width="700" height="630" style="margin-left:auto;margin-right:auto;display:block;"></canvas>
+  <canvas id="myCanvas" width="700" height="600" style="margin-left:auto;margin-right:auto;display:block;"></canvas>
   <div style="margin-left:auto;margin-right:auto;padding:0px;display:block;text-align:center;">
   <div id="message_stream" style="display:inline-block;overflow-y:scroll;height:200px;width:500px;background-color:#dfdfdf;"></div>
   <div style="display:inline-block;width:200px;height:230px;"id="image_key"><%= image_tag (image_url "boats.png") %></div>
@@ -18,10 +18,9 @@
   var canvas = document.getElementById('myCanvas');
   var ctx = canvas.getContext('2d');
   var N = 30;
-  var HEIGHT = canvas.height-30
-  var WIDTH = canvas.height-30 //make it square
+  var HEIGHT = canvas.height
+  var WIDTH = canvas.height //make it square
   var BAR_WIDTH = canvas.width-HEIGHT
-  var TEXT_BAR_WIDTH = canvas.height-600
   var SQ_WIDTH = Math.floor(WIDTH/N)
   var GAME_DATA = $('#game-data').data("game")
   var USERID = $('#game-data').data("userid")

@@ -3,4 +3,9 @@
 <% if current_user.name==@user.name %>
 	<p> This is your own profile page</p>
 <% end %>
-
+<h1 class="text-success">wins: <%= @user.wins %></h1>
+<h1 class="text-danger">losses: <%= @user.losses %></h1>
+<h1 class="text-warning">#shotsfired: <%= @user.shotsfired %></h1>
+<h2 class="text-info">win/loss ratio:
+<%= @user.losses==0 ? @user.wins : (@user.wins.to_f / @user.losses.to_f) %>
+</h2>
