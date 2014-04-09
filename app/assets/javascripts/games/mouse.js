@@ -29,17 +29,20 @@ function loadMouseEvents() {
 
       // ship selection
       var i=0;
+      var selfClick = false;
       game.players[pid].fleet.ships.forEach(function(s) {
         s.points.forEach(function(p){
           if(p.x == sq.x && p.y == sq.y){
             game.SelectShip(i); 
             select = true;
             game.movezone = -1;
-            console.log(game.sidebar.selected)
-            game.sidebar.buttons[game.sidebar.selected].selected = false;
-            game.sidebar.buttons[game.sidebar.selected].hover = false;
+            if(game.sidebar.selected>=0){
+              game.sidebar.buttons[game.sidebar.selected].selected = false;
+              game.sidebar.buttons[game.sidebar.selected].hover = false;
+            }
             game.sidebar.selected = -1;
             game.sidebar.ClearButtons();
+            selfClick = true;
           }
 
         });
@@ -55,9 +58,10 @@ function loadMouseEvents() {
       {
           if(validPoints[i].x == sq.x && validPoints[i].y == sq.y) validMove = true
       }
-
-      console.debug("move: "+move+", valid?: "+validMove)
-      if(validMove) request_move(shipid,sq.x,sq.y, move)
+      if(!(selfClick && (move == Abilities[2] || move == Abilities[3]))){
+        console.debug("move: "+move+", valid?: "+validMove)
+        if(validMove) request_move(shipid,sq.x,sq.y, move)
+      }
 
     }
     else if(x>=WIDTH && x<WIDTH+BAR_WIDTH && y>0 && y<WIDTH){
