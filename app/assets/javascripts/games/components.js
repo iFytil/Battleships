@@ -30,7 +30,7 @@ Ship = function (ship, radar, cannon, torpedo) {
   this.health     = ship.health;
   this.armor      = ship.shiptype.armor;
   this.damage     = ship.shiptype.cannon_damage;
-  this.ammo      = ship.ammo;
+  this.ammo       = ship.ammo;
 
   this.id         = ship.id;
   this.name       = ship.shiptype.name;
