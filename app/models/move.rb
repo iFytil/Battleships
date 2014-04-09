@@ -1,6 +1,6 @@
 class Move < ActiveRecord::Base
 
-  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate", "Radar", "Repair", "Mine", "Torpedo" ]
+  validates_inclusion_of :kind, :in => [ "Move", "Cannon", "Rotate", "Radar", "Repair", "Mine", "Torpedo", "Kamikaze" ]
 
   belongs_to :ship
   belongs_to :game
@@ -244,7 +244,10 @@ class Move < ActiveRecord::Base
           end
           count+=1
       end
+    when "Kamikaze"
+      #Stuff
     end
+
 
     game.save
     move.save

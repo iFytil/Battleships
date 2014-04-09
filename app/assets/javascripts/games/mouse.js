@@ -34,8 +34,8 @@ function loadMouseEvents() {
         s.points.forEach(function(p){
           if(p.x == sq.x && p.y == sq.y){
             game.SelectShip(i); 
-            select = true;
             game.movezone = -1;
+
             if(game.sidebar.selected>=0){
               game.sidebar.buttons[game.sidebar.selected].selected = false;
               game.sidebar.buttons[game.sidebar.selected].hover = false;
@@ -52,6 +52,7 @@ function loadMouseEvents() {
       if (!move) {
         return
       }
+
       var validPoints = game.currentZone.GetPoints()
       var validMove = false
       for(var i = 0; i < validPoints.length; i++)
