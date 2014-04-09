@@ -696,6 +696,8 @@ class Move < ActiveRecord::Base
       # If the boat only has dead squares, destroy the boat
       if /^0*$/ =~ s.health
         s.destroy
+        self.message += " " + s.shiptype.name + " destroyed."
+        self.save
       end
     }
 
