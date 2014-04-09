@@ -51,7 +51,7 @@ function loadMouseEvents() {
       {
           if(validPoints[i].x == sq.x && validPoints[i].y == sq.y) validMove = true
       }
-      if(!(selfClick && (move == Abilities[2] || move == Abilities[3]))){
+      if(!(selfClick && move == Abilities[2] )){
         console.debug("move: "+move+", valid?: "+validMove)
         if(validMove) request_move(shipid,sq.x,sq.y, move)
       }
