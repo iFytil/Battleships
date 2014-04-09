@@ -466,7 +466,7 @@ class Move < ActiveRecord::Base
             collisions.push(point)
           end
         end
-        if mineCheck[:result]
+        if mineCheck[:result] && ship.shiptype.name != "Mine Layer"
           point = {x: mineCheck[:x], y: mineCheck[:y]}
           if !collisions.include? point
             collisions.push(point)
