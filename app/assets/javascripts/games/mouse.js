@@ -34,14 +34,6 @@ function loadMouseEvents() {
         s.points.forEach(function(p){
           if(p.x == sq.x && p.y == sq.y){
             game.SelectShip(i); 
-            game.movezone = -1;
-
-            if(game.sidebar.selected>=0){
-              game.sidebar.buttons[game.sidebar.selected].selected = false;
-              game.sidebar.buttons[game.sidebar.selected].hover = false;
-            }
-            game.sidebar.selected = -1;
-            game.sidebar.ClearButtons();
             selfClick = true;
           }
 

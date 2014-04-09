@@ -51,11 +51,8 @@ Player = function(turn){
     this.fleet.ships[this.selected].highlighted = false;
     this.selected = (this.selected + delta + len)%len
     this.fleet.ships[this.selected].highlighted = true;
-
-
-    game.sidebar.RegisterShipChange();
-    game.sidebar.ClearButtons();
-    game.movezone = Zone.None;
+    
+    this.cleanSidebar();
   }
   this.selectShip = function(idx)
   {
@@ -63,10 +60,19 @@ Player = function(turn){
     this.selected = idx;
     this.fleet.ships[this.selected].highlighted = true;
 
+    this.cleanSidebar();
+  }
 
+  this.cleanSidebar = function() {
     game.sidebar.RegisterShipChange();
-    game.sidebar.ClearButtons();
     game.movezone = Zone.None;
+    if(game.sidebar.selected>=0){
+      game.sidebar.buttons[game.sidebar.selected].selected = false;
+      game.sidebar.buttons[game.sidebar.selected].hover = false;
+    }
+    game.sidebar.selected = -1;
+    game.sidebar.ClearButtons();
+
   }
 
   this.Ranges = function()
