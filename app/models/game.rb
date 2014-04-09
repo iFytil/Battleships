@@ -17,4 +17,14 @@ class Game < ActiveRecord::Base
     game.save
   end
 
+  after_destroy do |game|
+    game.ships.each do |ship|
+      ship.destroy
+    end
+
+    game.moves.each do |move|
+      move.destroy
+    end
+  end
+
 end
