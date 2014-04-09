@@ -31,7 +31,6 @@ function dispatch() {
       } else {
         SHIPS = JSON.parse(message.ships);
         GAME_DATA = newdata;
-        game.textbar.Message(message.msg)
         game.reload();
       }
     }
