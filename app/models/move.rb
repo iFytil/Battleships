@@ -83,10 +83,7 @@ class Move < ActiveRecord::Base
         }
       end
       if ship.shiptype.name != "Mine Layer"
-        if movedToMine()
-          move.message = "Mine exploded!"
-          break
-        end
+        movedToMine();
       end
     when "Rotate"
       turnPossible = false
@@ -296,9 +293,8 @@ class Move < ActiveRecord::Base
   end
 
   def movedToMine()
-    delta = directionToDelta(ship.direction,1)
 
-    # test = {result: true, x: 0, y: 0}
+    delta = directionToDelta(ship.direction,1)
 
     mineHit = false
     blockX = ship.location_x
@@ -307,6 +303,7 @@ class Move < ActiveRecord::Base
       for j in 0..5
         check = mineInProx(blockX, blockY)
         # check = test
+
         if check[:result]==true
           detonateMine(check[:x],check[:y],i)
           mineHit = true
@@ -321,6 +318,8 @@ class Move < ActiveRecord::Base
   end
 
   def detonateMine(x, y, ship_index)
+    self.message = "Mine exploded!"
+    self.save
     h = ship.health
     str = "";
     str += h;
@@ -575,7 +574,7 @@ class Move < ActiveRecord::Base
     else
       game.player_2_base = str
     end
-
+    game.save
   end
 
   def torpedoShip(hit_ship, i)
@@ -634,6 +633,7 @@ class Move < ActiveRecord::Base
     str += m;
     str[y * 30 + x] = '0'
     game.mines = str
+    game.save
   end
 
   def addMine(x,y)
@@ -642,6 +642,7 @@ class Move < ActiveRecord::Base
     str += m;
     str[y * 30 + x] = '1'
     game.mines = str
+    game.save
   end
 
   def addToShip(delta)

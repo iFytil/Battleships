@@ -21,7 +21,6 @@ function dispatch() {
   dispatcher.bind('receive_data', function(message) {
     var newdata = JSON.parse(message.game);
     if (newdata.id == GAME_DATA.id) {
-      console.log(newdata.winner)
       if (newdata.winner==0 || newdata.winner==1) {
         if (pid==newdata.winner) {
           alert("YOU WIN!!!")

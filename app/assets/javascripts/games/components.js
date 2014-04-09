@@ -106,7 +106,7 @@ Ship = function (ship, radar, cannon, torpedo) {
             var b = d[i + 2];
             // This is so hacky I want to cry
             // Do not affect water color, grid borders or hover color
-            if (b != 210 && b != 147 && b!=220) {
+            if (b != 210 && b != 147 && b!=220 && b!=128) {
               if (life=='0') {
                 // Dead square: RED
                 d[i+1]=d[i+2]=0;
