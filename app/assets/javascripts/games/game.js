@@ -208,6 +208,12 @@ Game = function()
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
+
+    //messages
+    var moves = GAME_DATA.moves;
+    var len = GAME_DATA.moves.length;
+    for(var i=10;i>0;i--)
+      this.textbar.Message(GAME_DATA.moves[len-i].message);
   }
 
   this.reload();

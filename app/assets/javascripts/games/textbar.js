@@ -12,4 +12,5 @@ Textbar = function(){
         var newnode = "<div><label>"+ this.message + "</label></div>"
          msgstr.innerHTML = newnode + msgstr.innerHTML;
 	}
+
 };
