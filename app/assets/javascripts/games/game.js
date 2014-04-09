@@ -190,6 +190,8 @@ Game = function()
     game.sidebar.setMessages();
     this.sidebar.Draw();
 
+    this.textbar.write();
+
   };
 
   this.reload = function()
@@ -208,18 +210,9 @@ Game = function()
 
     // Visibility
     this.V = new Visibility(this.players[pid].Ranges());
-
-    //messages
-    var moves = GAME_DATA.moves;
-    var len = GAME_DATA.moves.length;
-    var num = 10;
-    if(len<num)
-      num = len;
-    for(var i=len;i>0;i--)
-      this.textbar.Message(GAME_DATA.moves[len-i].message);
   }
 
-  //this.reload();
+  this.reload();
   
 };
 
