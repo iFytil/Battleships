@@ -251,11 +251,15 @@ class Move < ActiveRecord::Base
   private
 
   def isUnsafe(x,y)
-    isCoral(x,y) || isShip(x,y) || isMine(x,y) || isLimit(x,y)
+    isCoral(x,y) || isShip(x,y) || isMine(x,y) || isLimit(x,y) || isBase(x,y)
   end
 
   def isLimit(x,y)
     x < 0 || y < 0 || x >= 30 || y >= 30
+  end
+
+  def isBase(x,y)
+    y>=10 && y<20 && (x==0 || x==29)
   end
 
   def isCoral(x,y)
