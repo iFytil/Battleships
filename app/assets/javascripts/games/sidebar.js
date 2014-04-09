@@ -198,7 +198,7 @@ Sidebar = function(){
 
       // Mine abilities
       case Type.MineLayer:
-        this.buttons[4].active = true;
+        this.buttons[4].active = ship.ammo > 0
         break;
 
       // Torpedo
