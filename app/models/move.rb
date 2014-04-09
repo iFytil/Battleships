@@ -69,18 +69,10 @@ class Move < ActiveRecord::Base
       end  
 
     when "Move"
-      move.message = "No shots were fired"
       if ship.location_x == move.pos_x
         dy = move.pos_y - ship.location_y
         dy.abs.times {|i| 
           addToShip({x: 0, y: dy/dy.abs})
-
-          if ship.shiptype.name != "Mine Layer"
-            if movedToMine()
-              move.message = "Mine detonation ended action!"
-              break
-            end
-          end
         }
       end
 
@@ -88,17 +80,15 @@ class Move < ActiveRecord::Base
         dx = move.pos_x - ship.location_x
         dx.abs.times {|i| 
           addToShip({x: dx/dx.abs, y: 0})
-
-          if ship.shiptype.name != "Mine Layer"
-            if movedToMine()
-              move.message = "Mine detonation ended action!"
-              break
-            end
-          end
         }
       end
+      if ship.shiptype.name != "Mine Layer"
+        if movedToMine()
+          move.message = "Mine exploded!"
+          break
+        end
+      end
     when "Rotate"
-      move.message = "No shots were fired"
       turnPossible = false
       quadrant = "NE"
       turn_index = ship.shiptype.turn_index
