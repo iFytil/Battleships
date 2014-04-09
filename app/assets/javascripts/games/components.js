@@ -140,7 +140,7 @@ Ship = function (ship, radar, cannon, torpedo) {
             }
         }
       }
-      if(this.highlighted)
+      if(this.highlighted && game.turn == pid)
         this.DrawHighlight();
   }
 
