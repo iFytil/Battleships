@@ -173,9 +173,7 @@ Game = function()
     // bars
     game.sidebar.RegisterShipChange();
     this.sidebar.Draw();
-    //this.textbar.Draw();
-    
-   
+
   };
 
   this.reload = function()
