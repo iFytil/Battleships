@@ -32,19 +32,22 @@ class Move < ActiveRecord::Base
       move.message = txt
     when "Torpedo"
       result = getTorpedoCollision()
-      txt = "Torpedo fired."
+
+      txt = ""
       
       if result[:hit]==:ship
-        txt += " Ship hit at (#{result[:x]},#{result[:y]})"
+        txt += "Torpedo hit ship at (#{result[:x]},#{result[:y]})"
       elsif result[:hit]==:mine
-        txt += " Mine hit at (#{result[:x]},#{result[:y]})"
+        txt += "Torpedo hit mine at (#{result[:x]},#{result[:y]})"
       elsif result[:hit]==:coral
-        txt += " Coral hit at (#{result[:x]},#{result[:y]})"
+        txt += "Torpedo hit coral at (#{result[:x]},#{result[:y]})"
       elsif result[:hit]==:miss
-        txt += " Nothing hit!"
+        # No message without collision
       end
 
-      move.message = txt
+      if txt != ""
+        move.message = txt
+      end
     when "Mine"
 
       # Getting/Setting mines triggers only default message
