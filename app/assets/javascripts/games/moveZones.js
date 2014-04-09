@@ -427,3 +427,16 @@ Range = function (x,y,back, width, length,facing) {
   }
 };
 
+KamikazeZone = function (ship){
+  this.range = new Range(ship.x, ship.y, -1, 3, 3, Dir.Down)
+
+  this.Draw = function() {
+    this.range.Draw();
+  }
+
+  this.GetPoints = function() {
+    return this.range.GetPoints();
+  }
+}
+
+

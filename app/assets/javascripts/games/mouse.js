@@ -40,6 +40,7 @@ function loadMouseEvents() {
       if (!move) {
         return
       }
+
       var validPoints = game.currentZone.GetPoints()
       var validMove = false
       for(var i = 0; i < validPoints.length; i++)

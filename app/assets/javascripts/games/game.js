@@ -20,10 +20,11 @@ var Zone = {
   Torpedo: 3,
   Mine: 4,
   Radar: 5,
-  Repair: 6
+  Repair: 6,
+  Kamikaze: 7
 }
 
-var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair"]
+var Abilities = ["Move", "Rotate", "Cannon", "Torpedo", "Mine", "Radar", "Repair", "Kamikaze"]
 
 var Type = {
   RadarBoat:         "Radar Boat",
@@ -124,6 +125,7 @@ Game = function()
     this.rotationZone = new RotationZone(this.players[pid].Selected())
     this.cannonZone = this.players[pid].Selected().cannonzone
     this.torpedoZone = this.players[pid].Selected().torpedozone
+    this.kamikazeZone = new KamikazeZone(this.players[pid].Selected())
   };
 
   this.CurrentPlayer =function(){
@@ -167,7 +169,10 @@ Game = function()
       }else if(this.movezone ==Zone.Mine){
           this.currentZone = this.mineZone
           this.currentZone.Draw();
-      };
+      }else if(this.movezone ==Zone.Kamikaze){
+          this.currentZone = this.kamikazeZone
+          this.currentZone.Draw();
+      }
     }
     
     // bars

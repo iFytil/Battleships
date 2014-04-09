@@ -67,7 +67,7 @@ Sidebar = function(game){
   // list of buttons
   this.buttons = new Array();
   
-  var numButtons = 7;
+  var numButtons = 8;
   var spacing = 10;
   var infospace = 130;
   var bW = BAR_WIDTH-2*spacing;
@@ -161,7 +161,8 @@ Sidebar = function(game){
     this.buttons[3].active = false;
     this.buttons[4].active = false;
     this.buttons[5].active = false;
-    this.buttons[6].active = false
+    this.buttons[6].active = false;
+    this.buttons[7].active = false;
 
     switch(t) {
 
@@ -186,6 +187,7 @@ Sidebar = function(game){
       case Type.KamikazeBoat:
         this.buttons[1].active = false;
         this.buttons[2].active = false;
+        this.buttons[7].active = true;
         break;
     }
 
