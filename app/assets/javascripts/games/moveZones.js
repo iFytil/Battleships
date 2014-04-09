@@ -399,14 +399,14 @@ Range = function (x,y,back, width, length,facing) {
 
   this.Set(x,y);
     
-  this.Draw = function (color) {
+  this.Draw = function () {
     ctx.beginPath();
     ctx.moveTo(this.pointTL.x*SQ_WIDTH, this.pointTL.y*SQ_WIDTH);
     ctx.lineTo(this.pointTR.x*SQ_WIDTH, this.pointTR.y*SQ_WIDTH);
     ctx.lineTo(this.pointBR.x*SQ_WIDTH, this.pointBR.y*SQ_WIDTH);
     ctx.lineTo(this.pointBL.x*SQ_WIDTH, this.pointBL.y*SQ_WIDTH);
     ctx.lineWidth = 2;
-    ctx.strokeStyle = color;
+    ctx.strokeStyle = "white";
     ctx.closePath();
     ctx.stroke();
   }
@@ -428,7 +428,7 @@ Range = function (x,y,back, width, length,facing) {
 };
 
 KamikazeZone = function (ship){
-  this.range = new Range(ship.x, ship.y, -1, 5, 5, Dir.Down)
+  this.range = new Range(ship.x, ship.y, -2, 5, 5, Dir.Down)
 
   this.Draw = function() {
     this.range.Draw();
@@ -438,5 +438,7 @@ KamikazeZone = function (ship){
     return this.range.GetPoints();
   }
 }
+
+
 
 

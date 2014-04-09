@@ -120,12 +120,13 @@ Game = function()
   
   this.UpdateZones = function()
   {
-    this.translationZone = new TranslationZone(this.players[pid].Selected())
-    this.mineZone = new MineZone(this.players[pid].Selected())
-    this.rotationZone = new RotationZone(this.players[pid].Selected())
-    this.cannonZone = this.players[pid].Selected().cannonzone
-    this.torpedoZone = this.players[pid].Selected().torpedozone
-    this.kamikazeZone = new KamikazeZone(this.players[pid].Selected())
+    var ship = this.players[pid].Selected();
+    this.translationZone = (ship.name=="Kamikaze Boat") ? new KamikazeZone(ship) : new TranslationZone(ship)
+    this.mineZone     = new MineZone(ship)
+    this.rotationZone = new RotationZone(ship)
+    this.cannonZone   = ship.cannonzone
+    this.torpedoZone  = ship.torpedozone
+    this.kamikazeZone = new KamikazeZone(ship)
   };
 
   this.CurrentPlayer =function(){
@@ -162,10 +163,10 @@ Game = function()
           this.currentZone.Draw();
       }else if(this.movezone == Zone.Cannon){
           this.currentZone = this.cannonZone
-          this.currentZone.Draw("white");//rgb(0,0,255)
+          this.currentZone.Draw();
       }else if(this.movezone == Zone.Torpedo){
           this.currentZone = this.torpedoZone
-          this.currentZone.Draw("white");
+          this.currentZone.Draw();
       }else if(this.movezone ==Zone.Mine){
           this.currentZone = this.mineZone
           this.currentZone.Draw();
