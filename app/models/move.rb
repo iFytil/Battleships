@@ -708,7 +708,7 @@ class Move < ActiveRecord::Base
       game.player_2.save
       game.player_1.wins += 1
       game.player_1.save
-    game.destroy
+      game.destroy
     end
   end
 end
