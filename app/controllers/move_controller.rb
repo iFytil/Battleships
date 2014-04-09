@@ -14,6 +14,9 @@ class MoveController < WebsocketRails::BaseController
   def handle_data_request
     game = Game.find(message[:id])
     broadcast_message :receive_data, {ships: game.ships.to_json(:include => :shiptype), game: game.to_json(:include => :moves), msg: game.moves.last.message}
+    if game.winner != -1
+      game.destroy
+    end
   end
 
   private

@@ -21,10 +21,19 @@ function dispatch() {
   dispatcher.bind('receive_data', function(message) {
     var newdata = JSON.parse(message.game);
     if (newdata.id == GAME_DATA.id) {
-      SHIPS = JSON.parse(message.ships);
-      GAME_DATA = newdata;
-      game.textbar.Message(message.msg)
-      game.reload();
+      if (newdata.winner==0 || newdata.winner==1) {
+        if (pid==newdata.winner) {
+          alert("YOU WIN!!!")
+        } else {
+          alert("You ... lose")
+        }
+        window.location = "http://" + window.location.host
+      } else {
+        SHIPS = JSON.parse(message.ships);
+        GAME_DATA = newdata;
+        game.textbar.Message(message.msg)
+        game.reload();
+      }
     }
   });
 }

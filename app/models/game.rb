@@ -13,6 +13,7 @@ class Game < ActiveRecord::Base
     game.mines = '0' * 900
     game.player_1_base = '1'*10
     game.player_2_base = '1'*10
+    game.winner = -1
     game.save
   end
 
