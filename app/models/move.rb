@@ -713,7 +713,7 @@ class Move < ActiveRecord::Base
       game.player_2.wins += 1
       game.player_2.save
       game.destroy
-    elsif game.ships.length{|ship| ship.turn == 1}.length == 0
+    elsif game.ships.select{|ship| ship.turn == 1}.length == 0
       game.player_2.losses += 1
       game.player_2.save
       game.player_1.wins += 1
