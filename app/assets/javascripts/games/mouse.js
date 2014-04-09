@@ -31,8 +31,17 @@ function loadMouseEvents() {
       var i=0;
       game.players[pid].fleet.ships.forEach(function(s) {
         s.points.forEach(function(p){
-          if(p.x == sq.x && p.y == sq.y) 
+          if(p.x == sq.x && p.y == sq.y){
             game.SelectShip(i); 
+            select = true;
+            game.movezone = -1;
+            console.log(game.sidebar.selected)
+            game.sidebar.buttons[game.sidebar.selected].selected = false;
+            game.sidebar.buttons[game.sidebar.selected].hover = false;
+            game.sidebar.selected = -1;
+            game.sidebar.ClearButtons();
+          }
+
         });
         i++;
       });
