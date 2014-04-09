@@ -75,9 +75,21 @@ Ship = function (ship, radar, cannon, torpedo) {
 
   this.highlighted = false;
 
-  this.DrawStern = function(){
-    ctx.fillStyle = "yellow"
-    ctx.fillRect(this.x*SQ_WIDTH + SQ_WIDTH/4,this.y*SQ_WIDTH + SQ_WIDTH/4,SQ_WIDTH/2,SQ_WIDTH/2);
+  this.DrawHighlight = function(){
+    ctx.strokeStyle = "yellow"
+    ctx.beginPath();
+
+    if(this.facing==Dir.Right)
+      ctx.rect(this.x*SQ_WIDTH, this.y*SQ_WIDTH, this.length*SQ_WIDTH, SQ_WIDTH);
+    else if(this.facing==Dir.Left)
+      ctx.rect((this.x+1)*SQ_WIDTH, this.y*SQ_WIDTH, -this.length*SQ_WIDTH, SQ_WIDTH);
+    else if(this.facing==Dir.Up)
+      ctx.rect(this.x*SQ_WIDTH, (this.y+1)*SQ_WIDTH, SQ_WIDTH, -this.length*SQ_WIDTH);
+    else//Dir.Down
+      ctx.rect(this.x*SQ_WIDTH, this.y*SQ_WIDTH, SQ_WIDTH, this.length*SQ_WIDTH);
+
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
 
   this.Draw = function (damage) {
@@ -129,7 +141,7 @@ Ship = function (ship, radar, cannon, torpedo) {
         }
       }
       if(this.highlighted)
-        this.DrawStern();
+        this.DrawHighlight();
   }
 
   // Duplicate!
