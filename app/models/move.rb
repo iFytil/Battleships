@@ -11,7 +11,7 @@ class Move < ActiveRecord::Base
     move.game_id = ship.game_id
 
     # Default message
-    move.message = "No shots were fired"
+    move.message = "Nothing"
 
     case move.kind
     when "Cannon"
