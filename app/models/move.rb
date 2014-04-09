@@ -699,14 +699,14 @@ class Move < ActiveRecord::Base
       end
     }
 
-    if game.ships.select{|ship| ship.turn == 0}.length == 0
+    if game.ships.select{|ship| ship.turn == 0  && !(/^0*$/ =~ ship.health)}.length == 0
       game.player_1.losses += 1
       game.player_1.save
       game.player_2.wins += 1
       game.player_2.save
       game.winner = 1
       game.save
-    elsif game.ships.select{|ship| ship.turn == 1}.length == 0
+    elsif game.ships.select{|ship| ship.turn == 1  && !(/^0*$/ =~ ship.health)}.length == 0
       game.player_2.losses += 1
       game.player_2.save
       game.player_1.wins += 1
