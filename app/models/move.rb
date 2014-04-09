@@ -15,16 +15,18 @@ class Move < ActiveRecord::Base
 
     case move.kind
     when "Cannon"
-      result = getShipCollision(move.pos_x, move.pos_y)
-      mineResult = getMineCollision(move.pos_x, move.pos_y)
+
+      result = cannonAttack(move.pos_x, move.pos_y)
       txt = "Cannon fired at (#{move.pos_x},#{move.pos_y}). "
 
-      if result==:hit
+      if result==:hit_ship
         txt += "Ship hit!"
-      elsif mineResult==:hit
+      elsif result==:hit_mine
         txt += "Mine hit!"
-      elsif result==:miss
+      elsif result==:hit_nothing
         txt += "Nothing hit!"
+      elsif result==:hit_base
+        txt += "Base hit!"
       end
 
       move.message = txt
@@ -354,14 +356,6 @@ class Move < ActiveRecord::Base
     end
   end
 
-  def getMineCollision(x,y)
-    if isMine(x,y)
-      removeMine(x,y)
-      return :hit
-    end
-    return :miss
-  end
-
   def closestCollision(collisions)
     smallestDist = 20
     if ship.direction == "Up" || ship.direction == "Down"
@@ -491,17 +485,33 @@ class Move < ActiveRecord::Base
     return collisions
   end
 
-  def getShipCollision(x,y)
+  def cannonAttack(x,y)
+
+    # Target: ship
     game.ships.each { |s|
       s.shiptype.size.times {|i|
         shipSq = directionToDelta(s.direction,i)
         if s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y
           hitShip(s, i, ship.shiptype.cannon_damage)
-          return :hit
+          return :hit_ship
         end
       }
     }
-    return :miss
+
+    # Target: mine
+    if isMine(x,y)
+      removeMine(x,y)
+      return :hit_mine
+    end
+
+    # Target: base
+    if isBase(x,y)
+      damageBase(x,y)
+      return :hit_base
+    end
+
+    # Target: nothing
+    return :hit_nothing
   end
 
   def getShipTorpColl(x,y)
@@ -555,6 +565,21 @@ class Move < ActiveRecord::Base
     str[i] = after_hit.to_s
     hit_ship.health = str
     hit_ship.save
+  end
+
+  def damageBase(x,y)
+
+    h = x==0 ? game.player_1_base : game.player_2_base
+    str = ""
+    str += h
+    str[y-10] = "0"
+
+    if x==0
+      game.player_1_base = str
+    else
+      game.player_2_base = str
+    end
+
   end
 
   def torpedoShip(hit_ship, i)
