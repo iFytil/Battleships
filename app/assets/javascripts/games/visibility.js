@@ -7,10 +7,15 @@ Visibility = function(ranges) {
 
   this.Set=function()
   {
-    //start off blank
     for (var i = 0; i < N*N; i++) 
     {
-      this.field[i] = 1; //blocked 
+      var y = i%N;
+      var x = Math.floor(i/N);
+      if (!(y>=10 && y<20 && (x==0 || x==29))) {
+        this.field[i] = 1; // Block non-base squares
+      } else {
+        this.field[i] = 0;
+      }
     }
     
     // remove visible squares
