@@ -223,12 +223,12 @@ class Move < ActiveRecord::Base
       tmp = ship.health.reverse
       count=0
       tmp.split("").each do |i|
-          if i=='0' || i=='1'
-            tmp[count] = ship.shiptype.armor.to_s
-            ship.health = tmp.reverse
-            ship.save
-            break
-          end
+        if (i=='0' || i=='1') && i != ship.shiptype.armor.to_s
+          tmp[count] = ship.shiptype.armor.to_s
+          ship.health = tmp.reverse
+          ship.save
+          break
+        end
           count+=1
       end
     when "Kamikaze"
