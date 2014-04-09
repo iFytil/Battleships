@@ -69,21 +69,28 @@ class Move < ActiveRecord::Base
       end  
 
     when "Move"
-      if ship.location_x == move.pos_x
-        dy = move.pos_y - ship.location_y
-        dy.abs.times {|i| 
-          addToShip({x: 0, y: dy/dy.abs})
-        }
-      end
 
-      if ship.location_y == move.pos_y
-        dx = move.pos_x - ship.location_x
-        dx.abs.times {|i| 
-          addToShip({x: dx/dx.abs, y: 0})
-        }
-      end
-      if ship.shiptype.name != "Mine Layer"
-        movedToMine();
+      if !isUnsafe(move.pos_x, move.pos_y) && ship.shiptype.name=="Kamikaze Boat"
+        ship.location_x = move.pos_x
+        ship.location_y = move.pos_y
+        ship.save
+      else
+        if ship.location_x == move.pos_x
+          dy = move.pos_y - ship.location_y
+          dy.abs.times {|i| 
+            addToShip({x: 0, y: dy/dy.abs})
+          }
+        end
+
+        if ship.location_y == move.pos_y
+          dx = move.pos_x - ship.location_x
+          dx.abs.times {|i| 
+            addToShip({x: dx/dx.abs, y: 0})
+          }
+        end
+        if ship.shiptype.name != "Mine Layer"
+          movedToMine();
+        end
       end
     when "Rotate"
       turnPossible = false
@@ -232,7 +239,24 @@ class Move < ActiveRecord::Base
           count+=1
       end
     when "Kamikaze"
-      #Stuff
+      x = move.pos_x
+      y = move.pos_y
+
+      if !isUnsafe(x,y)
+
+        ship.destroy
+
+        pewpew(x+1,y)
+        pewpew(x-1,y)
+        pewpew(x,y+1)
+        pewpew(x,y-1)
+        pewpew(x-1,y-1)
+        pewpew(x+1,y+1)
+        pewpew(x+1,y-1)
+        pewpew(x-1,y+1)
+
+        move.message = "KAMIKAZE!!!"
+      end
     end
 
 
@@ -290,6 +314,18 @@ class Move < ActiveRecord::Base
     else
       return {result: false, x: 0, y: 0}
     end
+  end
+
+  def pewpew(x,y)
+    # Explosion damage
+    game.ships.each { |s|
+      s.shiptype.size.times {|i|
+        shipSq = directionToDelta(s.direction,i)
+        if s.location_x + shipSq[:x] == x && s.location_y + shipSq[:y] == y
+          hitShip(s, i, 2)
+        end
+      }
+    }
   end
 
   def movedToMine()
