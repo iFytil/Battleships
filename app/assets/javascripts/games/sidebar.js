@@ -217,7 +217,14 @@ Sidebar = function(){
 
     // Repairs are only made if the ship is near the base
     if(isInBox(ship.points[0],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL) || isInBox(ship.points[ship.length-1],baseRadar.pointTL,baseRadar.pointTR,baseRadar.pointBL)){
-      this.buttons[6].active = true;
+      var alive = 0;
+      for(var i=0;i<player.fleet.basehealth.length;i++){
+        if(player.fleet.basehealth[i]==1)
+          alive++;
+      }
+
+      if(alive>0)
+        this.buttons[6].active = true;
     }
   }
   
