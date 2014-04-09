@@ -35,6 +35,11 @@ function loadMouseEvents() {
           if(p.x == sq.x && p.y == sq.y){
             game.SelectShip(i); 
             select = true;
+            game.movezone = -1;
+            game.sidebar.buttons[game.sidebar.selected].selected = false;
+            game.sidebar.buttons[game.sidebar.selected].hover = false;
+            game.sidebar.selected = -1;
+            game.sidebar.ClearButtons();
           }
         });
         i++;
