@@ -1,6 +1,7 @@
 Button = function(x, y, w, h,bar){
   
   this.name = "";
+  this.message = "";
   this.func = -1;
   this.x = x;
   this.y =y;
@@ -48,18 +49,20 @@ Button = function(x, y, w, h,bar){
     ctx.fillStyle = 'black';
     ctx.font = 'bold 12pt Calibri';
     ctx.fillText(this.name, this.x+w/2, this.y+15);
+    ctx.font = 'bold 7pt Calibri';
+    ctx.fillText(this.message, this.x+w/2, this.y+30);
     
   }
   
 }
 
-Sidebar = function(game){
+Sidebar = function(){
   
   // top left corner
   this.x = WIDTH;
   this.y = 0;
   
-  this.game = game;
+  
   
   // index of selected button
   this.selected = -1;
@@ -84,6 +87,25 @@ Sidebar = function(game){
     this.buttons[i].name = Abilities[i];
     this.buttons[i].func = i;
   }
+  this.setMessages = function(){
+    for (var i = 0; i < Object.keys(Abilities).length; i++) {
+    if(i==4 && game.CurrentPlayer().name ==Type.MineLayer)
+      this.buttons[i].message ="Ammo:"+game.CurrentPlayer().ammo.toString();
+    
+    if(i== 2 && game.CurrentPlayer().name !=Type.KamikazeBoat ){
+      if(game.CurrentPlayer().damage ==2)
+        this.buttons[i].message ="Heavy Cannon";
+      else
+        this.buttons[i].message ="Standard Cannon";
+    }
+    if(i== 6 && game.CurrentPlayer().name){
+      if(game.CurrentPlayer().armor ==2)
+        this.buttons[i].message ="Heavy Armour";
+      else
+        this.buttons[i].message ="Standard Armour";
+    }
+  }
+  }
 
 
   // handle function
@@ -93,13 +115,13 @@ Sidebar = function(game){
     for (var i = 0; i < Object.keys(Abilities).length; i++) {
       if(f==i && this.buttons[i].active) {
         if(this.selected!=i){
-          this.game.movezone = i;
-          this.game.UpdateZones();
+          game.movezone = i;
+          game.UpdateZones();
           this.selected = i;
          this.ClearButtons();
           this.buttons[i].selected = true;
         }else{
-          this.game.movezone = -1;
+          game.movezone = -1;
           this.selected = -1;
           this.buttons[i].selected = false;
           this.ClearButtons();
@@ -127,7 +149,9 @@ Sidebar = function(game){
     for(var i = 0;i<this.buttons.length;i++){
       this.buttons[i].selected = false;
     }
-    //this.selected = -1;
+    for (var i = 0; i < Object.keys(Abilities).length; i++) {
+      this.buttons[i].message ="";
+    }
   }
 
   this.Hover = function(x,y){
@@ -146,7 +170,7 @@ Sidebar = function(game){
   }
   
   this.RegisterShipChange = function(){
-    var player = this.game.players[pid]; // currently player
+    var player = game.players[pid]; // currently player
     var ship = player.Selected();
     var t = ship.name; // currently selected ship's name
     var baseRadar = player.fleet.baseradar
@@ -230,7 +254,7 @@ Sidebar = function(game){
     ctx.fillText("Move: " + ability, WIDTH+BAR_WIDTH/2, 120);
     
     // buttons
-    if(this.game.turn == pid){
+    if(game.turn == pid){
       for (i = 0; i < this.buttons.length; i++) {
         this.buttons[i].Draw();
       }

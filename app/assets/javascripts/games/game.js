@@ -93,22 +93,25 @@ Player = function(turn){
 Game = function()
 {
 
+  // 2 players
+  this.players=new Array();
+  this.players.push(new Player(Turn.First));
+  this.players.push(new Player(Turn.Second));
+  this.turn = 0;
+
   // environment
   this.env = new Environment();
 
   // bars 
-  this.sidebar = new Sidebar(this);
+  this.sidebar = new Sidebar();
   this.textbar = new Textbar();
   
   // currently displayed zones
   this.movezone = Zone.None;
   
-  // 2 players
-  this.players=new Array();
-  this.players.push(new Player(Turn.First));
-  this.players.push(new Player(Turn.Second));
   
-  this.turn = 0;
+  
+  
   
   this.NextShipUp = function()
   {
@@ -134,6 +137,7 @@ Game = function()
     this.kamikazeZone = new KamikazeZone(ship)
   };
 
+// returns selected ship
   this.CurrentPlayer =function(){
       return this.players[pid].Selected();
   };
@@ -183,6 +187,7 @@ Game = function()
     
     // bars
     game.sidebar.RegisterShipChange();
+    game.sidebar.setMessages();
     this.sidebar.Draw();
 
   };
