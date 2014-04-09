@@ -19,11 +19,9 @@ Textbar = function(){
     document.getElementById("message_stream").innerHTML = ""
     var moves = GAME_DATA.moves;
     var len = GAME_DATA.moves.length;
-    var num = 10;
-    if(len<num)
-      num = len;
-    for(var i=len;i>0;i--)
-      this.Message(GAME_DATA.moves[len-i].message);
+
+    for (var i = len-1; i >= 0; i--)
+      this.Message(GAME_DATA.moves[i].message);
   }
 
 };
