@@ -28,7 +28,7 @@ Visibility = function(ranges) {
           var x = this.ranges[k].x+i;
           var y = this.ranges[k].y+j;
 
-          if(y>-1 && x>-1)
+          if(y>-1 && x>-1&& y<30 && x<30)
             this.field[y+N*x] = 0;
         }
       }
